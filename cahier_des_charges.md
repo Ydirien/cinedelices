@@ -6,7 +6,7 @@
 
 CinéDélices est une plateforme web qui propose des recettes de cuisine inspirées du cinéma, des séries et des animés. Pensée pour les amateurs de gastronomie autant que pour les cinéphiles, elle permet de redecouvrir ses films et séries préférés sous un angle inédit : celui de la table.
 
-🧠 Le concept 
+🎬 Le concept 💡
 
 Derrière chaque grand film , il y a souvent un scène culinaire mémorable. CinéDélices part de cette idée pour transformer ces moments en véritables expériences gustatives : recette détaillées, anecdotes liées à l'oeuvres, et mise en lien systematique entre les plats et les films ou séries dont ils s'inspirent.
 
@@ -33,7 +33,7 @@ back/
 
 
 ### Front 
-
+ 
 front/
 ├── public/
 ├── src/

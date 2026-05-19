@@ -6,19 +6,19 @@ React · TypeScript · SCSS
 
 📁 frontend/
 └─ 📁 src/
-├─ 📁 assets/
-├─ 📁 images/
-└─ 📁 fonts/
-├─ 📁 components/
-├─ 📁 layout/
-└─ 📁 ui/
-├─ 📁 pages/
-├─ 📁 router/
-├─ 📁 hooks/
-├─ 📁 services/
-├─ 📁 context/
-├─ 📁 types/
-└─ 📁 styles/
+├── 📁 assets/
+├── 📁 images/
+└── 📁 fonts/
+├── 📁 components/
+├── 📁 layout/
+└── 📁 ui/
+├── 📁 pages/
+├── 📁 router/
+├── 📁 hooks/
+├── 📁 services/
+├── 📁 context/
+├── 📁 types/
+└── 📁 styles/
 
 ## Back    
 

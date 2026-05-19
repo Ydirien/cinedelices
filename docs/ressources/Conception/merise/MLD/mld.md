@@ -61,4 +61,4 @@
 - id_utilisateur (FK)
 - id_recette (FK)
 
-![shéma du mld](mld_cinedelices.png)
+![shéma du mld](MLD_cinedelice.pdf)

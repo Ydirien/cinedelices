@@ -23,5 +23,5 @@
 | designer | produire des maquettes mobile et desktop des pages clés | valider l’ergonomie avant le développement |
 | utilisateur connecté | ajouter une recette à mes favoris | retrouver facilement mes recettes préférées |
 | utilisateur | commenter une recette | partager mon retour et échanger avec la communauté |
-| utilisateur | générer une liste de courses à partir d’une ou plusieurs recettes | préparer mes achats facilement |
 | visiteur | voir des suggestions pendant la saisie dans la barre de recherche | trouver plus vite des recettes pertinentes |
+<!-- | utilisateur | générer une liste de courses à partir d’une ou plusieurs recettes | préparer mes achats facilement | -->

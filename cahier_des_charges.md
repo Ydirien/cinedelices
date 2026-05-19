@@ -2,14 +2,6 @@
 
 ## La présentation du projet ✅
 
-🎬 CinéDélices 🍝 
-
-CinéDélices est une plateforme web qui propose des recettes de cuisine inspirées du cinéma, des séries et des animés. Pensée pour les amateurs de gastronomie autant que pour les cinéphiles, elle permet de redecouvrir ses films et séries préférés sous un angle inédit : celui de la table.
-
-🎬 Le concept 💡
-
-Derrière chaque grand film , il y a souvent un scène culinaire mémorable. CinéDélices part de cette idée pour transformer ces moments en véritables expériences gustatives : recette détaillées, anecdotes liées à l'oeuvres, et mise en lien systematique entre les plats et les films ou séries dont ils s'inspirent.
-
 ## La définition des besoins (problèmes auxquels répond le projet) et des objectifs (solutions qu'apporte le projet) du projet
  - Les fonctionnalités du projet (spécifications fonctionnelles)
 
@@ -20,47 +12,11 @@ Il faut se poser la question : pour que mon projet marche, est-ce que telle fonc
 Les évolutions potentielles (ce qui ne sera pas terminé) : tout ce qui est prévu mais ne fait pas partie du MVP
 
 ## Le choix et la justification de l'architecture du projet (front, back, BDD) ✅
-### Back    
-
-back/
-├── prisma/
-│
-├── src/
-│   ├── config/
-│   ├── controllers/
-│   ├── middlewares/
-│   ├── utils/
-
-
-### Front 
- 
-front/
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── features/
-│   ├── hooks/
-│   ├── styles/
-│   │   ├── base/
-│   │   ├── utils/
-│   └── layouts/
 
 
 ## La liste des technologies utilisées pour le projet, avec justification (spécifications techniques) ✅
 
-### Front 
-- React : J’utilise React afin de créer une interface utilisateur dynamique, réutilisable et performante grâce à son architecture basée sur les composants.
-- Typescript : J’utilise TypeScript plutôt que JavaScript afin d’avoir un code plus fiable, maintenable et sécurisé grâce au typage statique et à la détection d’erreurs dès le développement.
-- SCSS : J’utilise SCSS afin de structurer et maintenir plus facilement mes styles grâce aux variables, aux mixins et à l’imbrication du code CSS.
-
-### Back
--⠀Node.js : J’utilise Node.js afin de développer des applications backend rapides et scalables en JavaScript, avec une gestion efficace des opérations asynchrones et des requêtes serveur.
-- typescript : IDEM
-- Prisma : J’utilise Prisma plutôt que Sequelize afin de profiter d’un typage natif, d’une meilleure expérience développeur et d’une gestion des requêtes et des migrations plus moderne et intuitive.
-- PostgreSQL⠀:⠀J’utilise PostgreSQL plutôt que MongoDB afin de bénéficier d’une base de données relationnelle robuste, respectant mieux la cohérence des données et offrant des requêtes SQL puissantes pour des structures complexes.
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-La définition de la cible du projet (le public visé) : ça permettra entre autres choses d'anticiper certaines contraintes visuelles/ergonomiques/techniques
+## La définition de la cible du projet (le public visé) : ça permettra entre autres choses d'anticiper certaines contraintes visuelles/ergonomiques/techniques ✅
 
 ## Les navigateurs compatibles ✅
 
@@ -133,12 +89,13 @@ DELETE /api/favorites/:recipeId
 
 
 
-## Analyse des risques : quels sont les risques qui peuvent survenir pendant le développement et mesures pour s'en prémunir
+## Analyse des risques : quels sont les risques qui peuvent survenir pendant le développement et mesures pour s'en prémunir ✅
 
-La liste des rôles de chacun
+
+## La liste des rôles de chacun 
 Documents de conception
 
-Le MCD / MLD et MPD (MERISE) : schéma de la base de données
+## Le MCD / MLD et MPD (MERISE) : schéma de la base de données ✅
 
 Un diagramme de séquence d'une fonctionnalité complexe
 
@@ -151,12 +108,14 @@ BONUS : un diagramme de l'architecture de l'application (front, back, BDD, etc.)
 BONUS : un diagramme d'activité d'une fonctionnalité complexe
 Eléments graphiques
 
-Wireframes
+Wireframes ✅
 
 Maquettes
 
 Charte graphique
-Côté organisation
+
+## Côté organisation
+
 
 Daily obligatoire et dailies fortement conseillés !
 
@@ -166,3 +125,54 @@ Répartition claire des tâches
 
 Identification des blocages
 NB : ⚠️ seule l'équipe pédagogique peut valider vos documents. Communiquez simplement en commentaire de l'issue pour demander des vérifications ou encore poser vos interrogations !
+
+
+ MVP (Minimum Viable Product)
+Le MVP regroupe les fonctionnalités sans lesquelles le projet ne peut pas exister en tant que produit. Chaque étape de développement vise à livrer un produit fonctionnel, même partiel.
+Catalogue de recettes
+
+Affichage de la liste des recettes
+Recherche par titre de recette ou par titre de film/série
+Filtres par catégorie (entrée, plat, dessert, boisson)
+
+Page recette
+
+Affichage des ingrédients (sous forme de texte libre en MVP)
+Affichage des instructions de préparation
+Mention du film ou de la série associé(e)
+Informations complémentaires (anecdote, contexte)
+
+Système d'authentification
+
+Inscription via formulaire
+Connexion sécurisée
+Gestion du profil utilisateur (consultation, modification)
+Déconnexion
+
+Ajout de recette
+
+Formulaire d'ajout accessible uniquement aux utilisateurs authentifiés
+Saisie du titre, des ingrédients, des instructions, du film/série associé, des anecdotes
+Validation et publication
+
+Back-office (administration)
+
+Gestion des recettes (CRUD)
+Gestion des catégories
+Gestion des utilisateurs (rôles, suspension)
+Accès restreint aux administrateurs
+
+3.2 Évolutions potentielles (hors MVP)
+Fonctionnalités envisagées pour des versions ultérieures, non garanties dans le périmètre du MVP :
+
+Fonctionnalités sociales : commentaires (avec modération), likes, système de notation
+Gestion structurée des ingrédients : passage du texte libre à une table dédiée
+Filtre par ingrédient dans le catalogue
+Liste de courses générée à partir d'une ou plusieurs recettes sélectionnées
+Système de favoris : sauvegarde de recettes par l'utilisateur
+Recommandations personnalisées basées sur les favoris, l'historique, les films préférés
+Dashboard utilisateur avec statistiques personnelles
+Notifications pour commentaires, likes, nouvelles recettes
+Classements : recettes populaires, mieux notées, récentes
+Moteur de recherche dynamique avec autocomplétion
+Support multilingue français / anglais

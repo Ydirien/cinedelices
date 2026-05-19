@@ -1,0 +1,94 @@
+@startuml CineDelicesUseCase
+left to right direction
+
+skinparam actorStyle awesome
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+actor Visiteur
+actor Utilisateur
+
+rectangle "🎬 CinéDélices" {
+
+    package "Navigation des recettes" {
+
+        usecase "Voir les recettes" as UC1
+        usecase "Rechercher une recette" as UC2
+        usecase "Voir les suggestions\nde recherche" as UC6
+        usecase "Filtrer par catégorie" as UC3
+        usecase "Consulter le détail\nd'une recette" as UC4
+        usecase "Partager une recette" as UC5
+    }
+
+    package "Authentification" {
+
+        usecase "S'inscrire" as UC7
+        usecase "Se connecter" as UC8
+        usecase "Rester authentifié" as UC9
+    }
+
+    package "Fonctionnalités utilisateur" {
+
+        usecase "Modifier profil" as UC10
+        usecase "Créer une recette" as UC11
+        usecase "Ajouter aux favoris" as UC12
+        usecase "Commenter une recette" as UC13
+    }
+
+    package "Gestion auteur" {
+
+        usecase "Modifier ma recette" as UC14
+        usecase "Supprimer ma recette" as UC15
+    }
+
+    package "Administration" {
+
+        usecase "Gérer toutes\nles recettes" as UC16
+        usecase "Gérer les catégories" as UC17
+        usecase "Gérer les utilisateurs" as UC18
+        usecase "Bannir un utilisateur" as UC19
+    }
+}
+
+
+actor "Utilisateur connecté" as User
+actor Auteur
+actor Administrateur as Admin
+
+
+Visiteur --> UC1
+Visiteur --> UC2
+Visiteur --> UC3
+Visiteur --> UC4
+Visiteur --> UC5
+
+UC2 .> UC6 : <<include>>
+
+
+Utilisateur --> UC7
+Utilisateur --> UC8
+Utilisateur --> UC9
+
+
+User --> UC10
+User --> UC11
+User --> UC12
+User --> UC13
+
+UC11 .> UC8 : <<include>>
+UC12 .> UC8 : <<include>>
+UC13 .> UC8 : <<include>>
+
+
+Auteur --> UC14
+Auteur --> UC15
+
+
+Admin --> UC16
+Admin --> UC17
+Admin --> UC18
+Admin --> UC19
+
+UC19 .> UC18 : <<extend>>
+
+@enduml

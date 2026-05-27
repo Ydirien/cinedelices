@@ -13,8 +13,6 @@ h1,h2{
 .RecipeOfTheDay{
     display: grid;
     grid-template-columns: 70% 30%;
-    margin-left: 15vw;
-    margin-right: 15vw;
     background-color: var(--secondary-color);
     border-radius: 20px;
     padding: 1rem 1rem 1rem 1rem;
@@ -22,4 +20,46 @@ h1,h2{
     .Recipe-Info{
         text-align: start;
     }
+
+    
 }
+
+.Card{
+    
+    border-radius: 20px;
+    background-color: var(--secondary-color);
+    width: 12vw;
+    overflow: hidden;
+    .recetteImage {
+    height: 9rem;
+    width: auto;
+    
+    object-fit: cover;
+    }
+    
+    a{
+        text-decoration-line: none;
+        color: inherit;
+    }
+
+    .Recipe-Info{
+        text-align: start;
+        padding: 1rem ;
+    }
+
+    h3{
+        margin:0;
+        color: var(--quaternary-color);
+    }
+
+    h4{
+        margin:0;
+        color: var(--tertiary-color);
+    }
+
+    p{
+        color: var(--tertiary-color);
+    }
+}
+
+

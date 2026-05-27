@@ -18,12 +18,8 @@ h1,h2{
     background-color: var(--secondary-color);
     border-radius: 20px;
     padding: 1rem 1rem 1rem 1rem;
-}
 
-.RecipeOfTheDay .Recipe-Info{
-    display: flex;
-    flex-direction: column;
-
-    text-align: start;
-
+    .Recipe-Info{
+        text-align: start;
+    }
 }

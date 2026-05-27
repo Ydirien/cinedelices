@@ -51,7 +51,7 @@ h1,h2{
     overflow: hidden;
 
     .recetteImage{
-    height: 8rem;
+    height: 13rem;
     width: 100%;
     object-fit: contain;
     }

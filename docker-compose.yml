@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 
 services:
   db:
@@ -10,10 +10,9 @@ services:
       POSTGRES_PASSWORD: cinepass
       POSTGRES_DB: cinedelices
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - db_data:/var/lib/postgresql/data
-
   api:
     build: ./api
     container_name: cine_delices_api
@@ -23,21 +22,22 @@ services:
     environment:
       DATABASE_URL: postgres://cine:cinepass@db:5432/cinedelices
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
+
       - ./api:/app
       - /app/node_modules
 
-  client:
+  front:
     container_name: cine-delices-client
     build:
-      context: ./client
-      dockerfile: Dockerfile
+      context: ./front
+      dockerfile: ./front/Dockerfile
     restart: always
     ports:
-      - "5173:5173"
+      - '5173:5173'
     volumes:
-      - ./client:/app
+      - ./front:/app
       - /app/node_modules
     stdin_open: true
     tty: true

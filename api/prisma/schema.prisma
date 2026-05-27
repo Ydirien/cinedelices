@@ -15,6 +15,7 @@ model User {
   password    String
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
   recipes     Recipe[]
+  role        Role     @default(USER)
 
   @@map("user")
 }
@@ -124,4 +125,9 @@ enum State {
   PENDING
   APPROVED
   REJECTED
+}
+
+enum Role {
+  USER
+  ADMIN
 }

@@ -1,10 +1,9 @@
 .footer {
-  width: 100%;
   background: #111;
   color: white;
   padding-top: 50px;
   margin-top: 80px;
-  border-top: 2px solid #d4a017;
+  border-top: 2px solid #D4a017;
 }
 
 .footer-container {
@@ -13,18 +12,9 @@
   padding: 0 30px;
 
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   gap: 40px;
   flex-wrap: wrap;
-}
-.footer-brand {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  align-items: center;
-  gap: 20px;
 }
 .footer-bottom {
   border-top: 1px solid #222;

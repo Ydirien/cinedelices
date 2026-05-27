@@ -1,12 +1,15 @@
 import './App.css'
-import { useEffect, useState } from 'react'
 import Header from './components/header/Header'
+import Footer from './components/Footer/Footer'
+
 
 function App() {
 
   return (
-    
-    <Header />
+    <>
+      <Header />
+      <Footer />
+    </>
   )
 }
 

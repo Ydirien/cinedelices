@@ -1,0 +1,26 @@
+.footer {
+  background: #111;
+  color: white;
+  padding-top: 50px;
+  margin-top: 80px;
+  border-top: 2px solid #D4a017;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 30px;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.footer-bottom {
+  border-top: 1px solid #222;
+  margin-top: 40px;
+  padding: 20px;
+  text-align: center;
+  color: #777;
+  font-size: 0.9rem;
+}

@@ -32,7 +32,8 @@
 }
 
 .logo {
-  height: 3rem;
+  margin-top: 2rem;
+  height: 9rem;
   width: auto;
   object-fit: fit-content;
 }

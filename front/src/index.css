@@ -54,6 +54,10 @@ body {
   margin: 0;
 }
 
+main{
+  margin-top: 4.5rem;
+}
+
 #root {
   width: 100%;
   max-width: 100%;
@@ -70,7 +74,6 @@ h1,
 h2 {
   font-family: var(--heading);
   font-weight: 500;
-  color: var(--text-h);
 }
 
 h1 {

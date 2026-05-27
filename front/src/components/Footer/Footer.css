@@ -1,4 +1,5 @@
 .footer {
+  width: 100%;
   background: #111;
   color: white;
   padding-top: 50px;
@@ -12,6 +13,7 @@
   padding: 0 30px;
 
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   gap: 40px;
   flex-wrap: wrap;

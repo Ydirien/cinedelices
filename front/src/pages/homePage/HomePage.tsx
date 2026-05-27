@@ -1,3 +1,4 @@
+import CategoriesButton from '../../components/categories/categoriesButton/CategoriesButton';
 import './homePage.css';
 function HomePage(){
   return(
@@ -14,8 +15,8 @@ function HomePage(){
         <img src="../../../public/Logo/LOGO_pricipal_allonger.png" alt="CinéDélices Logo" className="logo" />
       </div>
       </section>
-    </main>
-  )
-}
+      <CategoriesButton/>
+      </main>
+)}
 
 export default HomePage

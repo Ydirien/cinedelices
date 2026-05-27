@@ -1,11 +1,11 @@
-import './header.css'
-import {NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
+import './Header.css';
 
 function Header() {
   return (
     <header className="Header">
       <div className="navbar-brand">
-        <img src="logo.png" alt="CinéDélices Logo" className="logo" />
+        <img src="../../../public/Logo/LOGO_pricipal_allonger.png" alt="CinéDélices Logo" className="logo" />
       </div>
 
       <nav className="navbar-links">

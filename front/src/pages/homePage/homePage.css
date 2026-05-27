@@ -14,27 +14,46 @@ h1,h2{
     display: grid;
     grid-template-columns: 70% 30%;
     background-color: var(--secondary-color);
-    border-radius: 20px;
-    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 10px;
+    min-height: 40vh;
+    padding: 1rem;
+    margin-bottom: 1rem;
+
+    .RecipeOfTheDayImg{
+        height:100%;
+        width: 100%;
+    object-fit: contain;
+    }
+
+    p{
+        color: var(--tertiary-color);
+    }
 
     .Recipe-Info{
         text-align: start;
+        min-width: none;
     }
-
     
 }
 
+.reco-home.page{
+
+    h2{
+        text-align: start;
+    }
+
+}
 .Card{
     
     border-radius: 20px;
     background-color: var(--secondary-color);
-    width: 12vw;
+    width: 25vw;
     overflow: hidden;
-    .recetteImage {
-    height: 9rem;
-    width: auto;
-    
-    object-fit: cover;
+
+    .recetteImage{
+    height: 8rem;
+    width: 100%;
+    object-fit: contain;
     }
     
     a{

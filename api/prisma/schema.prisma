@@ -1,0 +1,127 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  username    String   @unique
+  email       String   @unique
+  password    String
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+  recipes     Recipe[]
+
+  @@map("user")
+}
+
+model Ingredient {
+  id                Int                @id @default(autoincrement())
+  name              String             @unique
+  image             String
+  recipeIngredients RecipeIngredient[]
+
+  @@map("ingredient")
+}
+
+model Recipe {
+  id                Int                @id @default(autoincrement())
+  title             String
+  description       String
+  steps             Step[]
+  image             String
+  prepTime          Int                @map("prep_time")
+  cookTime          Int                @map("cook_time")
+  servings          Int
+  difficulty        Difficulty
+  state             State              @default(PENDING)
+  createdAt         DateTime           @default(now()) @map("created_at") @db.Timestamptz
+  userId            Int                @map("user_id")
+  user              User               @relation(fields: [userId], references: [id])
+  workId            Int                @unique @map("work_id")
+  work              Work               @relation(fields: [workId], references: [id])
+  recipeIngredients RecipeIngredient[]
+  thematics         RecipeThematic[]
+
+  @@map("recipe")
+}
+
+model Step {
+  id       Int    @id @default(autoincrement())
+  order    Int
+  content  String
+  recipeId Int    @map("recipe_id")
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
+
+  @@map("step")
+}
+
+model RecipeIngredient {
+  id           Int        @id @default(autoincrement())
+  recipeId     Int        @map("recipe_id")
+  ingredientId Int        @map("ingredient_id")
+  quantity     Float
+  unit         String
+  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
+
+  @@map("recipe_ingredient")
+}
+
+model Thematic {
+  id          Int              @id @default(autoincrement())
+  name        String           @unique
+  description String
+  recipes     RecipeThematic[]
+
+  @@map("thematic")
+}
+
+model RecipeThematic {
+  recipeId    Int      @map("recipe_id")
+  thematicId  Int      @map("thematic_id")
+  recipe      Recipe   @relation(fields: [recipeId], references: [id])
+  thematic    Thematic @relation(fields: [thematicId], references: [id])
+
+  @@id([recipeId, thematicId])
+  @@map("recipe_thematic")
+}
+
+model Work {
+  id          Int      @id @default(autoincrement())
+  title       String
+  releaseYear Int      @map("release_year")
+  synopsis    String
+  image       String
+  categoryId  Int      @map("category_id")
+  category    Category @relation(fields: [categoryId], references: [id])
+  recipe      Recipe?
+
+  @@map("work")
+}
+
+model Category {
+  id          Int    @id @default(autoincrement())
+  name        String @unique
+  description String
+  image       String
+  works       Work[]
+
+  @@map("category")
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum State {
+  PENDING
+  APPROVED
+  REJECTED
+}

@@ -2,16 +2,20 @@ import './Header.css';
 
 function Header() {
   return (
-    <header className="header">
-        <div>
-            <img src="logo.png" alt="Logo" />
-            <h3>Acceuil</h3>
-            <h3>Recettes</h3>
-        </div>
-        <div>
-            <h3>Crée une recette</h3>
-            <button>profil</button>
-        </div>
+    <header className="Header">
+      <div className="navbar-brand">
+        <img src="logo.png" alt="CinéDélices Logo" className="logo" />
+      </div>
+
+      <nav className="navbar-links">
+        <NavLink to="/">Accueil</NavLink>
+        <NavLink to="/recettes">Recettes</NavLink>
+      </nav>
+
+      <div className="navbar-actions">
+        <button className="btn-create">Créer une recette</button>
+        <NavLink to="/profile">Profile</NavLink>
+      </div>
     </header>
   );
 }

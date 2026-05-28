@@ -5,19 +5,21 @@ import './homePage.css';
 function HomePage() {
   return (
     <main>
-      <section className="Welcome-Section">
-        <div className="Welcome-Image">
-          <img src="../../../public/Logo/LOGO_debout.png" alt="CinéDélices Logo" className="Welcome-img" />
-        </div>
-        <div className="Recipe-Info">
-          <h1>Bienvenue sur CinéDélices 🍿</h1>
-          <p>
-            Que vous soyez fan de grands classiques du cinéma, de séries incontournables, d’anime légendaires ou de
-            dessins animés cultes, CinéDélices vous invite à découvrir des recettes inspirées de vos œuvres préférées
-            afin d’apporter toute la magie du grand écran directement dans votre assiette. Entre plats iconiques,
-            desserts gourmands et boissons emblématiques, plongez dans un univers où la cuisine rencontre la passion du
-            cinéma et de la pop culture. 🎬✨
-          </p>
+      <section className="welcome-section">
+        <div className="Welcome-div">
+          <div className="Welcome-Image">
+            <img src="../../../public/Logo/LOGO_debout.png" alt="CinéDélices Logo" className="Welcome-img" />
+          </div>
+          <div className="welcom-Info">
+            <h1>Bienvenue sur CinéDélices 🍿</h1>
+            <p>
+              Que vous soyez fan de grands classiques du cinéma, de séries incontournables, d’anime légendaires ou de
+              dessins animés cultes, CinéDélices vous invite à découvrir des recettes inspirées de vos œuvres préférées
+              afin d’apporter toute la magie du grand écran directement dans votre assiette. Entre plats iconiques,
+              desserts gourmands et boissons emblématiques, plongez dans un univers où la cuisine rencontre la passion du
+              cinéma et de la pop culture. 🎬✨
+            </p>
+          </div>
         </div>
       </section>
       <CategoriesButton />

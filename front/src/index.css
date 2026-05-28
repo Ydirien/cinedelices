@@ -50,21 +50,9 @@
 
 body {
   margin: 0;
-  background: radial-gradient(
-    circle,
-    #292929,
-    #252525,
-    #212121,
-    #1d1d1d,
-    #191919,
-    #161616,
-    #131313,
-    #101010,
-    #0d0d0d,
-    #090909,
-    #040404,
-    #000000
-  );
+  background-image: url('../public/ChatGPT\ Image\ 28\ mai\ 2026\,\ 16_46_57.png');
+  background-size: cover;
+  background-position: center;
 }
 
 main {
@@ -110,5 +98,6 @@ h2 {
   }
 }
 p {
+  fontfamily: var(--sans);
   margin: 0;
 }

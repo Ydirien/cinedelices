@@ -5,10 +5,17 @@ img{
 
 }
 
+.section-title{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    align-self: flex-start;
+}
+
 .button-container{
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: center;
     width: 100%;
     margin-bottom: 2rem;
 }
@@ -16,7 +23,7 @@ img{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 100%;
+    width: auto;
     
 
 }
@@ -43,8 +50,8 @@ img{
 .button-category{
     border-radius: 20px;
     background-color: var(--secondary-color);
-    width: 145px;
-    height: 120px;
+    width: 80px;
+    height: 80px;
     padding: 1rem;
     &:hover{
         background-color: #d49e175b;

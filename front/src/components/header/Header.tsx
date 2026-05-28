@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LuCircleUser } from "react-icons/lu";
+import { LuCircleUser } from 'react-icons/lu';
 import './Header.css';
 
 function Header() {
@@ -12,13 +12,12 @@ function Header() {
       <nav className="navbar-links">
         <NavLink to="/">Accueil</NavLink>
         <NavLink to="/recettes">Recettes</NavLink>
-        <NavLink to="/oeuvre">Oeuvre</NavLink>
       </nav>
 
       <div className="navbar-actions">
         <button className="btn-create">Créer une recette</button>
-        <NavLink className={"profile"} to="/profile">
-          <LuCircleUser />
+        <NavLink className="profile" to="/profile">
+          <LuCircleUser size={40} />
         </NavLink>
       </div>
     </header>

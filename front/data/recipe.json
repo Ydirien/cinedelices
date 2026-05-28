@@ -1,0 +1,244 @@
+  [
+    {
+      "id": 1,
+      "title": "Ratatouille à la Rémy",
+      "description": "La version revisitée et élégante du ratatouille, légumes finement émincés et disposés en spirale.",
+      "image": "https://example.com/images/recipes/ratatouille.jpg",
+      "prepTime": 30,
+      "cookTime": 45,
+      "servings": 4,
+      "difficulty": "MEDIUM",
+      "state": "APPROVED",
+      "userId": 1,
+      "workId": 1,
+      "steps": [
+        {
+          "order": 1,
+          "content": "Émincer finement l'aubergine, la courgette, la tomate et le poivron en rondelles régulières."
+        },
+        {
+          "order": 2,
+          "content": "Préparer une base de sauce avec tomates, ail et oignon revenus à l'huile d'olive."
+        },
+        {
+          "order": 3,
+          "content": "Disposer les rondelles de légumes en spirale sur la sauce."
+        },
+        {
+          "order": 4,
+          "content": "Arroser d'huile d'olive, couvrir et enfourner 45 min à 180°C."
+        }
+      ],
+      "ingredients": [
+        {
+          "ingredientId": 1,
+          "quantity": 1,
+          "unit": "pièce"
+        },
+        {
+          "ingredientId": 2,
+          "quantity": 2,
+          "unit": "pièce"
+        },
+        {
+          "ingredientId": 3,
+          "quantity": 4,
+          "unit": "pièce"
+        },
+        {
+          "ingredientId": 4,
+          "quantity": 1,
+          "unit": "pièce"
+        },
+        {
+          "ingredientId": 5,
+          "quantity": 4,
+          "unit": "cuillère à soupe"
+        },
+        {
+          "ingredientId": 6,
+          "quantity": 2,
+          "unit": "gousse"
+        },
+        {
+          "ingredientId": 16,
+          "quantity": 1,
+          "unit": "pièce"
+        }
+      ],
+      "thematicIds": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Gratin réconfortant du château",
+      "description": "Un gratin de pommes de terre crémeux et doré, parfait pour les soirées d'hiver.",
+      "image": "https://example.com/images/recipes/gratin.jpg",
+      "prepTime": 20,
+      "cookTime": 60,
+      "servings": 6,
+      "difficulty": "EASY",
+      "state": "APPROVED",
+      "userId": 2,
+      "workId": 2,
+      "steps": [
+        {
+          "order": 1,
+          "content": "Éplucher et trancher finement les pommes de terre."
+        },
+        {
+          "order": 2,
+          "content": "Beurrer un plat et y disposer les tranches en couches."
+        },
+        {
+          "order": 3,
+          "content": "Ajouter l'ail, le beurre et assaisonner entre chaque couche."
+        },
+        {
+          "order": 4,
+          "content": "Enfourner 1 h à 180°C jusqu'à coloration dorée."
+        }
+      ],
+      "ingredients": [
+        {
+          "ingredientId": 9,
+          "quantity": 1,
+          "unit": "kg"
+        },
+        {
+          "ingredientId": 12,
+          "quantity": 50,
+          "unit": "g"
+        },
+        {
+          "ingredientId": 6,
+          "quantity": 2,
+          "unit": "gousse"
+        }
+      ],
+      "thematicIds": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Bœuf bowl façon Food Wars",
+      "description": "Un donburi de bœuf mariné à la sauce soja, servi sur un riz vapeur et garni d'un œuf.",
+      "image": "https://example.com/images/recipes/gyudon.jpg",
+      "prepTime": 15,
+      "cookTime": 20,
+      "servings": 2,
+      "difficulty": "MEDIUM",
+      "state": "PENDING",
+      "userId": 2,
+      "workId": 4,
+      "steps": [
+        {
+          "order": 1,
+          "content": "Cuire le riz à la vapeur."
+        },
+        {
+          "order": 2,
+          "content": "Faire revenir l'oignon émincé puis ajouter le bœuf."
+        },
+        {
+          "order": 3,
+          "content": "Déglacer à la sauce soja et laisser mijoter."
+        },
+        {
+          "order": 4,
+          "content": "Servir sur le riz et garnir d'un œuf."
+        }
+      ],
+      "ingredients": [
+        {
+          "ingredientId": 13,
+          "quantity": 300,
+          "unit": "g"
+        },
+        {
+          "ingredientId": 15,
+          "quantity": 250,
+          "unit": "g"
+        },
+        {
+          "ingredientId": 14,
+          "quantity": 3,
+          "unit": "cuillère à soupe"
+        },
+        {
+          "ingredientId": 16,
+          "quantity": 1,
+          "unit": "pièce"
+        },
+        {
+          "ingredientId": 7,
+          "quantity": 2,
+          "unit": "pièce"
+        }
+      ],
+      "thematicIds": [
+        3
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Crêpes sucrées maison",
+      "description": "Des crêpes fines et moelleuses, base parfaite pour tous les desserts.",
+      "image": "https://example.com/images/recipes/crepes.jpg",
+      "prepTime": 10,
+      "cookTime": 15,
+      "servings": 4,
+      "difficulty": "EASY",
+      "state": "APPROVED",
+      "userId": 1,
+      "workId": 3,
+      "steps": [
+        {
+          "order": 1,
+          "content": "Mélanger la farine, le sucre et les œufs."
+        },
+        {
+          "order": 2,
+          "content": "Ajouter le beurre fondu et fouetter jusqu'à obtenir une pâte lisse."
+        },
+        {
+          "order": 3,
+          "content": "Laisser reposer 30 min."
+        },
+        {
+          "order": 4,
+          "content": "Cuire chaque crêpe dans une poêle beurrée."
+        }
+      ],
+      "ingredients": [
+        {
+          "ingredientId": 10,
+          "quantity": 250,
+          "unit": "g"
+        },
+        {
+          "ingredientId": 11,
+          "quantity": 50,
+          "unit": "g"
+        },
+        {
+          "ingredientId": 7,
+          "quantity": 3,
+          "unit": "pièce"
+        },
+        {
+          "ingredientId": 12,
+          "quantity": 30,
+          "unit": "g"
+        }
+      ],
+      "thematicIds": [
+        4
+      ]
+    }
+  ]
+}

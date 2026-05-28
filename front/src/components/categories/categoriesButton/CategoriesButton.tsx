@@ -16,29 +16,29 @@ function CategoriesButton() {
   ];
   const types = [{ title: 'entrées' }, { title: 'plats' }, { title: 'desserts' }, { title: 'boissons' }];
   return (
-    <div className="button-container">
-      <h2 className="section-title">Catégories </h2>
-      <section className='section-buttons'>
-        <div className="category-buttons">
-          {categories.map((category) => (
-            <NavLink className="category" to={`/${category.title}`}>
-              <div className="button-category">
-                <img src={category.url_image} alt="" />
-              </div>
-            </NavLink>
-          ))}
-        </div>
-        <div className="type-buttons">
-          {types.map((type) => (
-            <NavLink className="type" to={`/${type.title}`}>
-            <div className="button-category">
-                {type.title}
-            </div>
+    <>
+      <h2 className="subtitle">Catégories </h2>
+      <div className="button-container">
+        <section className="section-buttons">
+          <div className="category-buttons">
+            {categories.map((category) => (
+              <NavLink className="category" to={`/${category.title}`}>
+                <div className="button-category">
+                  <img src={category.url_image} alt="" />
+                </div>
               </NavLink>
-          ))}
-        </div>
-      </section>
-    </div>
+            ))}
+          </div>
+          <div className="type-buttons">
+            {types.map((type) => (
+              <NavLink className="type" to={`/${type.title}`}>
+                <div className="button-category">{type.title}</div>
+              </NavLink>
+            ))}
+          </div>
+        </section>
+      </div>
+    </>
   );
 }
 

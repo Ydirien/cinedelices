@@ -1,47 +1,68 @@
-version: '3.9'
-
 services:
   db:
-    image: postgres:16
-    container_name: cine_delices_db
-    restart: always
-    environment:
-      POSTGRES_USER: cine
-      POSTGRES_PASSWORD: cinepass
-      POSTGRES_DB: cinedelices
-    ports:
-      - '5432:5432'
+    container_name: database
+    image: postgres:17
+    restart: unless-stopped
     volumes:
       - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_LOCAL_PORT}:5432
+    networks:
+      - cinedelices-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
   api:
-    build: ./api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
     container_name: cine_delices_api
     restart: always
     depends_on:
-      - db
-    environment:
-      DATABASE_URL: postgres://cine:cinepass@db:5432/cinedelices
+      db:
+        condition: service_healthy
+    env_file:
+      - ./api/.env
     ports:
-      - '3000:3000'
-    volumes:
-
-      - ./api:/app
-      - /app/node_modules
+      - ${API_LOCAL_PORT}:3010
+    networks:
+      - cinedelices-network
 
   front:
-    container_name: cine-delices-client
     build:
       context: ./front
-      dockerfile: ./front/Dockerfile
+      dockerfile: Dockerfile
+    container_name: cine_delices_front
     restart: always
     ports:
-      - '5173:5173'
-    volumes:
-      - ./front:/app
-      - /app/node_modules
-    stdin_open: true
-    tty: true
-    command: npm run dev -- --host
+      - ${CLIENT_LOCAL_PORT}:80
+    depends_on:
+      api:
+        condition: service_started
+    networks:
+      - cinedelices-network
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - ${ADMINER_LOCAL_PORT}:8080
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - cinedelices-network
 
 volumes:
   db_data:
+
+networks:
+  cinedelices-network:

@@ -14,8 +14,8 @@ function Header() {
         <NavLink to="/recettes">Recettes</NavLink>
       </nav>
       <div className="SearchBar">
-        <LuSearch size={14} />
         <input type="seach" placeholder="exemple : Naruto" />
+        <LuSearch size={14} />
       </div>
       <div className="navbar-actions">
         <button className="btn-create">Créer une recette</button>

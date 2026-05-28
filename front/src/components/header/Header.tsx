@@ -15,7 +15,7 @@ function Header() {
       </nav>
       <div className="SearchBar">
         <input type="seach" placeholder="exemple : Naruto" />
-        <LuSearch size={14} />
+        <LuSearch size={20} />
       </div>
       <div className="navbar-actions">
         <button className="btn-create">Créer une recette</button>

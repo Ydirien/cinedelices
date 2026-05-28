@@ -1,5 +1,5 @@
 import CategoriesButton from '../../components/categories/categoriesButton/CategoriesButton';
-import RecoHomePage from '../../components/Recettes_cards/recommandation/HomePageReco';
+import RecoHomePage from '../../components/Recipes_cards/recommandation/HomePageReco';
 import RecipesOftheDay from '../../components/RecipeOftheDay/RecipesOftheDay';
 import './homePage.css';
 function HomePage() {

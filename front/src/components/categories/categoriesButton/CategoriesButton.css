@@ -1,23 +1,24 @@
 img{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+
 }
 
 .button-container{
     display: flex;
-    flex-direction: column;    ;
+    flex-direction: column;
     align-items: start;
+    width: 100%;
     margin-bottom: 2rem;
 }
 .section-buttons{
-  width: auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 15px;
+    width: 100%;
     
+
 }
 .category-buttons{
     display: flex;
@@ -25,9 +26,9 @@ img{
     justify-content: center;
     align-items: center;
     gap: 15px;
-    margin-right: 20px;
+    margin-right: 15px;
     border-right: 4px solid #545454;
-    padding-right: 40px;
+    padding-right: 15px;
     }
 
 .type-buttons{
@@ -42,14 +43,14 @@ img{
 .button-category{
     border-radius: 20px;
     background-color: var(--secondary-color);
-    width: 170px;
-    height: 150px;
+    width: 145px;
+    height: 120px;
     padding: 1rem;
     &:hover{
         background-color: #d49e175b;
-        transition: background-color 0.3s ease-in-out;
+        transition: background-color 0.5s ease-in-out;
     }
     
-  }
+}
 
     

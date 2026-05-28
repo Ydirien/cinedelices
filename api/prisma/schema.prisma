@@ -9,13 +9,14 @@ datasource db {
 }
 
 model User {
-  id          Int      @id @default(autoincrement())
-  username    String   @unique
-  email       String   @unique
-  password    String
-  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
-  recipes     Recipe[]
-  role        Role     @default(USER)
+  id            Int      @id @default(autoincrement())
+  username      String   @unique
+  email         String   @unique
+  password      String
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz
+  recipes       Recipe[]
+  refreshTokens RefreshToken[]
+  role          Role     @default(USER)
 
   @@map("user")
 }
@@ -113,6 +114,17 @@ model Category {
   works       Work[]
 
   @@map("category")
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String
+  userId            Int                @map("user_id")
+  user              User               @relation(fields: [userId], references: [id])
+  issuedAt  DateTime @default(now()) @map("issued_at") @db.Timestamptz
+  expiresAt DateTime @map("expires_at") @db.Timestamptz
+
+  @@map("refresh_token")
 }
 
 enum Difficulty {

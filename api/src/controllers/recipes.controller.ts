@@ -1,4 +1,4 @@
-import type { Request, Response, NextFunction } from 'express';
+import type { Request, Response } from 'express';
 import { prisma } from '../models/index.ts';
 import { z } from 'zod';
 import { NotFoundError, ConflictError } from '../lib/errors.ts';
@@ -24,83 +24,63 @@ const recipeSchema = z.object({
     thematics: z.array(z.number().int().positive()).min(1),
 });
 
-export async function getAllRecipes(req: Request, res: Response, next: NextFunction) {
-    try {
-        const recipes = await prisma.recipe.findMany();
-        if (recipes.length === 0) throw new NotFoundError("No recipes found");
-        res.json(recipes);
-    } catch (error: unknown) {
-        next(error);
-    }
+export async function getAllRecipes(req: Request, res: Response) {
+    const recipes = await prisma.recipe.findMany();
+    if (recipes.length === 0) throw new NotFoundError("No recipes found");
+    res.json(recipes);
 }
 
-export async function getRecipeById(req: Request, res: Response, next: NextFunction) {
-    try {
-        const id = Number(req.params.id);
-        const recipe = await prisma.recipe.findUnique({ where: { id } });
-        if (!recipe) throw new NotFoundError("Recipe not found");
-        res.json(recipe);
-    } catch (error: unknown) {
-        next(error);
-    }
+export async function getRecipeById(req: Request, res: Response) {
+    const id = Number(req.params.id);
+    const recipe = await prisma.recipe.findUnique({ where: { id } });
+    if (!recipe) throw new NotFoundError("Recipe not found");
+    res.json(recipe);
 }
 
-export async function createRecipe(req: Request, res: Response, next: NextFunction) {
-    try {
-        const data = recipeSchema.parse(req.body);
+export async function createRecipe(req: Request, res: Response) {
+    const data = recipeSchema.parse(req.body);
 
-        const alreadyExists = await prisma.recipe.findFirst({ where: { title: data.title } });
-        if (alreadyExists) throw new ConflictError("Recipe already exists");
+    const alreadyExists = await prisma.recipe.findFirst({ where: { title: data.title } });
+    if (alreadyExists) throw new ConflictError("Recipe already exists");
 
-        const newRecipe = await prisma.recipe.create({
-            data: {
-                ...data,
-                userId: req.user.id,
-                steps: { create: data.steps },
-                recipeIngredients: { create: data.recipeIngredients },
-                thematics: { create: data.thematics.map((thematicId) => ({ thematicId })) },
-            },
-        });
+    const newRecipe = await prisma.recipe.create({
+        data: {
+            ...data,
+            userId: req.user.id,
+            steps: { create: data.steps },
+            recipeIngredients: { create: data.recipeIngredients },
+            thematics: { create: data.thematics.map((thematicId) => ({ thematicId })) },
+        },
+    });
 
-        res.status(201).json(newRecipe);
-    } catch (error: unknown) {
-        next(error);
-    }
+    res.status(201).json(newRecipe);
 }
 
-export async function updateRecipe(req: Request, res: Response, next: NextFunction) {
-    try {
-        const recipeId = Number(req.params.id);
-        const { title } = recipeSchema.parse(req.body);
+export async function updateRecipe(req: Request, res: Response) {
+    const recipeId = Number(req.params.id);
+    const { title } = recipeSchema.parse(req.body);
 
-        const foundRecipe = await prisma.recipe.findUnique({ where: { id: recipeId } });
-        if (!foundRecipe) throw new NotFoundError("Recipe not found");
+    const foundRecipe = await prisma.recipe.findUnique({ where: { id: recipeId } });
+    if (!foundRecipe) throw new NotFoundError("Recipe not found");
 
-        const alreadyExists = await prisma.recipe.findFirst({
-            where: { title, id: { not: recipeId } },
-        });
-        if (alreadyExists) throw new ConflictError("Recipe already exists");
+    const alreadyExists = await prisma.recipe.findFirst({
+        where: { title, id: { not: recipeId } },
+    });
+    if (alreadyExists) throw new ConflictError("Recipe already exists");
 
-        const updatedRecipe = await prisma.recipe.update({
-            where: { id: recipeId },
-            data: { title, updatedAt: new Date() },
-        });
+    const updatedRecipe = await prisma.recipe.update({
+        where: { id: recipeId },
+        data: { title, updatedAt: new Date() },
+    });
 
-        res.json(updatedRecipe);
-    } catch (error: unknown) {
-        next(error);
-    }
+    res.json(updatedRecipe);
 }
 
-export async function deleteRecipe(req: Request, res: Response, next: NextFunction) {
-    try {
-        const recipeId = Number(req.params.id);
-        const recipe = await prisma.recipe.findUnique({ where: { id: recipeId } });
-        if (!recipe) throw new NotFoundError("Recipe not found");
+export async function deleteRecipe(req: Request, res: Response) {
+    const recipeId = Number(req.params.id);
+    const recipe = await prisma.recipe.findUnique({ where: { id: recipeId } });
+    if (!recipe) throw new NotFoundError("Recipe not found");
 
-        await prisma.recipe.delete({ where: { id: recipeId } });
-        res.status(204).send();
-    } catch (error: unknown) {
-        next(error);
-    }
+    await prisma.recipe.delete({ where: { id: recipeId } });
+    res.status(204).send();
 }

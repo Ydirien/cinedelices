@@ -137,3 +137,7 @@ async function replaceRefreshTokenInDatabase(refreshToken: Token, user: User) {
         },
     });
 }
+
+export async function forgotPassword(req: Request, res: Response) {
+    
+}

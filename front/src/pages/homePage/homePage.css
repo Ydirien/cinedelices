@@ -15,7 +15,7 @@ h1,h2{
     grid-template-columns: 70% 30%;
     background-color: var(--secondary-color);
     border-radius: 10px;
-    min-height: 40vh;
+    min-height: 35vh;
     padding: 1rem;
     margin-bottom: 1rem;
     text-decoration: none;
@@ -54,7 +54,7 @@ h1,h2{
     overflow: hidden;
 
     .recetteImage{
-    height: 7rem;
+    height: 6rem;
     width: 100%;
     object-fit: contain;
     }

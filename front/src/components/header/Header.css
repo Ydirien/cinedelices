@@ -47,6 +47,7 @@
 .navbar-links a:hover,
 .navbar-actions a:hover {
   color: var(--quinary-color);
+  transition: background-color 0.3s ease-in-out;
 }
 
 .navbar-actions {
@@ -68,4 +69,5 @@
 .btn-create:hover {
   background-color: var(--quinary-color);
   color: var(--secondary-color);
+  transition: background-color 0.3s ease-in-out;
 }

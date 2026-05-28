@@ -5,8 +5,8 @@ import './homePage.css';
 function HomePage(){
   return(
     <main>
-      <RecipesOftheDay/>
       <CategoriesButton/>
+      <RecipesOftheDay/>
       <RecoHomePage/>
     </main>
 );}

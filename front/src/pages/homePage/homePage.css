@@ -35,6 +35,7 @@ h2 {
   padding: 1rem;
   margin-bottom: 1rem;
   text-decoration: none;
+
   .RecipeOfTheDayImg {
     height: 100%;
     width: 100%;
@@ -49,6 +50,8 @@ h2 {
     text-align: start;
     min-width: none;
   }
+
+
 }
 
 .reco-container {

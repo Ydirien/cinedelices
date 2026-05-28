@@ -1,0 +1,82 @@
+ [
+    {
+      "id": 1,
+      "name": "Aubergine",
+      "image": "https://example.com/images/ingredients/aubergine.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Courgette",
+      "image": "https://example.com/images/ingredients/courgette.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Tomate",
+      "image": "https://example.com/images/ingredients/tomate.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Poivron",
+      "image": "https://example.com/images/ingredients/poivron.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Huile d'olive",
+      "image": "https://example.com/images/ingredients/huile-olive.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Ail",
+      "image": "https://example.com/images/ingredients/ail.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Œuf",
+      "image": "https://example.com/images/ingredients/oeuf.jpg"
+    },
+    {
+      "id": 8,
+      "name": "Lard",
+      "image": "https://example.com/images/ingredients/lard.jpg"
+    },
+    {
+      "id": 9,
+      "name": "Pomme de terre",
+      "image": "https://example.com/images/ingredients/pomme-de-terre.jpg"
+    },
+    {
+      "id": 10,
+      "name": "Farine",
+      "image": "https://example.com/images/ingredients/farine.jpg"
+    },
+    {
+      "id": 11,
+      "name": "Sucre",
+      "image": "https://example.com/images/ingredients/sucre.jpg"
+    },
+    {
+      "id": 12,
+      "name": "Beurre",
+      "image": "https://example.com/images/ingredients/beurre.jpg"
+    },
+    {
+      "id": 13,
+      "name": "Riz",
+      "image": "https://example.com/images/ingredients/riz.jpg"
+    },
+    {
+      "id": 14,
+      "name": "Sauce soja",
+      "image": "https://example.com/images/ingredients/sauce-soja.jpg"
+    },
+    {
+      "id": 15,
+      "name": "Bœuf",
+      "image": "https://example.com/images/ingredients/boeuf.jpg"
+    },
+    {
+      "id": 16,
+      "name": "Oignon",
+      "image": "https://example.com/images/ingredients/oignon.jpg"
+    }
+  ]

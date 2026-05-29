@@ -14,13 +14,17 @@ function Header() {
         <img src="../../../public/Logo/LOGO_pricipal_allonger.png" alt="CinéDélices Logo" className="logo" />
       </NavLink>
       <nav className="navbar-links">
-        <NavLink to="/">Accueil</NavLink>
         <NavLink to="/recettes">Recettes</NavLink>
       </nav>
-
+      <div className="SearchBar">
+        <input type="seach" placeholder="exemple : Naruto" />
+        <LuSearch size={20} />
+      </div>
       <div className="navbar-actions">
         <button className="btn-create">Créer une recette</button>
-        <NavLink to="/profile">Profile</NavLink>
+        <NavLink className="profile" to="/profile">
+          <LuCircleUser className="profil-icon" size={35} />
+        </NavLink>
       </div>
     </header>
   );

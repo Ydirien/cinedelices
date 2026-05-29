@@ -34,6 +34,7 @@
 }
 
 .Header {
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -59,8 +60,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: var(--secondary-color);
   color: var(--quaternary-color);
+  background: rgba(0, 0, 0, 0.089);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(9.6px);
+  -webkit-backdrop-filter: blur(9.6px);
   width: 100%;
   left: 0;
   right: 0;
@@ -87,12 +91,14 @@
 .navbar-links a:hover,
 .navbar-actions a:hover {
   color: var(--quinary-color);
+  transition: background-color 0.3s ease-in-out;
 }
 
 .navbar-actions {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   gap: 15px;
+  align-items: center;
 }
 
 .btn-create {
@@ -108,6 +114,7 @@
 .btn-create:hover {
   background-color: var(--quinary-color);
   color: var(--secondary-color);
+  transition: background-color 0.3s ease-in-out;
 }
 
 .SearchBar {

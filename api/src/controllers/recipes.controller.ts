@@ -25,7 +25,7 @@ const recipeSchema = z.object({
     thematics: z.array(z.number().int().positive()).min(1),
 });
 
-// Récupère toutes les recettes approuvées avec des filtres optionnels
+// MVP : page liste — retourne les recettes approuvées avec filtres optionnels
 // GET /recipes?difficulty=EASY&category=serie&search=ramen&thematic=dessert&workId=12
 export async function getAllRecipes(req: Request, res: Response) {
     const { category, workId, thematic, difficulty, search } = req.query;
@@ -50,6 +50,7 @@ export async function getAllRecipes(req: Request, res: Response) {
             }),
         },
         include: {
+            // MVP : film ou série associé (affiché sur la carte recette)
             work: { include: { category: true } },
             thematics: { include: { thematic: true } },
         },
@@ -58,6 +59,7 @@ export async function getAllRecipes(req: Request, res: Response) {
     res.json(recipes);
 }
 
+// MVP : page détail d'une recette — retourne toutes les données nécessaires à l'affichage
 export async function getRecipeById(req: Request, res: Response) {
     const id = Number(req.params.id);
     if (!Number.isInteger(id)) throw new NotFoundError("Recipe not found");
@@ -65,24 +67,31 @@ export async function getRecipeById(req: Request, res: Response) {
     const recipe = await prisma.recipe.findUnique({
         where: { id, state: "APPROVED" },
         include: {
+            // MVP : film ou série associé à la recette
             work: { include: { category: true } },
             thematics: { include: { thematic: true } },
+            // MVP : instructions de préparation étape par étape, triées par ordre
+            steps: { orderBy: { order: 'asc' } },
+            // MVP : ingrédients avec nom, quantité et unité (ex: "200g de farine")
+            recipeIngredients: { include: { ingredient: true } },
         },
     });
 
     if (!recipe) throw new NotFoundError("Recipe not found");
+
+    // MVP : le champ description couvre les informations complémentaires (anecdotes, contexte)
     res.json(recipe);
 }
 
 export async function createRecipe(req: Request, res: Response) {
     // On sépare les relations (steps, ingredients, thematics) des champs scalaires
-    // car Prisma attend une syntaxe différente pour les relations : { create: [...] }
+    // car Prisma attend une syntaxe différente pour les relations
     const { steps, recipeIngredients, thematics, ...scalarData } = recipeSchema.parse(req.body);
 
     const alreadyExists = await prisma.recipe.findFirst({ where: { title: scalarData.title } });
     if (alreadyExists) throw new ConflictError("Recipe already exists");
 
-    // La recette est créée en PENDING — l'admin doit l'approuver pour qu'elle soit visible
+    // MVP : la recette est créée en PENDING — l'admin doit l'approuver pour qu'elle soit visible
     const newRecipe = await prisma.recipe.create({
         data: {
             ...scalarData,

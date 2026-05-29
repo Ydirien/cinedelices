@@ -60,75 +60,7 @@ Welcome-Section {
   justify-content: center;
   text-align: center;
   gap: 1rem;
-<<<<<<< HEAD
   margin-bottom: 2rem;
-=======
-  overflow: hidden;
-  background: rgba(26, 26, 26, 1);
-  border-radius: 16px;
-  box-shadow: 10px 10px 10px rgba(212, 160, 23, 0.5);
-  /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
-  border: 1.8px solid rgb(46, 46, 46);
-}
-
-.Welcome-Image {
-  flex-shrink: 0;
-}
-
-.welcom-Info {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
-  .welcom-title{
-    color: #d4a017;
-    line-height: 1.2;
-  }
-  p {
-    font-size: 1.5rem;
-    line-height: 1.5;
-  }
-}
-
-.Welcome-img {
-  width: 40dvh;
-  max-width: 100%;
-  display: block;
-}
-
-.RecipeOfTheDay-container {
-  display: grid;
-  grid-template-columns: 60% 40%;
-  background: rgba(26, 26, 26, 0.603);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border: 1.8px solid rgb(46, 46, 46);
-
-  backdrop-filter: blur(9.5px);
-  border-radius: 10px;
-  min-height: 35vh;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  text-decoration: none;
-
-  .RecipeOfTheDayImg {
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
-  }
-
-  p {
-    color: var(--tertiary-color);
-  }
-
-  .Recipe-Info {
-    text-align: start;
-    min-width: none;
-  }
-
-
->>>>>>> origin/front
 }
 
 .reco-container {
@@ -200,53 +132,54 @@ Welcome-Section {
 
 @media(min-width: 901px){
 
-  .slider-dots {
-  display: none;
-    
-  }
-.burger-menu{
-  display:none;
-}
-
 .welcome-section {
   background: #464646b6;
-  border:3px solid #8b8b8b;
+  border:3px solid #d4a017;
+  
+  border-radius: 16px;
   padding:2rem;
   margin-bottom: 4rem;
 }
 .Welcome-div {
-  
+  padding: 2rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   gap: 1rem;
-  margin-bottom: 2rem;
+  overflow: hidden;
   background: rgba(26, 26, 26, 1);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 10px 10px 10px rgba(212, 160, 23, 0.5);
+  /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
   border: 1.8px solid rgb(46, 46, 46);
 }
-.welcom-Info{
-  height: 500px;
+
+.Welcome-Image {
+  flex-shrink: 0;
+}
+
+.welcom-Info {
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  align-items: start;
-  gap: 1rem;
+  align-items: center;
+  
+  .welcom-title{
+    color: #d4a017;
+    line-height: 1.2;
+  }
   p {
-    text-align: start;
     font-size: 1.5rem;
     line-height: 1.5;
-    
   }
 }
 
 .Welcome-img {
   width: 40dvh;
-  max-width: 800px;
-  
-  
+  max-width: 100%;
+  display: block;
 }
 
 .RecipeOfTheDay-container {

@@ -48,7 +48,7 @@ function CategoriesButton() {
 
   return (
     <>
-      <section className="container-test">
+      <section className="section-container">
         <div className="button-container">
           <h2 className="subtitle">Catégories </h2>
           <div className="carousel-wrapper">

@@ -4,17 +4,17 @@ import type { Request, Response } from "express";
 import type { User } from "../models/index.ts"
 import { prisma } from "../models/index.ts";
 import { ConflictError, UnauthorizedError } from "../lib/errors.ts";
-import { generateAuthTokens, setAccessTokenCookie, setRefreshTokenCookie, type Token } from "../lib/tokens.ts";
+import { generateAuthTokens, type Token } from "../lib/tokens.ts";
 
 export async function registerUser(req: Request, res: Response) {
     const registerUserBodySchema = z
         .object({
-        username: z.string().min(2).max(100),
+        username: z.string().min(2).max(30),
         email: z.email(),
         password: z
             .string()
             .min(12)
-            .max(100)
+            .max(30)
             .regex(/[a-z]/, "Password must contain at least one lowercase caracter")
             .regex(/[A-Z]/, "Password must contain at least one uppercase caracter")
             .regex(/[0-9]/, "Password must contain at least one number"),
@@ -77,16 +77,11 @@ export async function loginUser(req: Request, res: Response) {
 
     await replaceRefreshTokenInDatabase(refreshToken, user);
 
-    setAccessTokenCookie(res, accessToken);
-    setRefreshTokenCookie(res, refreshToken);
-
     res.json({ accessToken, refreshToken });
 }
 
 export async function logoutUser(req: Request, res: Response) {
     await prisma.refreshToken.deleteMany({ where: { userId: req.user.id } });
-    res.clearCookie("accessToken");
-    res.clearCookie("refreshToken", { path: "/api/auth/refresh" });
     res.status(204).end();
 }
 
@@ -103,7 +98,7 @@ export async function getAuthenticatedUser(req: Request, res: Response) {
 }
 
 export async function refreshTokens(req: Request, res: Response) {
-    const token = req.cookies?.refreshToken || req.body?.refreshToken;
+    const token = req.body?.refreshToken;
 
     if (!token) throw new UnauthorizedError("Refresh token not provided");
 
@@ -119,8 +114,6 @@ export async function refreshTokens(req: Request, res: Response) {
     }
     const { accessToken, refreshToken } = generateAuthTokens(existingToken.user);
     await replaceRefreshTokenInDatabase(refreshToken, existingToken.user);
-    setAccessTokenCookie(res, accessToken);
-    setRefreshTokenCookie(res, refreshToken);
     res.json({ accessToken, refreshToken });
 }
 
@@ -139,5 +132,5 @@ async function replaceRefreshTokenInDatabase(refreshToken: Token, user: User) {
 }
 
 export async function forgotPassword(req: Request, res: Response) {
-    
+    // a finir
 }

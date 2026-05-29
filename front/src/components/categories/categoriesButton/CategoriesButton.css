@@ -13,12 +13,6 @@
 .button-container {
   width: 100%;
   overflow: hidden;
-  background: rgba(26, 26, 26, 1);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border: 1.8px solid rgb(46, 46, 46);
-  padding: 1rem;
-
 }
 
 .section-buttons {
@@ -44,13 +38,6 @@
   gap: 12px;                      
   padding: 10px 15px;
   box-sizing: border-box;
-}
-
-.container-test {
-  background: #464646b6;
-  border: 3px solid #d4a017;
-  border-radius: 16px;
-  padding: 2rem;
 }
 
 .category, 
@@ -105,6 +92,24 @@
 }
 }
 
+.container-test {
+  background: #464646b6;
+  border: 3px solid #d4a017;
+  border-radius: 16px;
+  padding: 2rem;
+}
+
+
+.button-container {
+  background: rgba(26, 26, 26, 1);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1.8px solid rgb(46, 46, 46);
+    .subtitle {
+    align-self: flex-start;
+    padding: 1rem 0 0 1rem;
+  }
+}
 
 /*Desktop*/
 
@@ -119,25 +124,12 @@ img {
   height: 100%;
   object-fit: contain;
 }
-.container-test {
-  background: #464646b6;
-  border: 3px solid #d4a017;
-  border-radius: 16px;
-  padding: 2rem;
-}
 .button-container {
-  background: rgba(26, 26, 26, 1);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border: 1.8px solid rgb(46, 46, 46);
   display: flex;
   padding-bottom: 1rem;
   flex-direction: column;
   align-items: center;
-  .subtitle {
-    align-self: flex-start;
-    padding: 1rem 0 0 1rem;
-  }
+
 }
 .carousel-wrapper {
   display: flex;

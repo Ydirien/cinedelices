@@ -1,13 +1,16 @@
-import RecipesCards from "../../components/Recipes_cards/RecipesPageCards/RecipesPageCards";
 
-function RecipesPage(){
-  return(
-    <>  
-    <section>
+import RecipesCards from "../../components/Recipes_cards/RecipesPageCards/RecipesPageCards";
+import { useState } from 'react';
+import FilterBar from '../../components/filterBar/FilterBar';
+
+function RecipesPage() {
+  const [recipes, setRecipes] = useState([]);
+  return( 
+      <>  
+      <FilterBar onResults={setRecipes}/>
       <RecipesCards/>
-    </section>
-    </>
-  )
+      </>
+  );
 }
 
 export default RecipesPage;

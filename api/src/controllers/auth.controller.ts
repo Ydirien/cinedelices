@@ -4,7 +4,7 @@ import type { Request, Response } from "express";
 import type { User } from "../models/index.ts"
 import { prisma } from "../models/index.ts";
 import { ConflictError, UnauthorizedError } from "../lib/errors.ts";
-import { generateAuthTokens, setAccessTokenCookie, setRefreshTokenCookie, type Token } from "../lib/tokens.ts";
+import { generateAuthTokens, type Token } from "../lib/tokens.ts";
 
 export async function registerUser(req: Request, res: Response) {
     const registerUserBodySchema = z
@@ -77,16 +77,11 @@ export async function loginUser(req: Request, res: Response) {
 
     await replaceRefreshTokenInDatabase(refreshToken, user);
 
-    setAccessTokenCookie(res, accessToken);
-    setRefreshTokenCookie(res, refreshToken);
-
     res.json({ accessToken, refreshToken });
 }
 
 export async function logoutUser(req: Request, res: Response) {
     await prisma.refreshToken.deleteMany({ where: { userId: req.user.id } });
-    res.clearCookie("accessToken");
-    res.clearCookie("refreshToken", { path: "/api/refresh" });
     res.status(204).end();
 }
 
@@ -103,7 +98,7 @@ export async function getAuthenticatedUser(req: Request, res: Response) {
 }
 
 export async function refreshTokens(req: Request, res: Response) {
-    const token = req.cookies?.refreshToken || req.body?.refreshToken;
+    const token = req.body?.refreshToken;
 
     if (!token) throw new UnauthorizedError("Refresh token not provided");
 
@@ -119,8 +114,6 @@ export async function refreshTokens(req: Request, res: Response) {
     }
     const { accessToken, refreshToken } = generateAuthTokens(existingToken.user);
     await replaceRefreshTokenInDatabase(refreshToken, existingToken.user);
-    setAccessTokenCookie(res, accessToken);
-    setRefreshTokenCookie(res, refreshToken);
     res.json({ accessToken, refreshToken });
 }
 

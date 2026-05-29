@@ -7,8 +7,10 @@ function RecipesPage() {
   const [recipes, setRecipes] = useState([]);
   return( 
       <>  
-      <FilterBar onResults={setRecipes}/>
+        <div>
+          <FilterBar onResults={setRecipes}/>
       <RecipesCards/>
+        </div>
       </>
   );
 }

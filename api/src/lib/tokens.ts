@@ -16,7 +16,7 @@ export function generateAuthTokens(user: User) {
         role: user.role,
     };
 
-    const accessToken = jwt.sign(payload, config.jwtSecret, {
+    const accessToken = jwt.sign(payload, config.accessTokenSecret, {
         expiresIn: "15m",
     });
 
@@ -53,6 +53,6 @@ export function setRefreshTokenCookie(res: Response, refreshToken: Token) {
         maxAge: refreshToken.expiresInMS,
         sameSite: "none",
         secure: isProduction,
-        path: "/api/auth/refresh",
+        path: "/api/refresh",
     });
 }

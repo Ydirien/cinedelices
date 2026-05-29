@@ -9,12 +9,12 @@ import { generateAuthTokens, setAccessTokenCookie, setRefreshTokenCookie, type T
 export async function registerUser(req: Request, res: Response) {
     const registerUserBodySchema = z
         .object({
-        username: z.string().min(2).max(100),
+        username: z.string().min(2).max(30),
         email: z.email(),
         password: z
             .string()
             .min(12)
-            .max(100)
+            .max(30)
             .regex(/[a-z]/, "Password must contain at least one lowercase caracter")
             .regex(/[A-Z]/, "Password must contain at least one uppercase caracter")
             .regex(/[0-9]/, "Password must contain at least one number"),
@@ -86,7 +86,7 @@ export async function loginUser(req: Request, res: Response) {
 export async function logoutUser(req: Request, res: Response) {
     await prisma.refreshToken.deleteMany({ where: { userId: req.user.id } });
     res.clearCookie("accessToken");
-    res.clearCookie("refreshToken", { path: "/api/auth/refresh" });
+    res.clearCookie("refreshToken", { path: "/api/refresh" });
     res.status(204).end();
 }
 
@@ -139,5 +139,5 @@ async function replaceRefreshTokenInDatabase(refreshToken: Token, user: User) {
 }
 
 export async function forgotPassword(req: Request, res: Response) {
-    
+    // a finir
 }

@@ -4,8 +4,8 @@ import RecipesOftheDay from '../../components/RecipeOftheDay/RecipesOftheDay';
 import './homePage.css';
 function HomePage() {
   return (
-    <main>
-      <section className="welcome-section">
+    <>
+    <section className="section-container ">
         <div className="Welcome-div">
           <div className="Welcome-Image">
             <img src="../../../public/Logo/LOGO_debout.png" alt="CinéDélices Logo" className="Welcome-img" />
@@ -25,7 +25,7 @@ function HomePage() {
       <CategoriesButton />
       <RecipesOftheDay />
       <RecoHomePage />
-    </main>
+    </>
   );
 }
 

@@ -1,0 +1,22 @@
+[
+    {
+      "id": 1,
+      "name": "Entrée",
+      "description": "Plats servis en début de repas pour ouvrir l'appétit."
+    },
+    {
+      "id": 2,
+      "name": "Plat",
+      "description": "Plats principaux du repas."
+    },
+    {
+      "id": 3,
+      "name": "Dessert",
+      "description": "Recettes sucrées servies en fin de repas."
+    },
+    {
+      "id": 4,
+      "name": "Boisson",
+      "description": "Boissons chaudes ou froides, alcoolisées ou non."
+    }
+  ]

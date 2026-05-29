@@ -60,7 +60,75 @@ Welcome-Section {
   justify-content: center;
   text-align: center;
   gap: 1rem;
+<<<<<<< HEAD
   margin-bottom: 2rem;
+=======
+  overflow: hidden;
+  background: rgba(26, 26, 26, 1);
+  border-radius: 16px;
+  box-shadow: 10px 10px 10px rgba(212, 160, 23, 0.5);
+  /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
+  border: 1.8px solid rgb(46, 46, 46);
+}
+
+.Welcome-Image {
+  flex-shrink: 0;
+}
+
+.welcom-Info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  .welcom-title{
+    color: #d4a017;
+    line-height: 1.2;
+  }
+  p {
+    font-size: 1.5rem;
+    line-height: 1.5;
+  }
+}
+
+.Welcome-img {
+  width: 40dvh;
+  max-width: 100%;
+  display: block;
+}
+
+.RecipeOfTheDay-container {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  background: rgba(26, 26, 26, 0.603);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1.8px solid rgb(46, 46, 46);
+
+  backdrop-filter: blur(9.5px);
+  border-radius: 10px;
+  min-height: 35vh;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+
+  .RecipeOfTheDayImg {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+  }
+
+  p {
+    color: var(--tertiary-color);
+  }
+
+  .Recipe-Info {
+    text-align: start;
+    min-width: none;
+  }
+
+
+>>>>>>> origin/front
 }
 
 .reco-container {
@@ -140,43 +208,129 @@ Welcome-Section {
   display:none;
 }
 
-.Welcome-Section {
+.welcome-section {
+  background: #464646b6;
+  border:3px solid #8b8b8b;
+  padding:2rem;
+  margin-bottom: 4rem;
+}
+.Welcome-div {
+  
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   text-align: center;
   gap: 1rem;
   margin-bottom: 2rem;
+  background: rgba(26, 26, 26, 1);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1.8px solid rgb(46, 46, 46);
+}
+.welcom-Info{
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+  p {
+    text-align: start;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    
+  }
+}
+
+.Welcome-img {
+  width: 40dvh;
+  max-width: 800px;
+  
+  
 }
 
 .RecipeOfTheDay-container {
-    display: grid;                  
-    grid-template-columns: 60% 40%; 
-    position: static;            
-    background: rgba(26, 26, 26, 0.603); 
-    min-height: 35vh;
-    padding: 1rem;                 
+  display: grid;
+  grid-template-columns: 60% 40%;
+  background: rgba(26, 26, 26, 0.603);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1.8px solid rgb(46, 46, 46);
 
-    .RecipeOfTheDayImg {
-      position: static;             
-      height: 100%; width: 100%;
-      object-fit: contain;          
-    }
+  backdrop-filter: blur(9.5px);
+  border-radius: 10px;
+  min-height: 35vh;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+
+  .RecipeOfTheDayImg {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
   }
+
+  p {
+    color: var(--tertiary-color);
+  }
+
+  .Recipe-Info {
+    text-align: start;
+    min-width: none;
+  }
+
+
+}
 
 .reco-container {
-    flex-direction: row;          
-    justify-content: space-between;
-    gap: 1rem;                   
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+.Card {
+  border-radius: 20px;
+  width: 100%;
+  background: rgba(26, 26, 26, 0.603);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1.8px solid rgb(46, 46, 46);
+  .recetteImage {
+    width: 100%;
+    height: 8.5rem;
+    object-fit: cover;
   }
 
-  .Card {
-    flex: 1;
-    .recetteImage {
-      height: 7rem;            
-    }
+  a {
+    text-decoration-line: none;
+    color: inherit;
+    display: grid;
+    grid-template-rows: 3fr max-content;
   }
+
+  .Recipe-Info {
+    text-align: start;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  h3 {
+    margin: 0;
+    color: var(--quaternary-color);
+  }
+
+  h4 {
+    margin: 0;
+    color: var(--tertiary-color);
+  }
+
+  p {
+    color: var(--tertiary-color);
+  }
+}
 
 .subtitle {
   margin-bottom: 1rem;

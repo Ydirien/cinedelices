@@ -28,6 +28,7 @@
 .type-buttons {
   flex: 0 0 100%;                
   scroll-snap-align: center;    
+
   display: flex;
   justify-content: center;        
   gap: 12px;                      
@@ -120,8 +121,16 @@
   }
 
   .button-category {
-    width: 80px;  
-    height: 80px; 
-    padding: 1rem;
+  width: 120px;
+  height: 120px;
+  border-radius: 20px;
+  background-color: var(--secondary-color);
+  padding: 1rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.521);
+  &:hover {
+    background-color: #d49e175b;
+    transition: background-color 0.5s ease-in-out;
+
   }
+}
 }

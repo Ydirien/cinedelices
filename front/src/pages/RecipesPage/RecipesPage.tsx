@@ -9,7 +9,7 @@ function RecipesPage() {
       <>  
         <div>
           <FilterBar onResults={setRecipes}/>
-      <RecipesCards/>
+          <RecipesCards/>
         </div>
       </>
   );

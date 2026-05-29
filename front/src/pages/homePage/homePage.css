@@ -6,6 +6,7 @@ h2 {
 
 /* mobile */
 
+
 @media (max-width: 900px) {
   .RecipeOfTheDay-container {
     display: block;
@@ -54,14 +55,7 @@ h2 {
     margin-bottom: 4rem;
     line-height: 1.2;
   }
-  /* .welcome-section {
-  background: #464646b6;
-  border:3px solid #d4a017;
-  border-radius: 16px;
-  padding:2rem;
-  margin-bottom: 4rem;
-  line-height: 1.2;
-} */
+  
   .Welcome-Section {
     display: flex;
     flex-direction: column;
@@ -146,6 +140,7 @@ h2 {
     text-align: start;
     color: hsl(43, 80%, 46%);
   }
+
 }
 
 .Welcome-div {
@@ -167,6 +162,7 @@ h2 {
 /* Desktop*/
 
 @media (min-width: 901px) {
+
   .section-container {
     background: #464646b6;
     border: 3px solid #d4a017;

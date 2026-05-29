@@ -1,26 +1,29 @@
 import { NavLink } from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
-import { LuSearch } from 'react-icons/lu';
 import { LuMenu } from "react-icons/lu";
+import SearchBar from '../SearchBar/SearchBar';
+import { useState } from 'react';
 import './Header.css';
 
-function NavBarMobile(){
+function SearchBarMobile(){
   
-const NavBar = document.getElementById("Header-NavMobile");
-  if(NavBar?.style.display === "flex")
+const SearchBar = document.getElementById("SearchBarMobile");
+  if(SearchBar?.style.display === "flex")
   {
-    NavBar.style.display = "none";
+    SearchBar.style.display = "none";
   }
   else{
-    NavBar.style.display = "flex";
+    SearchBar.style.display = "flex";
   }
 }
 
-function Header() {
+function Header({setShowMobileSearch}) {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
   return (
     <header className="Header">
       <section className="Header-Nav">
-          <button className='burger-menu' onClick={NavBarMobile}>
+          <button className='burger-menu' onClick={()=>setMobileNavOpen(!mobileNavOpen)}>
         <LuMenu size={25} />
       </button>
       <NavLink to="/" className="navbar-brand">
@@ -29,23 +32,25 @@ function Header() {
       <nav className="navbar-links">
         <NavLink to="/recettes">Recettes</NavLink>
       </nav>
-      <div className="SearchBar">
-        <input type="seach" placeholder="exemple : Naruto" />
-        <LuSearch size={20} />
-      </div>
+      <div className='SearchBar-Header'>
+          <SearchBar/>
+        </div>
       <div className="navbar-actions">
         <button className="btn-create">Créer une recette</button>
+        <button className="buttonMobileSearchBar" onClick={() => setShowMobileSearch(prev => !prev)}></button>
         <NavLink className="profile" to="/profile">
           <LuCircleUser className="profil-icon" size={35} />
         </NavLink>
       </div>
       </section>
-      <section id="Header-NavMobile"> 
+      {mobileNavOpen &&(
+        <section id="Header-NavMobile"> 
         <NavLink to="/">Accueil</NavLink>
         <NavLink to="/profil">Profil</NavLink>
         <NavLink to="/recettes">Recettes</NavLink>
         <NavLink to="/create">Créer une recette </NavLink>
       </section>
+      )}
     </header>
   );
 }

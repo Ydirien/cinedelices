@@ -13,7 +13,8 @@ h2 {
 
 /* mobile */
 
-.RecipeOfTheDay-container {
+@media (max-width: 900px) {
+  .RecipeOfTheDay-container {
   display: block;
   position:relative;
   grid-template-columns: 1fr;
@@ -125,11 +126,16 @@ Welcome-Section {
   text-align: start;
   color: hsl(43, 80%, 46%);
 }
+}
 
 /* Desktop*/
 
-@media(min-width: 900px){
+@media(min-width: 901px){
 
+  .slider-dots {
+  display: none;
+    
+  }
 .burger-menu{
   display:none;
 }
@@ -166,8 +172,9 @@ Welcome-Section {
   }
 
   .Card {
+    flex: 1;
     .recetteImage {
-      height: 8.5rem;            
+      height: 7rem;            
     }
   }
 

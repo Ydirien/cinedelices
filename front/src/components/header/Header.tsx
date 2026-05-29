@@ -4,10 +4,23 @@ import { LuSearch } from 'react-icons/lu';
 import { LuMenu } from "react-icons/lu";
 import './Header.css';
 
+function NavBarMobile(){
+  
+const NavBar = document.getElementById("Header-NavMobile");
+  if(NavBar?.style.display === "flex")
+  {
+    NavBar.style.display = "none";
+  }
+  else{
+    NavBar.style.display = "flex";
+  }
+}
+
 function Header() {
   return (
     <header className="Header">
-      <button className='burger-menu'>
+      <section className="Header-Nav">
+          <button className='burger-menu' onClick={NavBarMobile}>
         <LuMenu size={25} />
       </button>
       <NavLink to="/" className="navbar-brand">
@@ -26,6 +39,13 @@ function Header() {
           <LuCircleUser className="profil-icon" size={35} />
         </NavLink>
       </div>
+      </section>
+      <section id="Header-NavMobile"> 
+        <NavLink to="/">Accueil</NavLink>
+        <NavLink to="/profil">Profil</NavLink>
+        <NavLink to="/recettes">Recettes</NavLink>
+        <NavLink to="/create">Créer une recette </NavLink>
+      </section>
     </header>
   );
 }

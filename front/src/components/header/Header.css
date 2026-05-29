@@ -6,7 +6,20 @@
   --quinary-color: #d4a017;
 }
 
-@media (max-width: 900px) {
+/* mobile */
+
+#Header-NavMobile {
+  display: none;
+  flex-direction: column;
+  align-items: start;
+  padding-left: 1rem;
+  a {
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5rem;
+}
+}
+
   .navbar-actions{
   color: var(--quinary-color);
   transition: background-color 0.3s ease-in-out;
@@ -34,47 +47,44 @@
   object-fit: fit-content;
 }
 
-.Header {
+.Header{
+  z-index: 1;
+  position: fixed;
+  width: 100dvw;
+  
+  color: var(--quaternary-color);
+  background: rgba(0, 0, 0, 0.089);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(9.6px);
+}
+
+.Header-Nav {
   z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1dvw 2dvw;
-  color: var(--quaternary-color);
-  background: rgba(0, 0, 0, 0.089);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(9.6px);
-  -webkit-backdrop-filter: blur(9.6px);
-  width: 100dvw;
   left: 0;
   right: 0;
   box-sizing: border-box;
   height: 4rem;
-  position: fixed;
   text-decoration: none;
-}
 }
 
+/*Desktop*/
+
 @media(min-width:901px){
-  .Header {
-  z-index: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  color: var(--quaternary-color);
-  background: rgba(0, 0, 0, 0.089);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(9.6px);
-  -webkit-backdrop-filter: blur(9.6px);
-  width: 100%;
-  left: 0;
-  right: 0;
-  box-sizing: border-box;
-  height: 4rem;
-  position: fixed;
-  text-decoration: none;
+  
+
+#Header-NavMobile {
+  display:none;
 }
+
+
+.burger-menu{
+  display: none;
+}
+
 
 .navbar-links {
   display: flex;

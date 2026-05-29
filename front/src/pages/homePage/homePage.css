@@ -53,7 +53,7 @@ h2 {
   }
 }
 
-Welcome-Section {
+.Welcome-Section {
   display: flex;
   flex-direction: column;
   align-items: center;

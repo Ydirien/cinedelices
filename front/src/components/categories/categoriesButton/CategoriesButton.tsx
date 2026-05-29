@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './CategoriesButton.css';
-import logoFilms from '../../../assets/logo films.png';
-import logoSeries from '../../../assets/logo series.png';
-import logoAnimes from '../../../assets/logo naime.png';
-import logoEntrees from '../../../assets/logo-entrees.png';
+import logoSeries from '../../../assets/logo-categories/logo series.png';
+import logoFilms from '../../../assets/logo-categories/logo films.png';
+import logoAnimes from '../../../assets/logo-categories/logo naime.png';
+import logoEntrees from '../../../assets/logo-types/logo-entrees.png';
 
 
 
@@ -56,6 +56,7 @@ function CategoriesButton() {
               &#8249;
             </button>
             <div className="section-buttons" ref={carouselRef}>
+              {/* button categories (films, series, anime, dessin animes) */}
               <div className="category-buttons">
                 {categories.map((category) => (
                   <NavLink key={category.title} className="category" to={`/${category.title}`}>

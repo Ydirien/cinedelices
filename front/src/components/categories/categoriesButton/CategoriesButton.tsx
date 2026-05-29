@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './CategoriesButton.css';
-import logoFilms from '../../../assets/logo-films.png';
-import logoSeries from '../../../assets/logo-series.png';
-import logoAnimes from '../../../assets/logo-naime.png';
-import logoEntrees from '../../../assets/logo-entrees.png';
-import logoDesserts from '../../../assets/logo-desserts.png';1fe21a62028953022c8e3a243043822a11d7f70
+import logoFilms from '../../../assets/Logo-categories/logo-films.png';
+import logoSeries from '../../../assets/Logo-categories/logo-series.png';
+import logoAnimes from '../../../assets/Logo-categories/logo-naime.png';
+import logoEntrees from '../../../assets/Logo-types/logo-entrees.png';
+import logoDesserts from '../../../assets/Logo-types/logo-desserts.png';
 
 
 

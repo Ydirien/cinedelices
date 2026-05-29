@@ -10,7 +10,7 @@ import MentionsLegales from './pages/MentionsPage/MentionsPage';
 import Confidentialite from './pages/ConfidentialPage/ConfidentialPage';
 
 function App() {
-<<<<<<< HEAD
+
   
   return (
     <>

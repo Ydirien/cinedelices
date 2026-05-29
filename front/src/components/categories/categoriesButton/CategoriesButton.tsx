@@ -4,6 +4,12 @@ import './CategoriesButton.css';
 import logoFilms from '../../../assets/logo films.png';
 import logoSeries from '../../../assets/logo series.png';
 import logoAnimes from '../../../assets/logo naime.png';
+import logoEntrees from '<div styleName={} />
+<div styleName={} />
+<div styleName={} />
+<assets />
+<logo-entrees></logo-entrees>.png';
+
 
 function CategoriesButton() {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -35,7 +41,7 @@ function CategoriesButton() {
     { title: 'animés', url_image: logoAnimes },
     { title: 'dessin animés' },
   ];
-  const types = [{ title: 'entrées' }, { title: 'plats' }, { title: 'desserts' }, { title: 'boissons' }];
+  const types = [{ title: 'entrées', url_image: logoEntrees }, { title: 'plats' }, { title: 'desserts' }, { title: 'boissons' }];
 
   const scroll = (direction: 'left' | 'right') => {
     if (carouselRef.current) {
@@ -62,10 +68,12 @@ function CategoriesButton() {
                   </NavLink>
                 ))}
               </div>
+              {/* buttons type (entrées, plats, desserts, boissons) */}
               <div className="type-buttons">
                 {types.map((type) => (
                   <NavLink key={type.title} className="type" to={`/${type.title}`}>
-                    <div className="button-category">{type.title}</div>
+                    <div className="button-category">
+                      <img src={type.url_image} alt={type.title} /></div>
                   </NavLink>
                 ))}
               </div>

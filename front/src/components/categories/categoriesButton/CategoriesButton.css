@@ -81,6 +81,7 @@ img {
   scrollbar-width: none;
   -ms-overflow-style: none;
   margin: 0 0.5rem;
+  padding: 1rem; 
   &::-webkit-scrollbar {
     display: none;
   }

@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
     }
 });
 
-const fileFilter = (req, file, cb) => {
+const fileFilter: multer.Options["fileFilter"] = (req, file, cb) => {
     // ✓ Vérifier le type MIME
     const allowedMimes = ['image/jpeg', 'image/png', 'image/webp'];
     if (allowedMimes.includes(file.mimetype)) {

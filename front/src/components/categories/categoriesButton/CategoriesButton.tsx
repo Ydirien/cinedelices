@@ -4,11 +4,8 @@ import './CategoriesButton.css';
 import logoFilms from '../../../assets/logo films.png';
 import logoSeries from '../../../assets/logo series.png';
 import logoAnimes from '../../../assets/logo naime.png';
-import logoEntrees from '<div styleName={} />
-<div styleName={} />
-<div styleName={} />
-<assets />
-<logo-entrees></logo-entrees>.png';
+import logoEntrees from '../../../assets/logo-entrees.png';
+
 
 
 function CategoriesButton() {

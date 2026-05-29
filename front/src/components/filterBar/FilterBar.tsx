@@ -26,20 +26,19 @@ function FilterBar({ onResults }: Props) {
   // Filtre actif par catégorie (films/séries/animés) — null = aucun filtre
   const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
   // Filtre actif par type de plat — null = aucun filtre
-  const [activeTypeId, setActiveTypeId] = useState<number | null>(null);
+  const [activeTypeId, setActiveTypeId] = useState<number[]>([]);
 
   // Construit l'URL avec les query params et appelle l'API
   // On passe les valeurs en paramètre plutôt que de lire le state
   // car setState est asynchrone (le state ne serait pas encore mis à jour)
-  async function fetchRecipes(categoryId: number | null, typeId: number | null) {
+  async function fetchRecipes(categoryId: number | null, typeId: number[]) {
     const params = new URLSearchParams();
     if (categoryId) {
       params.append('categoryId', String(categoryId));
     }
-    if (typeId) {
-      params.append('typeId', String(typeId));
-    }
-    // → ex: /api/recipes?categoryId=1&typeId=2
+    // append plusieurs fois la même clé
+    typeId.forEach((id) => params.append('typeId', String(id)));
+    // → /api/recipes?categoryId=1&typeId=1&typeId=3
     const res = await fetch(`/api/recipes?${params.toString()}`);
     const data = await res.json();
     // Remonte les recettes au composant parent via la prop onResults
@@ -56,7 +55,9 @@ function FilterBar({ onResults }: Props) {
 
   // Même logique de toggle pour les types de plats
   function handleType(id: number) {
-    const next = activeTypeId === id ? null : id;
+    const next = activeTypeId.includes(id)
+      ? activeTypeId.filter((t) => t !== id) // déjà coché → on retire
+      : [...activeTypeId, id]; // pas coché → on ajoute
     setActiveTypeId(next);
     fetchRecipes(activeCategoryId, next);
   }
@@ -80,7 +81,7 @@ function FilterBar({ onResults }: Props) {
         {types.map((type) => (
           <button
             key={type.id}
-            className={activeTypeId === type.id ? 'active' : ''}
+            className={activeTypeId.includes(type.id) ? 'active' : ''}
             onClick={() => handleType(type.id)}
           >
             {type.name}

@@ -6,25 +6,85 @@
   --quinary-color: #d4a017;
 }
 
-.Header {
-  z-index: 1;
+/* mobile */
+
+#Header-NavMobile {
+  display: none;
+  flex-direction: column;
+  align-items: start;
+  padding-left: 1rem;
+  a {
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5rem;
+}
+}
+
+  .navbar-actions{
+  color: var(--quinary-color);
+  transition: background-color 0.3s ease-in-out;
+
+.btn-create{
+  display:none;
+}
+}
+
+.navbar-links{
+  display: none;
+}
+
+.SearchBar{
+  display: none;
+}
+
+
+.logo {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
+  justify-content: center;
+  margin-top: 2rem;
+  height: 9rem;
+  width: auto;
+  object-fit: fit-content;
+}
+
+.Header{
+  z-index: 1;
+  position: fixed;
+  width: 100dvw;
+  
   color: var(--quaternary-color);
   background: rgba(0, 0, 0, 0.089);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(9.6px);
-  -webkit-backdrop-filter: blur(9.6px);
-  width: 100%;
+}
+
+.Header-Nav {
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1dvw 2dvw;
   left: 0;
   right: 0;
   box-sizing: border-box;
   height: 4rem;
-  position: fixed;
   text-decoration: none;
 }
+
+/*Desktop*/
+
+@media(min-width:901px){
+  
+
+#Header-NavMobile {
+  display:none;
+}
+
+
+.burger-menu{
+  display: none;
+}
+
 
 .navbar-links {
   display: flex;
@@ -34,34 +94,6 @@
   text-decoration-line: none;
   color: inherit;
 }
-
-.SearchBar {
-  display: flex;
-  padding-right: 10px;
-  padding-left: 10px;
-  align-items: center;
-  gap: 10px;
-  margin-right: 20px;
-  border: 1.2px solid var(--secondary-color);
-  width: 35rem;
-  height: 2rem;
-  border-radius: 20px;
-
-  input {
-    background: none;
-    border: none;
-    width: 100%;
-    text-size: 20px;
-  }
-}
-
-.logo {
-  margin-top: 2rem;
-  height: 9rem;
-  width: auto;
-  object-fit: fit-content;
-}
-
 .navbar-links a,
 .navbar-actions a {
   text-decoration: none;
@@ -96,3 +128,32 @@
   color: var(--secondary-color);
   transition: background-color 0.3s ease-in-out;
 }
+
+.SearchBar {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 10px;
+  padding-left: 10px;
+  align-items: center;
+  gap: 10px;
+  margin-right: 20px;
+  border: 0.7px solid var(--secondary-color);
+  width: 35rem;
+  height: 2rem;
+  border-radius: 20px;
+  input {
+    background: none;
+    border: none;
+  }
+}
+
+.logo {
+  margin-top: 2rem;
+  height: 9rem;
+  width: auto;
+  object-fit: fit-content;
+}
+}
+
+
+

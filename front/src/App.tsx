@@ -11,13 +11,21 @@ import Confidentialite from './pages/ConfidentialPage/ConfidentialPage';
 function App() {
   return (
     <>
-      <Header />
 
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/mentions-legales" element={<MentionsLegales />} />
-        <Route path="/confidentialite" element={<Confidentialite />} />
-      </Routes>
+      <Header setShowMobileSearch={setShowMobileSearch}/>
+        <main>
+          {showMobileSearch && (
+            <section id='SearchBarMobile'>
+            <SearchBar/>
+          </section>
+          )}
+        <Routes>
+          <Route path='/' element={<HomePage/>} />
+          <Route path='/recettes' element={<RecipesPage/>}/>
+          <Route path="/mentions-legales" element={<MentionsLegales />} />
+          <Route path="/confidentialite" element={<Confidentialite />} />
+        </Routes>
+        </main>
 
       <Footer />
     </>

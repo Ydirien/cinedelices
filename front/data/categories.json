@@ -1,0 +1,26 @@
+ [
+    {
+      "id": 1,
+      "name": "Film d'animation",
+      "description": "Longs-métrages d'animation tous studios confondus.",
+      "image": "https://example.com/images/categories/animation.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Série télévisée",
+      "description": "Séries de fiction diffusées à la télévision ou en streaming.",
+      "image": "https://example.com/images/categories/series.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Manga / Anime",
+      "description": "Œuvres japonaises issues de mangas et d'animes.",
+      "image": "https://example.com/images/categories/anime.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Dessin animé",
+      "description": "Dessin animés parrue au ciné ou à la télévision.",
+      "image": "https://example.com/images/categories/anime.jpg"
+    }
+  ]

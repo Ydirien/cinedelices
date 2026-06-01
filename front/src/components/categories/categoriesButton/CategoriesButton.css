@@ -1,28 +1,130 @@
-img {
+/* Mobile */
+@media (max-width: 900px) {
+  img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-.container-test {
-  background: #464646b6;
-  border: 3px solid #d4a017;
-  border-radius: 16px;
-  padding: 2rem;
+.carousel-arrow{
+  display: none;
 }
+
+.button-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.section-buttons {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;              
+  scroll-snap-type: x mandatory;  
+  scrollbar-width: none;         
+  width: 100%;
+
+  &::-webkit-scrollbar {
+    display: none;               
+  }
+}
+
+.category-buttons, 
+.type-buttons {
+  flex: 0 0 100%;                
+  scroll-snap-align: center;    
+
+  display: flex;
+  justify-content: center;        
+  gap: 12px;                      
+  padding: 10px 15px;
+  box-sizing: border-box;
+}
+
+.category, 
+.type {
+  flex: 1;                        
+  max-width: 100px;              
+  text-decoration: none;
+}
+
+.button-category {
+  width: 100%;
+  height: 90px;
+  background: rgba(34, 34, 34, 0.6); 
+  border-radius: 8px;            
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 0.85rem;
+
+  img {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 6px;
+    object-fit: contain;
+  }
+}
+
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  
+  .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #222;
+    border-radius: 50%;
+    
+    &.active {
+      background-color: var(--secondary-color, #d49e17); /* Ton point jaune */
+    }
+  }
+}
+
+.category-buttons::after {
+  content: none;
+}
+}
+
+
+
+
 .button-container {
   background: rgba(26, 26, 26, 1);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   border: 1.8px solid rgb(46, 46, 46);
+    .subtitle {
+    align-self: flex-start;
+    padding: 1rem 0 0 1rem;
+  }
+}
+
+/*Desktop*/
+
+@media (min-width: 901px) {
+
+  .slider-dots {
+    display: none;
+  }
+  
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.button-container {
   display: flex;
   padding-bottom: 1rem;
   flex-direction: column;
   align-items: center;
-  .subtitle {
-    align-self: flex-start;
-    padding: 1rem 0 0 1rem;
-  }
+
 }
 .carousel-wrapper {
   display: flex;
@@ -122,4 +224,5 @@ img {
     background-color: #d49e175b;
     transition: background-color 0.5s ease-in-out;
   }
+}
 }

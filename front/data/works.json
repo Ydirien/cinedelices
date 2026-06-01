@@ -1,0 +1,34 @@
+[
+    {
+      "id": 1,
+      "title": "Ratatouille",
+      "releaseYear": 2007,
+      "synopsis": "Un jeune rat passionné de cuisine s'allie à un commis pour devenir un grand chef parisien.",
+      "image": "https://example.com/images/works/ratatouille.jpg",
+      "categoryId": 1
+    },
+    {
+      "id": 2,
+      "title": "Le Château ambulant",
+      "releaseYear": 2004,
+      "synopsis": "Une jeune femme transformée en vieille dame trouve refuge dans le château mouvant d'un magicien.",
+      "image": "https://example.com/images/works/howl.jpg",
+      "categoryId": 1
+    },
+    {
+      "id": 3,
+      "title": "Breaking Bad",
+      "releaseYear": 2008,
+      "synopsis": "Un professeur de chimie atteint d'un cancer se lance dans la production de méthamphétamine.",
+      "image": "https://example.com/images/works/breakingbad.jpg",
+      "categoryId": 2
+    },
+    {
+      "id": 4,
+      "title": "Food Wars!",
+      "releaseYear": 2015,
+      "synopsis": "Un jeune cuisinier intègre une académie culinaire d'élite où l'on s'affronte en duels gastronomiques.",
+      "image": "https://example.com/images/works/foodwars.jpg",
+      "categoryId": 3
+    }
+  ]

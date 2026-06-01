@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './CategoriesButton.css';
+import logoFilms from '../../../assets/Logo-categories/logo-films.png';
+import logoSeries from '../../../assets/Logo-categories/logo-series.png';
+import logoAnimes from '../../../assets/Logo-categories/logo-naime.png';
+import logoEntrees from '../../../assets/Logo-types/logo-entrees.png';
+import logoDesserts from '../../../assets/Logo-types/logo-desserts.png';
 
-import logoFilms from '../../../assets/logo-films.png';
-import logoSeries from '../../../assets/logo-series.png';
-import logoAnimes from '../../../assets/logo-naime.png';
-import logoEntrees from '../../../assets/logo-entrees.png';
-import logoDesserts from '../../../assets/logo-desserts.png';
+
 
 function CategoriesButton() {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -59,46 +60,34 @@ const types = [
   };
 
   return (
-    <section className="container-test">
-      <div className="button-container">
-        <h2 className="subtitle">Catégories</h2>
-
-        <div className="carousel-wrapper">
-          <button
-            className={`carousel-arrow carousel-arrow--left ${showLeft ? 'visible' : ''}`}
-            onClick={() => scroll('left')}
-            aria-label="Précédent"
-          >
-            &#8249;
-          </button>
-
-          <div className="section-buttons" ref={carouselRef}>
-            <div className="category-buttons">
-              {categories.map((category) => (
-                <NavLink
-                  key={category.title}
-                  className="category"
-                  to={`/${category.title}`}
-                >
-                  <div className="button-category">
-                    <img src={category.url_image} alt={category.title} />
-                  </div>
-                </NavLink>
-              ))}
-            </div>
-
-            <div className="type-buttons">
-              {types.map((type) => (
-                <NavLink
-                  key={type.title}
-                  className="type"
-                  to={`/${type.title}`}
-                >
-                  <div className="button-category">
-                    <img src={type.url_image} alt={type.title} />
-                  </div>
-                </NavLink>
-              ))}
+    
+      <section className="section-container">
+        <div className="button-container">
+          <h2 className="subtitle">Catégories </h2>
+          <div className="carousel-wrapper">
+            <button className={`carousel-arrow carousel-arrow--left ${showLeft ? 'visible' : ''}`} onClick={() => scroll('left')} aria-label="Précédent">
+              &#8249;
+            </button>
+            <div className="section-buttons" ref={carouselRef}>
+              {/* button categories (films, series, anime, dessin animes) */}
+              <div className="category-buttons">
+                {categories.map((category) => (
+                  <NavLink key={category.title} className="category" to={`/${category.title}`}>
+                    <div className="button-category">
+                      <img src={category.url_image} alt={category.title} />
+                    </div>
+                  </NavLink>
+                ))}
+              </div>
+              {/* buttons type (entrées, plats, desserts, boissons) */}
+              <div className="type-buttons">
+                {types.map((type) => (
+                  <NavLink key={type.title} className="type" to={`/${type.title}`}>
+                    <div className="button-category">
+                      <img src={type.url_image} alt={type.title} /></div>
+                  </NavLink>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -110,8 +99,7 @@ const types = [
             &#8250;
           </button>
         </div>
-      </div>
-    </section>
+      </section>
   );
 }
 

@@ -51,11 +51,12 @@
   z-index: 1;
   position: fixed;
   width: 100dvw;
-  
+  padding: 10px;
   color: var(--quaternary-color);
-  background: rgba(0, 0, 0, 0.089);
+  border-bottom: 3px solid #d4a017;
+  background:#111;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(9.6px);
+  
 }
 
 .Header-Nav {

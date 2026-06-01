@@ -1,0 +1,43 @@
+{
+  "width": 737,
+  "height": 365,
+  "cx": [
+    [ "INGREDIENT", 62 ],
+    [ "COMPOSER", 184 ],
+    [ "RECETTE", 317 ],
+    [ "ASSOCIER", 445 ],
+    [ "THEMATIQUE", 566 ],
+    [ "UTILISATEUR", 62 ],
+    [ "CREER", 184 ],
+    [ "INSPIRER", 317 ],
+    [ "OEUVRE", 445 ],
+    [ "CLASSER", 566 ],
+    [ "CATEGORIE", 678 ]
+  ],
+  "cy": [
+    [ "INGREDIENT", 111 ],
+    [ "COMPOSER", 111 ],
+    [ "RECETTE", 111 ],
+    [ "ASSOCIER", 111 ],
+    [ "THEMATIQUE", 111 ],
+    [ "UTILISATEUR", 297 ],
+    [ "CREER", 297 ],
+    [ "INSPIRER", 297 ],
+    [ "OEUVRE", 297 ],
+    [ "CLASSER", 297 ],
+    [ "CATEGORIE", 297 ]
+  ],
+  "shift": [
+    [ "COMPOSER,RECETTE,0", 0 ],
+    [ "COMPOSER,INGREDIENT,0", 0 ],
+    [ "ASSOCIER,RECETTE,0", 0 ],
+    [ "ASSOCIER,THEMATIQUE,0", 0 ],
+    [ "CREER,UTILISATEUR,0", 0 ],
+    [ "CREER,RECETTE,0", 0 ],
+    [ "INSPIRER,RECETTE,0", 0 ],
+    [ "INSPIRER,OEUVRE,0", 0 ],
+    [ "CLASSER,OEUVRE,0", 0 ],
+    [ "CLASSER,CATEGORIE,0", 0 ]
+  ],
+  "ratio": []
+}

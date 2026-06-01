@@ -2,15 +2,32 @@ import express from "express";
 import cors from "cors";
 import {helmetMiddleware} from "./middlewares/helmet.middleware.ts";
 import { xssSanitizer } from "./middlewares/xss-sanitizer.ts";
+import { globalErrorHandler } from "./middlewares/global-error-handler.ts";
+import { notFoundMiddleware } from "./middlewares/not-found.middleware.ts";
+import { router as apiRouter } from "./routes/index.ts";
+import { config } from "../config.ts";
 
 
+// Créer une app Express
 export const app = express();
 
+// Sécuriser les headers HTTP
 app.use(helmetMiddleware);
-app.use(cors());
+
+// Autoriser les requêtes cross-origin
+app.use(cors({ origin: config.allowedOrigins }));
+
+// Body parser pour récupérer les body "application/json" dans req.body
 app.use(express.json());
+
+// Nettoyer les chaînes du body pour prévenir les injections XSS
 app.use(xssSanitizer);
 
-app.get("/", (_req, res) => {
-  res.json({ message: "API OK" });
-});
+// Brancher le routeur de l'API
+app.use("/api", apiRouter);
+
+// Not found middleware
+app.use(notFoundMiddleware);
+
+// Global error middleware
+app.use(globalErrorHandler);

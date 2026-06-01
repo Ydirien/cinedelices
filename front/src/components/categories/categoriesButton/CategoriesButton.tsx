@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './CategoriesButton.css';
-import logoSeries from '../../../assets/logo-categories/logo series.png';
-import logoFilms from '../../../assets/logo-categories/logo films.png';
-import logoAnimes from '../../../assets/logo-categories/logo naime.png';
-import logoEntrees from '../../../assets/logo-types/logo-entrees.png';
+import logoFilms from '../../../assets/Logo-categories/logo-films.png';
+import logoSeries from '../../../assets/Logo-categories/logo-series.png';
+import logoAnimes from '../../../assets/Logo-categories/logo-naime.png';
+import logoEntrees from '../../../assets/Logo-types/logo-entrees.png';
+import logoDesserts from '../../../assets/Logo-types/logo-desserts.png';
 
 
 
@@ -16,6 +17,7 @@ function CategoriesButton() {
   const updateArrows = () => {
     const el = carouselRef.current;
     if (!el) return;
+
     setShowLeft(el.scrollLeft > 0);
     setShowRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1);
   };
@@ -23,9 +25,12 @@ function CategoriesButton() {
   useEffect(() => {
     const el = carouselRef.current;
     if (!el) return;
+
     updateArrows();
+
     el.addEventListener('scroll', updateArrows);
     window.addEventListener('resize', updateArrows);
+
     return () => {
       el.removeEventListener('scroll', updateArrows);
       window.removeEventListener('resize', updateArrows);
@@ -36,18 +41,26 @@ function CategoriesButton() {
     { title: 'films', url_image: logoFilms },
     { title: 'séries', url_image: logoSeries },
     { title: 'animés', url_image: logoAnimes },
-    { title: 'dessin animés' },
   ];
-  const types = [{ title: 'entrées', url_image: logoEntrees }, { title: 'plats' }, { title: 'desserts' }, { title: 'boissons' }];
+
+const types = [
+  { title: 'entrées', url_image: logoEntrees },
+  { title: 'plats', url_image: logoEntrees },
+  { title: 'desserts', url_image: logoDesserts },
+  { title: 'boissons', url_image: logoEntrees },
+];
 
   const scroll = (direction: 'left' | 'right') => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: direction === 'left' ? -200 : 200, behavior: 'smooth' });
-    }
+    if (!carouselRef.current) return;
+
+    carouselRef.current.scrollBy({
+      left: direction === 'left' ? -200 : 200,
+      behavior: 'smooth',
+    });
   };
 
   return (
-    <>
+    
       <section className="section-container">
         <div className="button-container">
           <h2 className="subtitle">Catégories </h2>
@@ -76,13 +89,17 @@ function CategoriesButton() {
                 ))}
               </div>
             </div>
-            <button className={`carousel-arrow carousel-arrow--right ${showRight ? 'visible' : ''}`} onClick={() => scroll('right')} aria-label="Suivant">
-              &#8250;
-            </button>
           </div>
+
+          <button
+            className={`carousel-arrow carousel-arrow--right ${showRight ? 'visible' : ''}`}
+            onClick={() => scroll('right')}
+            aria-label="Suivant"
+          >
+            &#8250;
+          </button>
         </div>
       </section>
-    </>
   );
 }
 

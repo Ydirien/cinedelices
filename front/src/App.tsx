@@ -1,3 +1,4 @@
+
 import './App.css'
 import { useEffect } from 'react';
 import Header from './components/header/Header';
@@ -7,7 +8,8 @@ import RecipesPage from './pages/RecipesPage/RecipesPage';
 import { Route, Routes } from 'react-router-dom';
 import SearchBar from './components/SearchBar/SearchBar';
 import { useState } from 'react';
-
+import MentionsLegales from './pages/MentionsPage/MentionsPage';
+import Confidentialite from './pages/ConfidentialPage/ConfidentialPage';
 
 function App() {
   const [showMobileSearch, setShowMobileSearch] = useState(false);
@@ -40,7 +42,7 @@ function App() {
         </main>
       <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

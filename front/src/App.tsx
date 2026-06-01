@@ -11,9 +11,13 @@ import SearchBar from './components/SearchBar/SearchBar';
 import { useState } from 'react';
 import MentionsLegales from './pages/MentionsPage/MentionsPage';
 import Confidentialite from './pages/ConfidentialPage/ConfidentialPage';
+import { IRecipe } from '../@types/index.d';
+import recipes from "../data/recipe.json"
 
 function App() {
-  const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const [getAllRecipes, setGetAllrecipes] = useState<IRecipe>(recipes)
+  
+  const [showMobileSearch, setShowMobileSearch] = useState(false); // useState pour cacher/montrer la barre de recherche en version mobile
 
   useEffect(() => {
   const handleResize = () => {

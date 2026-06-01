@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
 import { LuMenu } from "react-icons/lu";
 import SearchBar from '../SearchBar/SearchBar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Header.css';
 
 function SearchBarMobile(){
@@ -18,7 +18,23 @@ const SearchBar = document.getElementById("SearchBarMobile");
 }
 
 function Header({setShowMobileSearch}) {
+
+
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+    useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 900) {
+        setMobileNavOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <header className="Header">
@@ -45,10 +61,10 @@ function Header({setShowMobileSearch}) {
       </section>
       {mobileNavOpen &&(
         <section id="Header-NavMobile"> 
-        <NavLink to="/">Accueil</NavLink>
-        <NavLink to="/profil">Profil</NavLink>
-        <NavLink to="/recettes">Recettes</NavLink>
-        <NavLink to="/create">Créer une recette </NavLink>
+          <NavLink to="/">Accueil</NavLink>
+          <NavLink to="/profil">Profil</NavLink>
+          <NavLink to="/recettes">Recettes</NavLink>
+          <NavLink to="/create">Créer une recette </NavLink>
       </section>
       )}
     </header>

@@ -1,0 +1,133 @@
+.Recipe-Info {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.Recipe-Info li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    background: #1f1f1f;
+    padding: 10px 14px;
+    border-radius: 10px;
+}
+
+.Recipe-Info img {
+    width: 18px;
+    height: 18px;
+}
+
+.Nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    
+    button{
+        width: 100vw;
+    }
+}
+
+.Ingredients{
+    overflow-y: hidden;
+    display: flex;
+    justify-content: start;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.Steps{
+    display: flex;
+    justify-content: start;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.Comments {
+    margin-top: 20px;
+}
+
+.Comment {
+    background: #1e1e1e;
+    border-radius: 14px;
+    padding: 2px 18px;
+    margin-bottom: 20px;
+    p {
+        color: #d0d0d0;
+        line-height: 1.5;
+        margin-top: 12px; /* Remplacé 5% par des pixels pour un meilleur contrôle */
+        text-align: start;
+    }
+}
+
+.CommentHeader {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    /* Appliqué spécifiquement à l'image pour l'avatar */
+    img {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    h4 {
+        margin: 0;
+        color: #fff;
+    }
+}
+
+.Stars {
+    color: gold;
+    font-size: 14px;
+}
+
+/* Style du nouveau formulaire de commentaire */
+.CommentForm {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.CommentInput {
+    flex: 1;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus {
+        border-color: gold; 
+    }
+}
+
+.CommentButton {
+    background: gold;
+    color: #121212;
+    border: none;
+    border-radius: 8px;
+    padding: 0 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}

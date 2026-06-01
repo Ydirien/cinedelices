@@ -1,3 +1,5 @@
+
+import RecipesCards from "../../components/Recipes_cards/RecipesPageCards/RecipesPageCards";
 import { useState } from 'react';
 import FilterBar from '../../components/filterBar/FilterBar';
 import './RecipesPage.css';

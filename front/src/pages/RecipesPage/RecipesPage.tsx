@@ -7,7 +7,7 @@ function RecipesPage() {
   const [recipes, setRecipes] = useState([]);
 
   return (
-    <div className="recipes-page">
+    <section className="recipes-page">
       <aside className="recipes-sidebar">
         <FilterBar onResults={setRecipes} />
       </aside>
@@ -15,7 +15,7 @@ function RecipesPage() {
         {/* On passe le tableau de recettes filtrées au composant de cartes */}
         <RecipesCards recipes={recipes} />
       </div>
-    </div>
+    </section>
   );
 }
 

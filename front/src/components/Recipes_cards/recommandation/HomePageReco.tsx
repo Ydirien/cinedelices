@@ -26,7 +26,7 @@ export default function RecoHomePage() {
           </NavLink>
         </div>
 
-        {/* Carte 2 */}
+        
         <div className="Card">
           <NavLink to="/#">
             <div className="RecipeIMG">

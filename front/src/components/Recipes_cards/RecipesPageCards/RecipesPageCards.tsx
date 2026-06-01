@@ -24,7 +24,6 @@ export default function RecipesPageCards({ recipes }) {
                 <div className="RecipesPCard">
                   <NavLink to="/#">
                     <div className="RecipeIMG">
-                      {/* Note : Tu pourras remplacer l'image fixe par Recipe.image si tu veux afficher la vraie photo */}
                       <img
                         src="/Logo/LOGO_pricipal_allonger.png" 
                         alt="image de la recette"

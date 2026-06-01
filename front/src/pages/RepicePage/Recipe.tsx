@@ -37,9 +37,9 @@ function RecipePage() {
         </ul>
       </section>
       <section className="Nav">
-        <button onClick={()=> SetNav(1)} style={{color: NavSwitch == 1? 'var' : 'var(--tertiary-color)'}}>Ingrédients</button>
-        <button onClick={()=> SetNav(2)}>Steps</button>
-        <button onClick={()=> SetNav(3)}>Avis</button>
+        <button onClick={()=> SetNav(1)} style={{color: NavSwitch == 1? 'var(--quinary-color)' : 'var( --tertiary-color)'}}>Ingrédients</button>
+        <button onClick={()=> SetNav(2)} style={{color: NavSwitch == 2? 'var(--quinary-color)' : 'var( --tertiary-color)'}}>Steps</button>
+        <button onClick={()=> SetNav(3)} style={{color: NavSwitch == 3? 'var(--quinary-color)' : 'var( --tertiary-color)'}}>Avis</button>
       </section>
       {NavSwitch == 1 && (
         <section className="Ingredients">

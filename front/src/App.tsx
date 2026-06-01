@@ -5,6 +5,7 @@ import Header from './components/header/Header';
 import Footer from './components/footer/Footer'
 import HomePage from './pages/homePage/HomePage';
 import RecipesPage from './pages/RecipesPage/RecipesPage';
+import RecipePage from './pages/RepicePage/Recipe';
 import { Route, Routes } from 'react-router-dom';
 import SearchBar from './components/SearchBar/SearchBar';
 import { useState } from 'react';
@@ -38,6 +39,8 @@ function App() {
         <Routes>
           <Route path='/' element={<HomePage/>} />
           <Route path='/recettes' element={<RecipesPage/>}/>
+          <Route path='/recettes/:recette' element={<RecipePage/>}/>
+          
         </Routes>
         </main>
       <Footer />

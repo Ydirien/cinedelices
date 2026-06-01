@@ -91,6 +91,11 @@ main {
   min-width: 0;
 }
 
+.Stars {
+    color: gold;
+    font-size: 14px;
+}
+
 #root {
   width: 100%;
   max-width: 100%;

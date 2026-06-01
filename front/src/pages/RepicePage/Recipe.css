@@ -1,7 +1,17 @@
+.Info{
+    text-align: start;
+
+    h2{
+        margin-bottom: 0;
+    }
+    h4{
+        margin: 0;
+    }
+}
 .Recipe-Info {
     display: flex;
     justify-content: space-between;
-    gap: 12px;
+    gap: 10px;
     list-style: none;
     padding: 0;
     margin-top: 20px;
@@ -30,13 +40,15 @@
     
     button{
         width: 100vw;
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid var(--tertiary-color);
     }
 }
 
 .Ingredients{
     overflow-y: hidden;
-    display: flex;
-    justify-content: start;
+    text-align: start;
     gap: 12px;
     list-style: none;
     padding: 0;
@@ -44,13 +56,31 @@
 }
 
 .Steps{
-    display: flex;
-    justify-content: start;
+    text-align: start;
     gap: 12px;
     list-style: none;
     padding: 0;
     margin-top: 20px;
 }
+
+.List {
+    max-height: 300px;    
+    overflow-y: auto;     
+    padding-right: 8px;   
+    margin-bottom: 25px;  
+    
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: gold;
+    }
+}
+
 
 .Comments {
     margin-top: 20px;
@@ -74,14 +104,6 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    
-    /* Appliqué spécifiquement à l'image pour l'avatar */
-    img {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
 
     h4 {
         margin: 0;
@@ -89,12 +111,6 @@
     }
 }
 
-.Stars {
-    color: gold;
-    font-size: 14px;
-}
-
-/* Style du nouveau formulaire de commentaire */
 .CommentForm {
     display: flex;
     gap: 10px;

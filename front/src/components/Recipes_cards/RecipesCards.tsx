@@ -1,6 +1,9 @@
 import { NavLink } from "react-router-dom";
+import dataRecipes from '../../../data/recipe.json'
+import { useState } from "react";
 
 function RecipesCards (){
+  const [getRecipes, setGetRecipes] = useState(dataRecipes);
   return(
     <div className="container-recipes">
       <NavLink to="/#">

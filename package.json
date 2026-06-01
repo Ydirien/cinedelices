@@ -1,0 +1,21 @@
+{
+  "name": "projet-cda-cinedelices",
+  "version": "1.0.0",
+  "description": "> **On ne travaille JAMAIS directement sur `main` ou `develop`.**\r > Chaque développeur crée sa propre branche à partir de `develop`.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/O-clock-Helsinki/projet-cda-CineDelices.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/O-clock-Helsinki/projet-cda-CineDelices/issues"
+  },
+  "homepage": "https://github.com/O-clock-Helsinki/projet-cda-CineDelices#readme"
+}

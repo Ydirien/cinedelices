@@ -12,14 +12,23 @@ import MentionsLegales from './pages/MentionsPage/MentionsPage';
 import Confidentialite from './pages/ConfidentialPage/ConfidentialPage';
 
 function App() {
-  const [showMobileSearch, setShowMobileSearch] = useState(false);
+  return (
+    <>
 
-  useEffect(() => {
-  const handleResize = () => {
-    if (window.innerWidth > 900) {
-      setShowMobileSearch(false);
-    }
-  };
+      <Header setShowMobileSearch={setShowMobileSearch}/>
+        <main>
+          {showMobileSearch && (
+            <section id='SearchBarMobile'>
+            <SearchBar/>
+          </section>
+          )}
+        <Routes>
+          <Route path='/' element={<HomePage/>} />
+          <Route path='/recettes' element={<RecipesPage/>}/>
+          <Route path="/mentions-legales" element={<MentionsLegales />} />
+          <Route path="/confidentialite" element={<Confidentialite />} />
+        </Routes>
+        </main>
 
   window.addEventListener("resize", handleResize);
   handleResize(); // important au chargement

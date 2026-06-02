@@ -12,6 +12,7 @@ import MentionsLegales from './pages/MentionsPage/MentionsPage';
 import Confidentialite from './pages/ConfidentialPage/ConfidentialPage';
 import { IRecipe } from '../@types/index.d';
 import recipes from "../data/recipe.json"
+import logoMain from '../../../public/Logo/LOGO_pricipal_allonger.png';
 
 function App() {
   const [getAllRecipes, setGetAllrecipes] = useState<IRecipe[]>([]) // recupérer les données de la data recipe en attendants la bdd 
@@ -41,7 +42,7 @@ useEffect( ()=>{
 }, []);
   return (
     <>
-      <Header setShowMobileSearch={setShowMobileSearch}/>
+      <Header setShowMobileSearch={setShowMobileSearch} logoMain={logoMain}/>
         <main>
           {showMobileSearch && (
             <section id='SearchBarMobile'>

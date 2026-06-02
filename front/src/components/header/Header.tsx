@@ -53,7 +53,7 @@ function Header({setShowMobileSearch}) {
         </div>
       <div className="navbar-actions">
         <button className="btn-create">Créer une recette</button>
-        <button className="buttonMobileSearchBar" onClick={() => setShowMobileSearch(prev => !prev)}></button>
+        <button className="buttonMobileSearchBar" onClick={() => setShowMobileSearch((prev) => !prev)}></button>
         <NavLink className="profile" to="/profile">
           <LuCircleUser className="profil-icon" size={35} />
         </NavLink>

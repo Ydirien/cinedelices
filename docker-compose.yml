@@ -32,7 +32,7 @@ services:
     env_file:
       - ./api/.env
     ports:
-      - ${API_LOCAL_PORT}:3010
+      - ${API_LOCAL_PORT}:3000
     networks:
       - cinedelices-network
 

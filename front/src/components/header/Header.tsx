@@ -8,9 +8,16 @@ import { useState, useEffect } from 'react';
 import './Header.css';
 
 interface HeaderProps {
+  setShowMobileSearch: (show: boolean) => void;
   logoMain: string;
 }
-function SearchBarMobile() {
+
+
+function Header({ setShowMobileSearch, logoMain }: HeaderProps) {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+//   function toggleMobileSearch() 
+  function SearchBarMobile() {
   const SearchBar = document.getElementById('SearchBarMobile');
   if (SearchBar?.style.display === 'flex') {
     SearchBar.style.display = 'none';
@@ -18,9 +25,6 @@ function SearchBarMobile() {
     SearchBar.style.display = 'flex';
   }
 }
-
-function Header({ setShowMobileSearch, logoMain }: HeaderProps) {
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {

@@ -1,11 +1,6 @@
 import { useState } from 'react';
 
-// Type représentant une recette retournée par l'API
-type Recipe = { id: number; title: string; description: string };
 
-// Props du composant : onResults est une fonction callback appelée avec les recettes filtrées
-// Le composant parent (RecipesPage) passe setRecipes ici pour mettre à jour son state
-type Props = { onResults: (recipes: Recipe[]) => void };
 
 // IDs à synchroniser avec les vrais IDs en base de données
 const categories = [

@@ -11,7 +11,7 @@ function RecipePage() {
       </section>
       <section className="Info">
         <h2>Nom de la recette</h2>
-        <h4>Film associé</h4>
+        <h4>Film associe</h4>
         <StarsRating/>
         <p>
           Dans la scène culte, Peter Clemenza enseigne la recette à Michael Corleone avant de lui dire :

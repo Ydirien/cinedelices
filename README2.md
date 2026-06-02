@@ -58,12 +58,12 @@ Fill in the required values in `api/.env`:
 
 ```env
 NODE_ENV=development
-PORT=3010
-HOST=0.0.0.0
-DATABASE_URL=postgres://cinedelices:cinedelices@localhost:5454/cinedelices
+PORT=3000
+HOST=localhost
+DATABASE_URL=postgres://cinedelices:cinedelices@db:5432/cinedelices
 ACCESS_TOKEN_SECRET=a_secret_key_of_your_choice
-ALLOWED_ORIGINS=http://localhost:5173
-LOG_LEVEL=info
+ALLOWED_ORIGINS=http://localhost:3000/
+LOG_LEVEL=debug
 ```
 
 > `DATABASE_URL` uses `localhost:5454` for local dev (outside Docker), `db:5432` inside Docker.

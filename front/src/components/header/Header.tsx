@@ -1,8 +1,10 @@
 import { NavLink } from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
 import { LuMenu } from "react-icons/lu";
+import { LuSearch } from 'react-icons/lu';
 import SearchBar from '../SearchBar/SearchBar';
 import { useState, useEffect } from 'react';
+import logoMain from '../../../public/Logo/LOGO_pricipal_allonger.png';
 import './Header.css';
 
 function SearchBarMobile(){
@@ -43,7 +45,7 @@ function Header({setShowMobileSearch}) {
         <LuMenu size={25} />
       </button>
       <NavLink to="/" className="navbar-brand">
-        <img src="../../../public/Logo/LOGO_pricipal_allonger.png" alt="CinéDélices Logo" className="logo" />
+        <img src={logoMain} alt="CinéDélices Logo" className="logo" />
       </NavLink>
       <nav className="navbar-links">
         <NavLink to="/recettes">Recettes</NavLink>
@@ -53,7 +55,7 @@ function Header({setShowMobileSearch}) {
         </div>
       <div className="navbar-actions">
         <button className="btn-create">Créer une recette</button>
-        <button className="buttonMobileSearchBar" onClick={() => setShowMobileSearch(prev => !prev)}></button>
+        <button className="buttonMobileSearchBar" onClick={() => setShowMobileSearch(prev => !prev)}><LuSearch size={20}/></button>
         <NavLink className="profile" to="/profile">
           <LuCircleUser className="profil-icon" size={35} />
         </NavLink>

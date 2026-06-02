@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-
+import StarsRating from '../Stars/StarsRating';
 export default function RecoHomePage() {
   return (
     <section className="reco-home-page">
@@ -21,7 +21,7 @@ export default function RecoHomePage() {
             <div className="Recipe-Info">
               <h3>Cannolis siciliens</h3>
               <h4>Le parrain</h4>
-              <p>■■■■□ 4/5 - 30min - facile</p>
+               <StarsRating/>
             </div>
           </NavLink>
         </div>
@@ -39,7 +39,7 @@ export default function RecoHomePage() {
             <div className="Recipe-Info">
               <h3>Cannolis siciliens</h3>
               <h4>Le parrain</h4>
-              <p>■■■■□ 4/5 - 30min - facile</p>
+               <StarsRating/>
             </div>
           </NavLink>
         </div>
@@ -57,7 +57,7 @@ export default function RecoHomePage() {
             <div className="Recipe-Info">
               <h3>Cannolis siciliens</h3>
               <h4>Le parrain</h4>
-              <p>■■■■□ 4/5 - 30min - facile</p>
+               <StarsRating/>
             </div>
           </NavLink>
         </div>

@@ -1,4 +1,3 @@
-
 /* mobile */
 
 #Header-NavMobile {
@@ -14,6 +13,8 @@
 }
 
   .navbar-actions{
+    display: flex;
+    align-items: center;
   color: var(--quinary-color);
   transition: background-color 0.3s ease-in-out;
 
@@ -50,6 +51,14 @@
   }
 }
 
+.buttonMobileSearchBar{
+  margin-right: 10px;
+  height: 2rem;
+  background: transparent;
+  border-radius: 35%;
+  border: 1px solid ; /* Yellow border from your image */
+}
+
 .logo {
   display: flex;
   justify-content: center;
@@ -68,7 +77,7 @@
   border-bottom: 3px solid #d4a017;
   background:#111;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  
+
 }
 
 .Header-Nav {
@@ -93,7 +102,6 @@
 .burger-menu{
   display: none;
 }
-
 
 .navbar-links {
   display: flex;
@@ -155,6 +163,3 @@
 }
 
 }
-
-
-

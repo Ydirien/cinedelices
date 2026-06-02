@@ -1,7 +1,7 @@
 :root {
   --text: #6b6375;
   --text-h: #08060d;
-  --bg: #000000;
+  --bg: #fff;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
   --accent: #aa3bff;
@@ -69,13 +69,14 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url('../public/ChatGPT\ Image\ 28\ mai\ 2026\,\ 16_46_57.png');
+  background-image: url('../public/background-body.png');
   background-size: cover;
   background-position: center;
   transform: scale(1.05);
   z-index: -2;
 }
 
+/* assombrissment du background */
 body::after {
   content: '';
   position: fixed;
@@ -91,8 +92,13 @@ main {
   min-width: 0;
 }
 
+.Stars {
+    color: gold;
+    font-size: 14px;
+}
+
 #root {
-  width: 100%;
+  width: 100vw;
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
@@ -107,6 +113,7 @@ h1,
 h2 {
   font-family: var(--heading);
   font-weight: 500;
+  color: var(--text-h);
 }
 
 h1 {

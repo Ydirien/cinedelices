@@ -62,7 +62,8 @@ PORT=3000
 HOST=localhost
 DATABASE_URL=postgres://cinedelices:cinedelices@db:5432/cinedelices
 ACCESS_TOKEN_SECRET=a_secret_key_of_your_choice
-ALLOWED_ORIGINS=http://localhost:3000/
+ALLOWED_ORIGINS=http://localhost:5173
+
 LOG_LEVEL=debug
 ```
 

@@ -25,6 +25,9 @@ services:
       context: ./api
       dockerfile: Dockerfile
     container_name: cine_delices_api
+    volumes:
+      - ./api:/app
+      - /app/node_modules
     restart: always
     depends_on:
       db:

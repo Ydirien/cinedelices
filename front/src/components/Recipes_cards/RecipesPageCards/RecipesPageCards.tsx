@@ -5,6 +5,7 @@ import defaultRecipes from '../../../../data/recipe.json';
 import Work from '../../../../data/works.json';
 import Categories from '../../../../data/categories.json';
 import { IRecipe } from '../../../../@types/index.d';
+import StarsRating from '../Stars/StarsRating';
 
 interface RecipesPageCardsProps{
   recipes: IRecipe[]
@@ -29,7 +30,7 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
           return (
             <li key={recipe.id}>
               <div className="RecipesPCard">
-                <NavLink to="/#">
+                <NavLink to="/recettes/1">
                   <div className="RecipeIMG">
                     {/* Note : Tu pourras remplacer l'image fixe par recipe.image si tu veux afficher la vraie photo */}
                     <img src={recipe.image} alt={recipe.title} className="recetteImage" />
@@ -39,8 +40,11 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
                     <div className="Recipe-Info">
                       <h3>{recipe.title}</h3>
                       <h4>{matchMovie?.title}</h4>
+                      <div className='Rating'>
+                        <StarsRating/>
+                        <p>- {recipe.prepTime}min - {recipe.difficulty}</p>
+                      </div>
                       <p>
-                        ■■■■□ 4/5 - {recipe.prepTime}min - {recipe.difficulty}
                       </p>
                     </div>
                   </div>

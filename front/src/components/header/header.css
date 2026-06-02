@@ -1,14 +1,107 @@
-.Header {
+
+/* mobile */
+
+#Header-NavMobile {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding-left: 1rem;
+  a {
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5rem;
+}
+}
+
+  .navbar-actions{
+    display: flex;
+    align-items: center;
+  color: var(--quinary-color);
+  transition: background-color 0.3s ease-in-out;
+
+.btn-create{
+  display:none;
+}
+}
+
+.navbar-links{
+  display: none;
+}
+
+.SearchBar-Header
+{
+  display: none;
+}
+
+.SearchBar{
+  display: flex;
+  justify-content: space-between;
+  padding-right: 10px;
+  padding-left: 10px;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  margin-right: 20px;
+  border: 0.7px solid var(--secondary-color);
+  width: 35rem;
+  height: 2rem;
+  border-radius: 20px;
+  input {
+    background: none;
+    border: none;
+  }
+}
+
+.buttonMobileSearchBar{
+  margin-right: 10px;
+  height: 2rem;
+  background: transparent;
+  border-radius: 35%;
+  border: 1px solid ; /* Yellow border from your image */
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  height: 9rem;
+  width: auto;
+  object-fit: fit-content;
+}
+
+.Header{
+  z-index: 1;
+  position: fixed;
+  width: 100dvw;
+  padding: 10px;
+  color: var(--quaternary-color);
+  border-bottom: 3px solid #d4a017;
+  background:#111;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  
+}
+
+.Header-Nav {
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #1a1a1a;
-  color: #ffffff;
-  width: 100vw;
+  padding: 1dvw 2dvw;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
   height: 4rem;
-  position: fixed;
   text-decoration: none;
+}
+
+/*Desktop*/
+
+@media(min-width:901px){
+
+
+
+.burger-menu{
+  display: none;
 }
 
 .navbar-links {
@@ -17,25 +110,60 @@
   margin-right: auto;
   margin-left: 40px;
   text-decoration-line: none;
+  color: inherit;
+}
+.navbar-links a,
+.navbar-actions a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar-links a:hover,
+.navbar-actions a:hover {
+  color: var(--quinary-color);
+  transition: background-color 0.3s ease-in-out;
 }
 
 .navbar-actions {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   gap: 15px;
+  align-items: center;
 }
 
 .btn-create {
   background: transparent;
-  border: 2px solid #ffcc00; /* Yellow border from your image */
-  color: #ffffff;
+  border: 2px solid var(--quinary-color); /* Yellow border from your image */
+  color: var(--quaternary-color);
   padding: 8px 16px;
   border-radius: 20px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: bold;
 }
 
 .btn-create:hover {
-  background-color: #ffcc00;
-  color: #1a1a1a;
+  background-color: var(--quinary-color);
+  color: var(--secondary-color);
+  transition: background-color 0.3s ease-in-out;
 }
+
+.buttonMobileSearchBar
+{
+  display: none;
+}
+.SearchBar-Header
+{
+  display: flex;
+}
+
+.logo {
+  margin-top: 2rem;
+  height: 9rem;
+  width: auto;
+  object-fit: fit-content;
+}
+
+}
+
+
+

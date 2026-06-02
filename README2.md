@@ -45,7 +45,7 @@ POSTGRES_DB=cinedelices
 POSTGRES_LOCAL_PORT=5454
 API_LOCAL_PORT=3010
 ADMINER_LOCAL_PORT=8080
-CLIENT_LOCAL_PORT=8000
+CLIENT_LOCAL_PORT=5173
 ```
 
 ### API
@@ -80,7 +80,7 @@ docker compose up --build
 
 | Service  | URL                       |
 |----------|---------------------------|
-| Frontend | http://localhost:8000     |
+| Frontend | http://localhost:5173     |
 | API      | http://localhost:3010     |
 | Adminer  | http://localhost:8080     |
 

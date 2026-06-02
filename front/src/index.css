@@ -69,13 +69,14 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url('../public/ChatGPT\ Image\ 28\ mai\ 2026\,\ 16_46_57.png');
+  background-image: url('../public/background-body.png');
   background-size: cover;
   background-position: center;
   transform: scale(1.05);
   z-index: -2;
 }
 
+/* assombrissment du background */
 body::after {
   content: '';
   position: fixed;
@@ -104,6 +105,7 @@ main {
   border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
+  flex-direction: column;
   box-sizing: border-box;
 }
 

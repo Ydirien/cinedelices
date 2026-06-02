@@ -4,6 +4,7 @@ import { LuMenu } from "react-icons/lu";
 import { LuSearch } from 'react-icons/lu';
 import SearchBar from '../SearchBar/SearchBar';
 import { useState, useEffect } from 'react';
+import logoMain from '../../../public/Logo/LOGO_pricipal_allonger.png';
 import './Header.css';
 
 function SearchBarMobile(){
@@ -44,7 +45,7 @@ function Header({setShowMobileSearch}) {
         <LuMenu size={25} />
       </button>
       <NavLink to="/" className="navbar-brand">
-        <img src="../../../public/Logo/LOGO_pricipal_allonger.png" alt="CinéDélices Logo" className="logo" />
+        <img src={logoMain} alt="CinéDélices Logo" className="logo" />
       </NavLink>
       <nav className="navbar-links">
         <NavLink to="/recettes">Recettes</NavLink>

@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import dataRecipes from '../../../data/recipe.json'
 import { useState } from "react";
+import StarsRating from "./Stars/StarsRating";
 
 function RecipesCards (){
   const [getRecipes, setGetRecipes] = useState(dataRecipes);
@@ -17,7 +18,8 @@ function RecipesCards (){
             <div className="Recipe-Info">
               <h3>Cannolis siciliens</h3>
               <h4>Le parain</h4>
-              <p>■■■■□ 4/5 - 30min - facile</p>
+              <StarsRating/>
+              <p> - 30min - facile</p>
             </div>
           </NavLink>
     </div>

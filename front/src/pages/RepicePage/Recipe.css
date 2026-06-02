@@ -1,5 +1,8 @@
 .Info{
     text-align: start;
+    background: rgb(15, 15, 15);
+    padding: 8px 8px 1px 8px;
+    margin-bottom: 20px;
 
     h2{
         margin-bottom: 0;
@@ -53,6 +56,7 @@
     list-style: none;
     padding: 0;
     margin-top: 20px;
+
 }
 
 .Steps{
@@ -66,8 +70,11 @@
 .List {
     max-height: 300px;    
     overflow-y: auto;     
+   overflow-x: hidden;
     padding-right: 8px;   
     margin-bottom: 25px;  
+
+     background: rgb(15, 15, 15);
     
     &::-webkit-scrollbar-track {
         background: transparent;
@@ -90,7 +97,7 @@
     background: #1e1e1e;
     border-radius: 14px;
     padding: 2px 18px;
-    margin-bottom: 20px;
+    margin: 20px;
     p {
         color: #d0d0d0;
         line-height: 1.5;

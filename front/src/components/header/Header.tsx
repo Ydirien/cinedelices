@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
 import { LuMenu } from "react-icons/lu";
+import { LuSearch } from 'react-icons/lu';
 import SearchBar from '../SearchBar/SearchBar';
 import { useState, useEffect } from 'react';
 import './Header.css';
@@ -53,7 +54,7 @@ function Header({setShowMobileSearch}) {
         </div>
       <div className="navbar-actions">
         <button className="btn-create">Créer une recette</button>
-        <button className="buttonMobileSearchBar" onClick={() => setShowMobileSearch(prev => !prev)}></button>
+        <button className="buttonMobileSearchBar" onClick={() => setShowMobileSearch(prev => !prev)}><LuSearch size={20}/></button>
         <NavLink className="profile" to="/profile">
           <LuCircleUser className="profil-icon" size={35} />
         </NavLink>

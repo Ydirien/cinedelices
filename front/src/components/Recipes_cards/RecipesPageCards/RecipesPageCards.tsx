@@ -4,7 +4,7 @@ import './RecipesStyles.css';
 import defaultRecipes from '../../../../data/recipe.json';
 import Work from '../../../../data/works.json';
 import Categories from '../../../../data/categories.json';
-import img from ''
+import StarsRating from '../Stars/StarsRating';
 
 // On récupère "recipes" depuis les props passées par RecipesPage
 export default function RecipesPageCards({ recipes }) {
@@ -22,9 +22,8 @@ export default function RecipesPageCards({ recipes }) {
           return (
             <li key={Recipe.id}>
               <div className="RecipesPCard">
-                <NavLink to="/#">
+                <NavLink to="/recettes/1">
                   <div className="RecipeIMG">
-                    {/* Note : Tu pourras remplacer l'image fixe par Recipe.image si tu veux afficher la vraie photo */}
                     <img src={Recipe.image} alt={Recipe.title} className="recetteImage" />
                   </div>
                   <div className="Content-Info">
@@ -32,8 +31,11 @@ export default function RecipesPageCards({ recipes }) {
                     <div className="Recipe-Info">
                       <h3>{Recipe.title}</h3>
                       <h4>{matchMovie?.title}</h4>
+                      <div className='Rating'>
+                        <StarsRating/>
+                        <p>- {Recipe.prepTime}min - {Recipe.difficulty}</p>
+                      </div>
                       <p>
-                        ■■■■□ 4/5 - {Recipe.prepTime}min - {Recipe.difficulty}
                       </p>
                     </div>
                   </div>

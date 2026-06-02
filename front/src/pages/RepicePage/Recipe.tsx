@@ -1,4 +1,5 @@
 import "./Recipe.css"
+import StarsRating from "../../components/Recipes_cards/Stars/StarsRating";
 import { useState } from "react";
 function RecipePage() {
    const [NavSwitch, SetNav] = useState(1);
@@ -11,7 +12,7 @@ function RecipePage() {
       <section className="Info">
         <h2>Nom de la recette</h2>
         <h4>Film associé</h4>
-        <div className="Stars">★★★★☆ (4/5)</div>
+        <StarsRating/>
         <p>
           Dans la scène culte, Peter Clemenza enseigne la recette à Michael Corleone avant de lui dire :
           "Laisse le flingue, prends les cannolis".
@@ -37,9 +38,9 @@ function RecipePage() {
         </ul>
       </section>
       <section className="Nav">
-        <button onClick={()=> SetNav(1)} style={{color: NavSwitch == 1? 'var(--quinary-color)' : 'var( --tertiary-color)'}}>Ingrédients</button>
-        <button onClick={()=> SetNav(2)} style={{color: NavSwitch == 2? 'var(--quinary-color)' : 'var( --tertiary-color)'}}>Steps</button>
-        <button onClick={()=> SetNav(3)} style={{color: NavSwitch == 3? 'var(--quinary-color)' : 'var( --tertiary-color)'}}>Avis</button>
+        <button onClick={()=> SetNav(1)} style={{color: NavSwitch == 1? 'var(--quinary-color)' : 'var( --tertiary-color)', borderColor: NavSwitch == 1? 'var(--quinary-color)' : 'var( --tertiary-color)'}}>Ingrédients</button>
+        <button onClick={()=> SetNav(2)} style={{color: NavSwitch == 2? 'var(--quinary-color)' : 'var( --tertiary-color)', borderColor: NavSwitch == 2? 'var(--quinary-color)' : 'var( --tertiary-color)'}}>Steps</button>
+        <button onClick={()=> SetNav(3)} style={{color: NavSwitch == 3? 'var(--quinary-color)' : 'var( --tertiary-color)', borderColor: NavSwitch == 3? 'var(--quinary-color)' : 'var( --tertiary-color)'}}>Avis</button>
       </section>
       {NavSwitch == 1 && (
         <section className="Ingredients">

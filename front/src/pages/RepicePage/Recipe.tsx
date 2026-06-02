@@ -1,5 +1,10 @@
 import "./Recipe.css"
 import StarsRating from "../../components/Recipes_cards/Stars/StarsRating";
+import { GiCook } from "react-icons/gi";
+import { IoTimer } from "react-icons/io5";
+import { BiSolidFilm } from "react-icons/bi";
+import { BsForkKnife } from "react-icons/bs";
+
 import { useState } from "react";
 function RecipePage() {
    const [NavSwitch, SetNav] = useState(1);
@@ -11,7 +16,7 @@ function RecipePage() {
       </section>
       <section className="Info">
         <h2>Nom de la recette</h2>
-        <h4>Film associé</h4>
+        <h4>Film associe</h4>
         <StarsRating/>
         <p>
           Dans la scène culte, Peter Clemenza enseigne la recette à Michael Corleone avant de lui dire :
@@ -19,20 +24,20 @@ function RecipePage() {
         </p>
         <ul className="Recipe-Info">
         <li>
-            <img src="/icons/time.svg" alt="" />
+            <IoTimer size={22}/>
             <span>20 min</span>
         </li>
         <li>
-            <img src="/icons/level.svg" alt="" />
+            <GiCook size={22} />
             <span>Facile</span>
         </li>
         <li>
-            <img src="/icons/movie.svg" alt="" />
+            <BiSolidFilm  size={22}/>
             <span>Film</span>
         </li>
 
         <li>
-            <img src="/icons/people.svg" alt="" />
+            <BsForkKnife size={20}/>
             <span>4 pers.</span>
         </li>
         </ul>

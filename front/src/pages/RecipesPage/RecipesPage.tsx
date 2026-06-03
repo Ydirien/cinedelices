@@ -1,16 +1,14 @@
-import RecipesCards from "../../components/Recipes_cards/RecipesPageCards/RecipesPageCards";
+import RecipesCards from '../../components/recipes_cards/recipesPageCards/RecipesPageCards';
 import { useEffect, useState } from 'react';
 import FilterBar from '../../components/filterBar/FilterBar';
 import './RecipesPage.css';
-import { IRecipe } from "../../../@types/index.d";
+import { IRecipe } from '../../../@types/index.d';
 
 interface RecipesPageProps {
-  recipes: IRecipe[]
+  recipes: IRecipe[];
 }
-function RecipesPage({recipes}: RecipesPageProps) {
+function RecipesPage({ recipes }: RecipesPageProps) {
   const [filteredRecipes, setFilteredRecipes] = useState([]); // recepérer les recettes filtrer
-
-  
 
   return (
     <section className="recipes-page">

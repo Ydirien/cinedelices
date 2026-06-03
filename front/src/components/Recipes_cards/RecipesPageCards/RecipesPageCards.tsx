@@ -2,10 +2,10 @@ import { NavLink } from 'react-router-dom';
 import './RecipesStyles.css';
 
 // import defaultRecipes from '../../../../data/recipe.json';
-import Work from '../../../../data/works.json';
-import Categories from '../../../../data/categories.json';
+// import Work from '../../../../data/works.json';
+// import Categories from '../../../../data/categories.json';
 import { IRecipe } from '../../../../@types/index.d';
-import StarsRating from '../Stars/StarsRating';
+import StarsRating from '../stars/StarsRating';
 
 interface RecipesPageCardsProps {
   recipes: IRecipe[];
@@ -44,7 +44,6 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
                           - {recipe.prepTime}min - {recipe.difficulty}
                         </p>
                       </div>
-                      <p></p>
                     </div>
                   </div>
                 </NavLink>

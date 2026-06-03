@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
 import { LuMenu } from 'react-icons/lu';
 import { LuSearch } from 'react-icons/lu';
-import SearchBar from '../SearchBar/SearchBar';
+import SearchBar from '../searchBar/SearchBar';
 import { useState, useEffect } from 'react';
 
 import './Header.css';
@@ -12,19 +12,18 @@ interface HeaderProps {
   logoMain: string;
 }
 
-
 function Header({ setShowMobileSearch, logoMain }: HeaderProps) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
-//   function toggleMobileSearch() 
+  //   function toggleMobileSearch()
   function SearchBarMobile() {
-  const SearchBar = document.getElementById('SearchBarMobile');
-  if (SearchBar?.style.display === 'flex') {
-    SearchBar.style.display = 'none';
-  } else {
-    SearchBar.style.display = 'flex';
+    const SearchBar = document.getElementById('SearchBarMobile');
+    if (SearchBar?.style.display === 'flex') {
+      SearchBar.style.display = 'none';
+    } else {
+      SearchBar.style.display = 'flex';
+    }
   }
-}
 
   useEffect(() => {
     const handleResize = () => {

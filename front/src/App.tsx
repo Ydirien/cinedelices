@@ -54,7 +54,7 @@ function App() {
           </section>
         )}
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage recipes={getAllRecipes}/>} />
           <Route path="/recettes" element={<RecipesPage recipes={getAllRecipes} />} />
           <Route path="/recettes/:recette" element={<RecipePage />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />

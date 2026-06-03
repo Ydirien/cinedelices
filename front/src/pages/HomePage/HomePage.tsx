@@ -2,7 +2,12 @@ import CategoriesButton from '../../components/Categories/CategoriesButton/Categ
 import RecoHomePage from '../../components/Recipes_cards/Recommandation/HomePageReco';
 import RecipesOftheDay from '../../components/RecipeOftheDay/RecipesOftheDay';
 import './homePage.css';
-function HomePage() {
+import { IRecipe } from '../../../@types/index.d';
+
+interface HomePageProps {
+  recipes: IRecipe[]
+}
+function HomePage({recipes}: HomePageProps) {
   return (
     <>
       <section className="section-container ">

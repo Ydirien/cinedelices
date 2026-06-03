@@ -1,4 +1,4 @@
-# CineDelices â€” Dev Environment Setup
+ÿþ# CineDelices â€” Dev Environment Setup
 
 ## Stack
 
@@ -14,7 +14,7 @@
 ## Prerequisites
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (includes Docker Compose)
-- [Node.js](https://nodejs.org/) v20+
+- [Node.js](https://nodejs.org/v20+
 - [Git](https://git-scm.com/)
 
 ---

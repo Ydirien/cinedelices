@@ -1,60 +1,48 @@
 import { useState } from 'react';
+import { IRecipe } from '../../../@types/index.d';
 
+interface Props {
+  onResults: (recipes: IRecipe[]) => void;
+}
 
-
-// IDs à synchroniser avec les vrais IDs en base de données
 const categories = [
-  { name: 'Films', id: 1 },
-  { name: 'Séries', id: 2 },
-  { name: 'Animés', id: 3 },
+  { name: 'Film' },
+  { name: 'Série' },
+  { name: 'Manga / Anime' },
+  { name: 'Dessin animé' },
 ];
 
-// Types de plats — correspondent aux thématiques (Thematic) dans le schéma Prisma
-const types = [
-  { name: 'Entrées', id: 1 },
-  { name: 'Plats', id: 2 },
-  { name: 'Desserts', id: 3 },
-  { name: 'Boissons', id: 4 },
+const thematics = [
+  { name: 'Entrée' },
+  { name: 'Plat' },
+  { name: 'Dessert' },
+  { name: 'Boisson' },
+
 ];
 
 function FilterBar({ onResults }: Props) {
-  // Filtre actif par catégorie (films/séries/animés) — null = aucun filtre
-  const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
-  // Filtre actif par type de plat — null = aucun filtre
-  const [activeTypeId, setActiveTypeId] = useState<number[]>([]);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeThematic, setActiveThematic] = useState<string | null>(null);
 
-  // Construit l'URL avec les query params et appelle l'API
-  // On passe les valeurs en paramètre plutôt que de lire le state
-  // car setState est asynchrone (le state ne serait pas encore mis à jour)
-  async function fetchRecipes(categoryId: number | null, typeId: number[]) {
+  async function fetchRecipes(category: string | null, thematic: string | null) {
     const params = new URLSearchParams();
-    if (categoryId) {
-      params.append('categoryId', String(categoryId));
-    }
-    // append plusieurs fois la même clé
-    typeId.forEach((id) => params.append('typeId', String(id)));
-    // → /api/recipes?categoryId=1&typeId=1&typeId=3
+    if (category) params.append('category', category);
+    if (thematic) params.append('thematic', thematic);
     const res = await fetch(`/api/recipes?${params.toString()}`);
     const data = await res.json();
-    // Remonte les recettes au composant parent via la prop onResults
     onResults(data);
   }
 
-  // Cliquer sur une catégorie déjà active la désélectionne (toggle)
-  function handleCategory(id: number) {
-    const next = activeCategoryId === id ? null : id;
-    setActiveCategoryId(next);
-    // On passe `next` (valeur calculée) et non `activeCategoryId` (state encore ancien)
-    fetchRecipes(next, activeTypeId);
+  function handleCategory(name: string) {
+    const next = activeCategory === name ? null : name;
+    setActiveCategory(next);
+    fetchRecipes(next, activeThematic);
   }
 
-  // Même logique de toggle pour les types de plats
-  function handleType(id: number) {
-    const next = activeTypeId.includes(id)
-      ? activeTypeId.filter((t) => t !== id) // déjà coché → on retire
-      : [...activeTypeId, id]; // pas coché → on ajoute
-    setActiveTypeId(next);
-    fetchRecipes(activeCategoryId, next);
+  function handleThematic(name: string) {
+    const next = activeThematic === name ? null : name;
+    setActiveThematic(next);
+    fetchRecipes(activeCategory, next);
   }
 
   return (
@@ -63,23 +51,23 @@ function FilterBar({ onResults }: Props) {
       <div className="filter-group">
         {categories.map((category) => (
           <button
-            key={category.id}
-            className={activeCategoryId === category.id ? 'active' : ''}
-            onClick={() => handleCategory(category.id)}
+            key={category.name}
+            className={activeCategory === category.name ? 'active' : ''}
+            onClick={() => handleCategory(category.name)}
           >
             {category.name}
           </button>
         ))}
       </div>
-      {/* Groupe de boutons pour filtrer par type de plat */}
       <div className="filter-group">
-        {types.map((type) => (
+        {thematics.map((thematic) => (
           <button
-            key={type.id}
-            className={activeTypeId.includes(type.id) ? 'active' : ''}
-            onClick={() => handleType(type.id)}
+            key={thematic.name}
+            className={activeThematic === thematic.name ? 'active' : ''}
+            onClick={() => handleThematic(thematic.name)}
+            type="button"
           >
-            {type.name}
+            {thematic.name}
           </button>
         ))}
       </div>

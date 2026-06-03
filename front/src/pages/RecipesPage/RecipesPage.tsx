@@ -17,7 +17,7 @@ function RecipesPage({ recipes }: RecipesPageProps) {
       </aside>
       <div className="recipes-content">
         {/* On passe le tableau de recettes filtrées au composant de cartes */}
-        <RecipesCards recipes={recipes} />
+        <RecipesCards recipes={filteredRecipes.length > 0 ? filteredRecipes : recipes} />
       </div>
     </section>
   );

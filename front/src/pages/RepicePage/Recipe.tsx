@@ -19,9 +19,9 @@ function RecipePage() {
     setRecipe(data);
   }
   
-useEffect(() => {
-  getRecipeById();
-}, [recette]);
+  useEffect(() => {
+    getRecipeById();
+  }, [recette]);
 
 if (!recipe) return <p>Chargement...</p>; 
 

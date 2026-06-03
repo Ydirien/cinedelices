@@ -1,13 +1,13 @@
  [
     {
       "id": 1,
-      "name": "Film d'animation",
+      "name": "Film ",
       "description": "Longs-métrages d'animation tous studios confondus.",
       "image": "https://example.com/images/categories/animation.jpg"
     },
     {
       "id": 2,
-      "name": "Série télévisée",
+      "name": "Série ",
       "description": "Séries de fiction diffusées à la télévision ou en streaming.",
       "image": "https://example.com/images/categories/series.jpg"
     },

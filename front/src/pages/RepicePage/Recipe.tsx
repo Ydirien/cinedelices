@@ -1,45 +1,60 @@
-import './Recipe.css';
-import StarsRating from '../../components/Recipes_cards/Stars/StarsRating';
-import { GiCook } from 'react-icons/gi';
-import { IoTimer } from 'react-icons/io5';
-import { BiSolidFilm } from 'react-icons/bi';
-import { BsForkKnife } from 'react-icons/bs';
+import "./Recipe.css"
+import StarsRating from "../../components/Recipes_cards/Stars/StarsRating";
+import { GiCook } from "react-icons/gi";
+import { IoTimer } from "react-icons/io5";
+import { BiSolidFilm } from "react-icons/bi";
+import { BsForkKnife } from "react-icons/bs";
+import { useState,useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-import { useState } from 'react';
 function RecipePage() {
   const [NavSwitch, SetNav] = useState(1);
+  const {recette} = useParams();
+
+  const [recipe, setRecipe] = useState(null); 
+
+  async function getRecipeById(){
+    const response = await fetch(`http://localhost:3010/api/recipes/${recette}`);
+    const data = await response.json();
+    setRecipe(data);
+  }
+  
+useEffect(() => {
+  getRecipeById();
+}, [recette]);
+
+if (!recipe) return <p>Chargement...</p>; 
 
   return (
     <div className="RecipePage">
       <section className="RecipeImage">
-        <img src="/recipes-picture/Bœuf bowl façon Food Wars.png" alt="" />
+          <img src={recipe.image} alt="" />
       </section>
       <section className="Info">
-        <h2>Nom de la recette</h2>
-        <h4>Film associe</h4>
-        <StarsRating />
+        <h2>{recipe.title}</h2>
+        <h4>{recipe.work.title}</h4>
+        <StarsRating/>
         <p>
-          Dans la scène culte, Peter Clemenza enseigne la recette à Michael Corleone avant de lui dire : "Laisse le
-          flingue, prends les cannolis".
+          {recipe.work.synopsis}
         </p>
         <ul className="Recipe-Info">
-          <li>
-            <IoTimer size={22} />
-            <span>20 min</span>
-          </li>
-          <li>
+        <li>
+            <IoTimer size={22}/>
+            <span>{recipe.prepTime} min</span>
+        </li>
+        <li>
             <GiCook size={22} />
-            <span>Facile</span>
-          </li>
-          <li>
-            <BiSolidFilm size={22} />
-            <span>Film</span>
-          </li>
+            <span>{recipe.difficulty}</span>
+        </li>
+        <li>
+            <BiSolidFilm  size={22}/>
+            <span>{recipe.work.category.name}</span>
+        </li>
 
-          <li>
-            <BsForkKnife size={20} />
-            <span>4 pers.</span>
-          </li>
+        <li>
+            <BsForkKnife size={20}/>
+            <span>{recipe.servings} pers.</span>
+        </li>
         </ul>
       </section>
       <section className="Nav">
@@ -73,44 +88,28 @@ function RecipePage() {
       </section>
       {NavSwitch == 1 && (
         <section className="Ingredients">
-          <div className="List">
+        <div className="List">
             <ul>
-              <li>500g de viande hachée mixte (bœuf + porc)</li>
-              <li>500g de viande hachée mixte (bœuf + porc)</li>
-              <li>500g de viande hachée mixte (bœuf + porc)</li>
-              <li>500g de viande hachée mixte (bœuf + porc)</li>
-              <li>500g de viande hachée mixte (bœuf + porc)</li>
-              <li>500g de viande hachée mixte (bœuf + porc)</li>
-              <li>500g de viande hachée mixte (bœuf + porc)</li>
-              <li>500g de viande hachée mixte (bœuf + porc)</li>
-              <li>500g de viande hachée mixte (bœuf + porc)</li>
-              <li>500g de viande hachée mixte (bœuf + porc)</li>
-              <li>500g de viande hachée mixte (bœuf + porc)</li>
-              <li>500g de viande hachée mixte (bœuf + porc)</li>
-              <li>500g de viande hachée mixte (bœuf + porc)</li>
+              {recipe.recipeIngredients.map((Ingredient) => (
+                <li key={Ingredient.id}>
+                  <span>{Ingredient.quantity} {Ingredient.unit} - </span>
+                  <span> {Ingredient.ingredient.name}</span>
+                </li>
+              ))}
             </ul>
-          </div>
-        </section>
+        </div>
+      </section>
       )}
       {NavSwitch == 2 && (
         <section className="Steps">
           <div className="List">
             <ul>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
+              {recipe.steps.map((step) => (
+                <li key={step.id}>
+                  <span>{step.order} - </span>
+                  <span> {step.content}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </section>

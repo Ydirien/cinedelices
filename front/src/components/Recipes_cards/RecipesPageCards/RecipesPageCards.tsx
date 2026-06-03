@@ -28,7 +28,7 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
           return (
             <li key={recipe.id}>
               <div className="RecipesPCard">
-                <NavLink to="/recettes/1">
+                <NavLink to={`/recettes/${recipe.id}`}>
                   <div className="RecipeIMG">
                     {/* Note : Tu pourras remplacer l'image fixe par recipe.image si tu veux afficher la vraie photo */}
                     <img src={recipe.image} alt={recipe.title} className="recetteImage" />

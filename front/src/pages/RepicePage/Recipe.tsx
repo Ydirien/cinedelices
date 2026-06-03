@@ -122,14 +122,14 @@ if (!recipe) return <p>Chargement...</p>;
                 <h4>NIB</h4>
                 <div className="Stars">★★★★☆</div>
               </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Les chocolatine c'est mieux que le capitalisme</p>
             </article>
             <article className="Comment">
               <div className="CommentHeader">
-                <h4>NIB</h4>
+                <h4> Romain Hoff.</h4>
                 <div className="Stars">★★★★☆</div>
               </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Hoff... les chocolatine c'est qu'une dockerisation du pain au chocolat, de toute façon je suis legitime!</p>
             </article>
             <article className="Comment">
               <div className="CommentHeader">

@@ -44,10 +44,10 @@ function CategoriesButton() {
   ];
 
 const types = [
-  { title: 'entrées', url_image: logoEntrees, id: 1},
-  { title: 'plats', url_image: logoEntrees, id: 2},
-  { title: 'desserts', url_image: logoDesserts, id: 3},
-  { title: 'boissons', url_image: logoEntrees, id: 4},
+  { title: 'Entrée', url_image: logoEntrees, id: 1},
+  { title: 'Plat', url_image: logoEntrees, id: 2},
+  { title: 'Dessert', url_image: logoDesserts, id: 3},
+  { title: 'Boisson', url_image: logoEntrees, id: 4},
 ];
 
   const scroll = (direction: 'left' | 'right') => {
@@ -82,7 +82,7 @@ const types = [
               {/* buttons type (entrées, plats, desserts, boissons) */}
               <div className="type-buttons">
                 {types.map((type) => (
-                  <NavLink key={type.title} className="type" to={`/recettes?type=${type.id}`}>
+                  <NavLink key={type.title} className="type" to={`/recettes?thematic=${type.title}`}>
                     <div className="button-category">
                       <img src={type.url_image} alt={type.title} /></div>
                   </NavLink>

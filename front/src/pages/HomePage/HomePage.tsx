@@ -2,12 +2,33 @@ import CategoriesButton from '../../components/Categories/CategoriesButton/Categ
 import RecoHomePage from '../../components/Recipes_cards/Recommandation/HomePageReco';
 import RecipesOftheDay from '../../components/RecipeOftheDay/RecipesOftheDay';
 import './homePage.css';
+import { useState, useEffect } from 'react';
 import { IRecipe } from '../../../@types/index.d';
 
 interface HomePageProps {
   recipes: IRecipe[]
 }
 function HomePage({recipes}: HomePageProps) {
+
+  //recette du jours (aléatoir pour l'instant)
+  const [random,setrandom] = useState(1);
+  useEffect(() => {
+    if (recipes.length > 0) {
+      setrandom(Math.floor(Math.random() * recipes.length));
+    }
+  }, [recipes]);
+
+  //recommandation (aléatoir aussi)
+  const [recommendedRecipes, setRecommendedRecipes] = useState<IRecipe[]>([]);
+
+  useEffect(() => {
+    if (recipes.length >= 3) {
+      const recoSetter = [...recipes].sort(() => Math.random() - 0.5);
+      setRecommendedRecipes(recoSetter.slice(0, 3));
+    }
+  }, [recipes]);
+
+
   return (
     <>
       <section className="section-container ">
@@ -28,8 +49,12 @@ function HomePage({recipes}: HomePageProps) {
         </div>
       </section>
       <CategoriesButton />
-      <RecipesOftheDay />
-      <RecoHomePage />
+      {recipes[random] && (
+      <RecipesOftheDay recipe={recipes[random]} />
+      )}
+      {recipes && (
+      <RecoHomePage reco={recommendedRecipes}/>
+      )}
     </>
   );
 }

@@ -1,15 +1,18 @@
 import { NavLink } from "react-router-dom";
-
-function recipesOftheDay(){
+import { IRecipe } from '../../../../@types/index.d';
+interface RecipesOftheDayProps {
+  recipe: IRecipe;
+}
+function recipesOftheDay({ recipe }: RecipesOftheDayProps){
     return(
         <section className="section-container">
             <div className="RecipeOfTheDay">
                 <NavLink to="/#" className={"RecipeOfTheDay-container"}>
                 <h2 className="subtitle">Recette du jour</h2>
                     <div className="Recipe-Info">
-                        <h2>Polpette à la sauce tomate - Le Parrain </h2>
-                        <p>Dans la scène culte, Peter Clemenza enseigne la recette à Michael
-                            Corleone avant de lui dire 'Laisse le flingue, prends les cannolis'.
+                        <h2>{recipe.title}</h2>
+                        <h4>{recipe.work.title}</h4>
+                        <p>{recipe.work.synopsis}
                         </p>
                     </div>
                     <div className="Recipe-img">

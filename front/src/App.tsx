@@ -26,8 +26,8 @@ function App() {
       const category = await fetch(`${url}api/category`);
       const types = await fetch(`${url}api/type`);
       const recipes = await fetch(`${url}api/recipes`);
-      const data = await recipes.json();
-      setGetAllrecipes(data);
+      const dataRecipes = await recipes.json();
+      setGetAllrecipes(dataRecipes);
     }
     fetchData();
   }, []);

@@ -90,10 +90,10 @@ if (!recipe) return <p>Chargement...</p>;
         <section className="Ingredients">
         <div className="List">
             <ul>
-              {recipe.steps.map((step) => (
-                <li key={step.id}>
-                  <span>{step.order}</span>
-                  <span>{step.content}</span>
+              {recipe.recipeIngredients.map((Ingredient) => (
+                <li key={Ingredient.id}>
+                  <span>{Ingredient.quantity} {Ingredient.unit} - </span>
+                  <span> {Ingredient.ingredient.name}</span>
                 </li>
               ))}
             </ul>
@@ -104,21 +104,12 @@ if (!recipe) return <p>Chargement...</p>;
         <section className="Steps">
           <div className="List">
             <ul>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
-              <li>Mélanger la viande, les œufs, le parmesan</li>
+              {recipe.steps.map((step) => (
+                <li key={step.id}>
+                  <span>{step.order} - </span>
+                  <span> {step.content}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </section>

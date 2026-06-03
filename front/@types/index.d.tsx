@@ -35,6 +35,21 @@ export interface IRecipe {
     quantity: number;
     unit: string;
   }[];
-  thematicIds: number[];
-}
+  thematics: {
+    recipeId: number,
+    thematic: IType,
+    thematicId: number,
+    }[],
+    work: {
+      id:number,
+      image: string,
+      releaseYear: number,
+      synospis: string,
+      title: string,
+      category: ICategory,
+      categoryId: number
+    }
+
+  };
+
 

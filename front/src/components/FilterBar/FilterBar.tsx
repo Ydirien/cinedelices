@@ -17,66 +17,67 @@ const types = [
   { name: 'Boissons', id: 4 },
 ];
 
-function FilterBar({ onResults }: Props) {
-  // Filtre actif par catégorie (films/séries/animés) — null = aucun filtre
-  const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
-  // Filtre actif par type de plat — null = aucun filtre
-  const [activeTypeId, setActiveTypeId] = useState<number[]>([]);
+import { useSearchParams } from "react-router-dom";
 
-  // Construit l'URL avec les query params et appelle l'API
-  // On passe les valeurs en paramètre plutôt que de lire le state
-  // car setState est asynchrone (le state ne serait pas encore mis à jour)
-  async function fetchRecipes(categoryId: number | null, typeId: number[]) {
-    const params = new URLSearchParams();
-    if (categoryId) {
-      params.append('categoryId', String(categoryId));
-    }
-    // append plusieurs fois la même clé
-    typeId.forEach((id) => params.append('typeId', String(id)));
-    // → /api/recipes?categoryId=1&typeId=1&typeId=3
-    const res = await fetch(`/api/recipes?${params.toString()}`);
-    const data = await res.json();
-    // Remonte les recettes au composant parent via la prop onResults
-    onResults(data);
-  }
+function FilterBar() {
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // Cliquer sur une catégorie déjà active la désélectionne (toggle)
+  const activeCategoryId = searchParams.get("category");
+  const activeTypeIds = searchParams.getAll("type");
+
   function handleCategory(id: number) {
-    const next = activeCategoryId === id ? null : id;
-    setActiveCategoryId(next);
-    // On passe `next` (valeur calculée) et non `activeCategoryId` (state encore ancien)
-    fetchRecipes(next, activeTypeId);
+    const params = new URLSearchParams(searchParams);
+
+    if (params.get("category") === String(id)) {
+      params.delete("category");
+    } else {
+      params.set("category", String(id));
+    }
+
+    setSearchParams(params);
   }
 
-  // Même logique de toggle pour les types de plats
   function handleType(id: number) {
-    const next = activeTypeId.includes(id)
-      ? activeTypeId.filter((t) => t !== id) // déjà coché → on retire
-      : [...activeTypeId, id]; // pas coché → on ajoute
-    setActiveTypeId(next);
-    fetchRecipes(activeCategoryId, next);
+    const params = new URLSearchParams(searchParams);
+
+    const current = params.getAll("type");
+
+    if (current.includes(String(id))) {
+      params.delete("type");
+      current
+        .filter((t) => t !== String(id))
+        .forEach((t) => params.append("type", t));
+    } else {
+      params.append("type", String(id));
+    }
+
+    setSearchParams(params);
+  }
+
+  async function Filter() {
+    const response = await fetch(`http://localhost:3010/recettes?${searchParams.toString()}`);
+    const data = await response.json();
   }
 
   return (
     <div className="filter-bar">
-      {/* Groupe de boutons pour filtrer par catégorie d'œuvre */}
       <div className="filter-group">
         {categories.map((category) => (
           <button
             key={category.id}
-            className={activeCategoryId === category.id ? 'active' : ''}
+            className={activeCategoryId === String(category.id) ? "active" : ""}
             onClick={() => handleCategory(category.id)}
           >
             {category.name}
           </button>
         ))}
       </div>
-      {/* Groupe de boutons pour filtrer par type de plat */}
+
       <div className="filter-group">
         {types.map((type) => (
           <button
             key={type.id}
-            className={activeTypeId.includes(type.id) ? 'active' : ''}
+            className={activeTypeIds.includes(String(type.id)) ? "active" : ""}
             onClick={() => handleType(type.id)}
           >
             {type.name}
@@ -86,4 +87,5 @@ function FilterBar({ onResults }: Props) {
     </div>
   );
 }
+
 export default FilterBar;

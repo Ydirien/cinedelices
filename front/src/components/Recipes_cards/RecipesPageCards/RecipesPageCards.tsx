@@ -16,7 +16,6 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
   // Si la FilterBar n'a pas encore renvoyé de données (ex: tableau vide au départ),
   // on peut afficher toutes les recettes par défaut.
   const recipesToDisplay = recipes;
-  console.log('Recipes to display:', recipesToDisplay); // Debug : vérifier les données reçues
 
   return (
     <section className="RecipesContainer">

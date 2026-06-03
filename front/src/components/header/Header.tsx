@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
 import { LuMenu } from 'react-icons/lu';
 import { LuSearch } from 'react-icons/lu';
-import SearchBar from '../searchBar/SearchBar';
+import SearchBar from '../SearchBar/SearchBar';
 import { useState, useEffect } from 'react';
 
 import './Header.css';

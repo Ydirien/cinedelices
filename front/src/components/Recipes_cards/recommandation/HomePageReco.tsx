@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import StarsRating from '../stars/StarsRating';
+import StarsRating from '../Stars/StarsRating';
 export default function RecoHomePage() {
   return (
     <section className="reco-home-page">

@@ -1,5 +1,5 @@
 import './Recipe.css';
-import StarsRating from '../../components/recipes_cards/stars/StarsRating';
+import StarsRating from '../../components/Recipes_cards/Stars/StarsRating';
 import { GiCook } from 'react-icons/gi';
 import { IoTimer } from 'react-icons/io5';
 import { BiSolidFilm } from 'react-icons/bi';

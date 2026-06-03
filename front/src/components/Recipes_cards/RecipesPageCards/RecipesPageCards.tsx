@@ -5,7 +5,7 @@ import './RecipesStyles.css';
 // import Work from '../../../../data/works.json';
 // import Categories from '../../../../data/categories.json';
 import { IRecipe } from '../../../../@types/index.d';
-import StarsRating from '../stars/StarsRating';
+import StarsRating from '../Stars/StarsRating';
 
 interface RecipesPageCardsProps {
   recipes: IRecipe[];
@@ -22,9 +22,6 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
     <section className="RecipesContainer">
       <ul>
         {recipesToDisplay.map((recipe) => {
-          const matchMovie = Work.find((work) => work.id === recipe.workId);
-          const matchCategorie = Categories.find((Categorie) => Categorie.id === matchMovie?.categoryId);
-
           return (
             <li key={recipe.id}>
               <div className="RecipesPCard">
@@ -34,10 +31,10 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
                     <img src={recipe.image} alt={recipe.title} className="recetteImage" />
                   </div>
                   <div className="Content-Info">
-                    <h2 className="Content-Type">{matchCategorie?.name}</h2>
+                    <h2 className="Content-Type"></h2>
                     <div className="Recipe-Info">
                       <h3>{recipe.title}</h3>
-                      <h4>{matchMovie?.title}</h4>
+                      <h4></h4>
                       <div className="Rating">
                         <StarsRating />
                         <p>

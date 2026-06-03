@@ -7,7 +7,7 @@ function recipesOftheDay({ recipe }: RecipesOftheDayProps){
     return(
         <section className="section-container">
             <div className="RecipeOfTheDay">
-                <NavLink to="/#" className={"RecipeOfTheDay-container"}>
+                <NavLink to={`/recettes/${recipe.id}`} className={"RecipeOfTheDay-container"}>
                 <h2 className="subtitle">Recette du jour</h2>
                     <div className="Recipe-Info">
                         <h2>{recipe.title}</h2>

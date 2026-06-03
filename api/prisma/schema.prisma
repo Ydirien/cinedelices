@@ -9,14 +9,16 @@ datasource db {
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  username      String   @unique
-  email         String   @unique
-  password      String
-  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz
-  recipes       Recipe[]
-  refreshTokens RefreshToken[]
-  role          Role     @default(USER)
+  id               Int       @id @default(autoincrement())
+  username         String    @unique
+  email            String    @unique
+  password         String
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  recipes          Recipe[]
+  refreshTokens    RefreshToken[]
+  role             Role      @default(USER)
+  resetToken       String?   @unique @map("reset_token")
+  resetTokenExpiry DateTime? @map("reset_token_expiry") @db.Timestamptz
 
   @@map("user")
 }

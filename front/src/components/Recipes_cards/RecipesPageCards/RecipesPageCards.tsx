@@ -33,7 +33,7 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
                     <img src={recipe.image} alt={recipe.title} className="recetteImage" />
                   </div>
                   <div className="Content-Info">
-                    <h2 className="Content-Type">{type[0].thematic.name}</h2>
+                    <h2 className="Content-Type">{type[0].thematic.name} - {work.category.name}</h2>
                     <div className="Recipe-Info">
                       <h3>{recipe.title}</h3>
                       <h4>{work.title}</h4>

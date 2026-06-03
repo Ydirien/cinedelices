@@ -1,6 +1,6 @@
-import CategoriesButton from '../../components/categories/categoriesButton/CategoriesButton';
-import RecoHomePage from '../../components/recipes_cards/recommandation/HomePageReco';
-import RecipesOftheDay from '../../components/recipeOftheDay/RecipesOftheDay';
+import CategoriesButton from '../../components/Categories/CategoriesButton/CategoriesButton';
+import RecoHomePage from '../../components/Recipes_cards/Recommandation/HomePageReco';
+import RecipesOftheDay from '../../components/RecipeOftheDay/RecipesOftheDay';
 import './homePage.css';
 function HomePage() {
   return (

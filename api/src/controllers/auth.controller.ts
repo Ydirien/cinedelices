@@ -1,9 +1,10 @@
 import argon2 from "argon2";
+import { randomBytes, createHash } from "node:crypto";
 import z from "zod";
 import type { Request, Response } from "express";
 import type { User } from "../models/index.ts"
 import { prisma } from "../models/index.ts";
-import { ConflictError, UnauthorizedError } from "../lib/errors.ts";
+import { ConflictError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
 import { generateAuthTokens, type Token } from "../lib/tokens.ts";
 
 export async function registerUser(req: Request, res: Response) {
@@ -129,8 +130,4 @@ async function replaceRefreshTokenInDatabase(refreshToken: Token, user: User) {
         expiresAt: new Date(new Date().valueOf() + refreshToken.expiresInMS),
         },
     });
-}
-
-export async function forgotPassword(req: Request, res: Response) {
-    // a finir
 }

@@ -1,12 +1,12 @@
 import './App.css';
 import { useEffect } from 'react';
-import Header from './components/header/Header';
-import Footer from './components/footer/Footer';
-import HomePage from './pages/homePage/HomePage';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import HomePage from './pages/HomePage/HomePage';
 import RecipesPage from './pages/RecipesPage/RecipesPage';
 import RecipePage from './pages/RepicePage/Recipe';
 import { Route, Routes } from 'react-router-dom';
-import SearchBar from './components/searchBar/SearchBar';
+import SearchBar from './components/SearchBar/SearchBar';
 import { useState } from 'react';
 import MentionsLegales from './pages/MentionsPage/MentionsPage';
 import Confidentialite from './pages/ConfidentialPage/ConfidentialPage';
@@ -21,10 +21,10 @@ function App() {
 
   // fetch pour appelle de toutes les recettes
   useEffect(() => {
-    const url = "http://localhost:3010/"
+    const url = 'http://localhost:3010/';
     async function fetchData() {
       const category = await fetch(`${url}api/category`);
-      const types= await fetch(`${url}api/type`);
+      const types = await fetch(`${url}api/type`);
       const recipes = await fetch(`${url}api/recipes`);
       const data = await recipes.json();
       setGetAllrecipes(data);

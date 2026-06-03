@@ -1,6 +1,6 @@
-import RecipesCards from '../../components/recipes_cards/recipesPageCards/RecipesPageCards';
+import RecipesCards from '../../components/Recipes_cards/RecipesPageCards/RecipesPageCards';
 import { useEffect, useState } from 'react';
-import FilterBar from '../../components/filterBar/FilterBar';
+import FilterBar from '../../components/FilterBar/FilterBar';
 import './RecipesPage.css';
 import { IRecipe } from '../../../@types/index.d';
 

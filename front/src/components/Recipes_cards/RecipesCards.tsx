@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import dataRecipes from '../../../data/recipe.json';
 import { useState } from 'react';
-import StarsRating from './stars/StarsRating';
+import StarsRating from './Stars/StarsRating';
 
 function RecipesCards() {
   const [getRecipes, setGetRecipes] = useState(dataRecipes);

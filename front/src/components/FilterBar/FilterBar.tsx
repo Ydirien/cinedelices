@@ -47,7 +47,6 @@ function FilterBar({ onResults }: Props) {
 
   return (
     <div className="filter-bar">
-      {/* Groupe de boutons pour filtrer par catégorie d'œuvre */}
       <div className="filter-group">
         {categories.map((category) => (
           <button
@@ -74,4 +73,5 @@ function FilterBar({ onResults }: Props) {
     </div>
   );
 }
+
 export default FilterBar;

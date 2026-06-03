@@ -38,16 +38,16 @@ function CategoriesButton() {
   }, []);
 
   const categories = [
-    { title: 'films', url_image: logoFilms },
-    { title: 'séries', url_image: logoSeries },
-    { title: 'animés', url_image: logoAnimes },
+    { title: 'film', url_image: logoFilms , id: 1},
+    { title: 'serie', url_image: logoSeries, id: 2},
+    { title: 'Manga / Anime', url_image: logoAnimes, id: 3},
   ];
 
 const types = [
-  { title: 'entrées', url_image: logoEntrees },
-  { title: 'plats', url_image: logoEntrees },
-  { title: 'desserts', url_image: logoDesserts },
-  { title: 'boissons', url_image: logoEntrees },
+  { title: 'entrées', url_image: logoEntrees, id: 1},
+  { title: 'plats', url_image: logoEntrees, id: 2},
+  { title: 'desserts', url_image: logoDesserts, id: 3},
+  { title: 'boissons', url_image: logoEntrees, id: 4},
 ];
 
   const scroll = (direction: 'left' | 'right') => {
@@ -72,7 +72,7 @@ const types = [
               {/* button categories (films, series, anime, dessin animes) */}
               <div className="category-buttons">
                 {categories.map((category) => (
-                  <NavLink key={category.title} className="category" to={`/${category.title}`}>
+                  <NavLink key={category.title} className="category" to={`/recettes?category=${category.title}`}>
                     <div className="button-category">
                       <img src={category.url_image} alt={category.title} />
                     </div>
@@ -82,7 +82,7 @@ const types = [
               {/* buttons type (entrées, plats, desserts, boissons) */}
               <div className="type-buttons">
                 {types.map((type) => (
-                  <NavLink key={type.title} className="type" to={`/${type.title}`}>
+                  <NavLink key={type.title} className="type" to={`/recettes?type=${type.id}`}>
                     <div className="button-category">
                       <img src={type.url_image} alt={type.title} /></div>
                   </NavLink>

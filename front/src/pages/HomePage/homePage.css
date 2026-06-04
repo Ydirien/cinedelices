@@ -180,6 +180,7 @@ h2 {
     margin-bottom: 4rem;
     line-height: 1.2;
   }
+  
   .Welcome-Image {
     flex-shrink: 0;
   }
@@ -214,8 +215,7 @@ h2 {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: 1.8px solid rgb(46, 46, 46);
     backdrop-filter: blur(9.5px);
-    
-    min-height: 300px; /* Hauteur stable */
+    min-height: 300px;
     padding: 2rem;
     margin-bottom: 1rem;
     text-decoration: none;
@@ -227,9 +227,9 @@ h2 {
       left: 0;
       height: 100%;
       width: 100%;
-      object-fit: cover; 
+      object-fit: cover;
       z-index: 0;
-      filter: brightness(0.5); 
+      filter: brightness(0.5);
     }
 
     .subtitle {
@@ -245,7 +245,7 @@ h2 {
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      height: calc(100% - 40px); 
+      height: calc(100% - 40px);
     }
 
     p {
@@ -254,54 +254,91 @@ h2 {
   }
 
   .reco-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
     width: 100%;
+    overflow-x: visible;
   }
 
+  /* --- RETOUR AU RENDU INITIAL COMPTIBLE GRID --- */
   .Card {
-    border-radius: 20px;
-    width: 100%;
+    flex: none; 
     background: rgba(26, 26, 26, 0.603);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: 1.8px solid rgb(46, 46, 46);
+    overflow: hidden;
     
-    .recetteImage {
-      width: 100%;
-      height: 8.5rem;
-      object-fit: cover;
-    }
+    /* On force la carte à se structurer verticalement de manière stricte */
+    display: flex;
+    flex-direction: column;
+    min-height: 280px; 
+    height: 100%;
+    text-shadow: none; /* Plus besoin de l'ombre de texte puisque le fond est noir/gris */
 
     a {
       text-decoration-line: none;
       color: inherit;
-      display: grid;
-      grid-template-rows: 3fr max-content;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
     }
 
+    /* Le conteneur de l'image prend exactement la moitié haute de la carte */
+    .RecipeIMG {
+      position: relative;
+      width: 100%;
+      height: 140px; /* Hauteur fixe pour que toutes les images soient alignées */
+      overflow: hidden;
+    }
+
+    .recetteImage {
+      position: static; /* Sort du mode plein écran absolu */
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: none; /* On retire le filtre sombre pour retrouver les vraies couleurs */
+    }
+
+    /* Le bloc d'infos prend la moitié basse */
     .Recipe-Info {
+      position: relative;
+      z-index: 1;
       text-align: start;
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      gap: 6px;
+      background: transparent;
+      /* Prend tout l'espace restant en bas */
+      flex-grow: 1; 
+      justify-content: flex-start; 
     }
 
     h3 {
       margin: 0;
+      font-size: 1.1rem;
       color: var(--quaternary-color);
+      font-weight: bold;
     }
 
     h4 {
       margin: 0;
+      font-size: 0.9rem;
       color: var(--tertiary-color);
     }
 
     p {
+      margin: 0;
+      font-size: 0.8rem;
       color: var(--tertiary-color);
     }
+  }
+
+  .slider-dots {
+    display: none !important;
   }
 
   .subtitle {

@@ -14,6 +14,8 @@ import { IRecipe } from '../@types/index.d';
 import recipes from '../data/recipe.json';
 import logoMain from '../public/Logo/LOGO_pricipal_allonger.png';
 import Register from './pages/Auth/register/Register';
+import Login from './pages/Auth/login/login';
+import Passwordlost from './pages/Auth/passwordlost/passwordlost';
 
 function App() {
   const [getAllRecipes, setGetAllrecipes] = useState<IRecipe[]>([]); // recupérer les données de la data recipe en attendants la bdd
@@ -61,8 +63,8 @@ function App() {
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/confidentialite" element={<Confidentialite />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Register />} />
-          <Route path="/passwordforgot" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/passwordlost" element={<Passwordlost/>} />
         </Routes>
       </main>
       <Footer />

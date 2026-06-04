@@ -122,26 +122,40 @@
 
 .password-strength-bar {
   height: 4px;
-  background: var(--secondary-color);
+  background: var(--secondary-color); /* Fond de la barre */
   width: 100%;
   border-radius: 2px;
   position: relative;
 }
 
-.password-strength-bar.medium::before {
+/* Base commune pour le remplissage de la barre */
+.password-strength-bar::before {
   content: '';
   position: absolute;
   left: 0;
   top: 0;
   height: 100%;
-  width: 45%;
-  background: var(--quinary-color); 
   border-radius: 2px;
+  transition: width 0.3s ease, background 0.3s ease; /* Animation fluide */
+  width: 0%; 
 }
 
-.password-strength-text {
-  font-size: 0.75rem;
-  color: var(--tertiary-color);
+/* 1. FAIBLE : Rempli à 25% */
+.password-strength-bar.weak::before {
+  width: 25%;
+  background: #ff4d4d; /* Rouge */
+}
+
+/* 2. MOYEN : Rempli à 60% */
+.password-strength-bar.medium::before {
+  width: 60%;
+  background: var(--quinary-color); 
+}
+
+/* 3. FORT : Rempli à 100% */
+.password-strength-bar.strong::before {
+  width: 100%;
+  background: #4cd137; /* Vert */
 }
 
 

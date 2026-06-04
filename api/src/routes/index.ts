@@ -9,6 +9,8 @@ import { router as typesRouter } from './types.route.ts';
 
 export const router = Router();
 
+router.get('/health', (_, res) => res.json({ status: 'ok' }));
+
 router.use(authRouter);
 router.use(usersRouter);
 router.use(worksRouter);
@@ -16,3 +18,4 @@ router.use(recipesRouter);
 router.use(adminRouter);
 router.use(categoriesRouter);
 router.use(typesRouter);
+

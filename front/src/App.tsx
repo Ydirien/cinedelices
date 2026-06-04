@@ -27,7 +27,6 @@ function App() {
 
   const [showMobileSearch, setShowMobileSearch] = useState(false); // useState pour cacher/montrer la barre de recherche en version mobile
 
-  // fetch pour appelle de toutes les recettes
   useEffect(() => {
     const url = 'http://localhost:3010';
     async function fetchData() {

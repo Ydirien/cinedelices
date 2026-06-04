@@ -14,7 +14,7 @@ function RecipePage() {
   const [recipe, setRecipe] = useState(null); 
 
   async function getRecipeById(){
-    const response = await fetch(`http://localhost:3010/api/recipes/${recette}`);
+    const response = await fetch(`/api/recipes/${recette}`);
     const data = await response.json();
     setRecipe(data);
   }

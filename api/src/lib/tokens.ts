@@ -34,3 +34,15 @@ export function generateAuthTokens(user: User) {
         },
     };
 }
+
+export function generateResetPasswordToken(user: User) {
+    const payload = {
+        id: user.id,
+    };
+
+    const resetToken = jwt.sign(payload, config.resetTokenSecret, {
+        expiresIn: "15m",
+    });
+
+    return resetToken;
+}

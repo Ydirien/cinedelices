@@ -16,6 +16,7 @@ import logoMain from '../public/Logo/LOGO_pricipal_allonger.png';
 import Register from './pages/Auth/register/Register';
 import Login from './pages/Auth/login/login';
 import Passwordlost from './pages/Auth/passwordlost/passwordlost';
+import SearchPage from './pages/SearchPage/SearchPage';
 
 function App() {
   const [getAllRecipes, setGetAllrecipes] = useState<IRecipe[]>([]); // recupérer les données de la data recipe en attendants la bdd
@@ -30,15 +31,13 @@ function App() {
   useEffect(() => {
     
     async function fetchData() {
-      const category = await fetch(`/api/category`);
-      const types = await fetch(`/api/type`);
-      const recipes = await fetch(`/api/recipes`);
+      const url = 'http://localhost:3010/'
+      const category = await fetch(`${url}api/categories`);
+      const types = await fetch(`${url}api/types`);
+      const recipes = await fetch(`${url}api/recipes`);
       const dataRecipes = await recipes.json();
-      const dataCategories = await category.json();
-      const dataTypes = await types.json();
-      setGetAllrecipes(dataRecipes);
-      setGetAllCategories(dataCategories)
-      setGetAllTypes(dataTypes)
+      setGetAllrecipes(dataRecipes.data);
+      console.log(dataRecipes.data);
     }
     fetchData();
   }, []);
@@ -55,6 +54,7 @@ function App() {
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
   return (
     <>
       <Header setShowMobileSearch={setShowMobileSearch} logoMain={logoMain} />
@@ -64,15 +64,17 @@ function App() {
             <SearchBar />
           </section>
         )}
+
         <Routes>
-          <Route path="/" element={<HomePage categories={getAllCategories} types={getAllTypes} recipes={getAllRecipes}/>} />
-          <Route path="/recettes" element={<RecipesPage categories={getAllCategories} types={getAllTypes} recipes={getAllRecipes} />} />
+          <Route path="/" element={<HomePage recipes={getAllRecipes} />} />
+          <Route path="/recettes" element={<RecipesPage recipes={getAllRecipes} />} />
           <Route path="/recettes/:recette" element={<RecipePage />} />
+          <Route path="/search" element={<SearchPage />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/confidentialite" element={<Confidentialite />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/passwordlost" element={<Passwordlost/>} />
+          <Route path="/passwordlost" element={<Passwordlost />} />
         </Routes>
       </main>
       <Footer />

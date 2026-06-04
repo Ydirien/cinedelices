@@ -18,7 +18,7 @@ function RecipesPage({ recipes }: RecipesPageProps) {
     try {
       const response = await fetch(`/api/recipes?${searchParams.toString()}`);
       const data = await response.json();
-      setFilteredRecipes(data);
+      setFilteredRecipes(data.data);
     } catch (error) {
       console.error("Erreur lors de la récupération des recettes :", error);
       setFilteredRecipes([]);

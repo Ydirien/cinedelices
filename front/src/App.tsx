@@ -27,17 +27,15 @@ function App() {
 
   const [showMobileSearch, setShowMobileSearch] = useState(false); // useState pour cacher/montrer la barre de recherche en version mobile
 
-  // fetch pour appelle de toutes les recettes
   useEffect(() => {
-    
     async function fetchData() {
-      const url = 'http://localhost:3010/'
-      const category = await fetch(`${url}api/categories`);
-      const types = await fetch(`${url}api/types`);
-      const recipes = await fetch(`${url}api/recipes`);
-      const dataRecipes = await recipes.json();
-      setGetAllrecipes(dataRecipes.data);
-      console.log(dataRecipes.data);
+      try {
+        const response = await fetch('/api/recipes');
+        const dataRecipes = await response.json();
+        setGetAllrecipes(dataRecipes.data);
+      } catch (error) {
+        console.error('Erreur lors du chargement des recettes :', error);
+      }
     }
     fetchData();
   }, []);

@@ -28,26 +28,45 @@ const updateStateSchema = z.object({
     state: z.enum(["PENDING", "APPROVED", "REJECTED"]),
 });
 
+// GET /admin/recipes?state=PENDING&page=1&limit=10
 export async function getAllRecipes(req: Request, res: Response) {
-    const { state } = req.query;
+    const { state, page, limit } = req.query;
 
     const stateFilter = state
         ? z.enum(["PENDING", "APPROVED", "REJECTED"]).parse(state)
         : undefined;
 
-    const recipes = await prisma.recipe.findMany({
-        where: {
-            ...(stateFilter && { state: stateFilter }),
-        },
-        include: {
-            work: { include: { category: true } },
-            thematics: { include: { thematic: true } },
-            user: { select: { id: true, username: true, email: true } },
-        },
-        orderBy: { createdAt: "desc" },
-    });
+    // Nombre de recettes par page (défaut 10), et nombre à sauter selon la page demandée
+    const take = limit ? Number(limit) : 10;
+    const skip = page ? (Number(page) - 1) * take : 0;
 
-    res.json(recipes);
+    const where = {
+        ...(stateFilter && { state: stateFilter }),
+    };
+
+    // On lance les deux requêtes en parallèle : les recettes de la page + le total pour calculer les pages
+    const [recipes, total] = await Promise.all([
+        prisma.recipe.findMany({
+            where,
+            include: {
+                work: { include: { category: true } },
+                thematics: { include: { thematic: true } },
+                user: { select: { id: true, username: true, email: true } },
+            },
+            orderBy: { createdAt: "desc" },
+            take,
+            skip,
+        }),
+        prisma.recipe.count({ where }),
+    ]);
+
+    res.json({
+        data: recipes,
+        total,                               // nombre total de recettes (tous filtres confondus)
+        page: page ? Number(page) : 1,
+        limit: take,
+        totalPages: Math.ceil(total / take), // nombre de pages disponibles
+    });
 }
 
 export async function updateRecipeState(req: Request, res: Response) {

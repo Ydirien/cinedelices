@@ -26,6 +26,9 @@ app.use(xssSanitizer);
 // Brancher le routeur de l'API
 app.use("/api", apiRouter);
 
+// Brancher le dossier upload
+app.use('/uploads',express.static('uploads'))
+
 // Not found middleware
 app.use(notFoundMiddleware);
 

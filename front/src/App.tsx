@@ -13,6 +13,7 @@ import Confidentialite from './pages/ConfidentialPage/ConfidentialPage';
 import { ICategory, IRecipe, IType } from '../@types/index.d';
 import recipes from '../data/recipe.json';
 import logoMain from '../public/Logo/LOGO_pricipal_allonger.png';
+import Register from './pages/Auth/register/Register';
 
 function App() {
   const [getAllRecipes, setGetAllrecipes] = useState<IRecipe[]>([]); // recupérer les données de la data recipe en attendants la bdd
@@ -67,6 +68,9 @@ function App() {
           <Route path="/recettes/:recette" element={<RecipePage />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/confidentialite" element={<Confidentialite />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Register />} />
+          <Route path="/passwordforgot" element={<Register />} />
         </Routes>
       </main>
       <Footer />

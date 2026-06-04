@@ -1,7 +1,8 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink , useLocation} from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
 import { LuMenu } from 'react-icons/lu';
 import { LuSearch } from 'react-icons/lu';
+import { LuFilter } from "react-icons/lu";
 import SearchBar from '../SearchBar/SearchBar';
 import { useState, useEffect } from 'react';
 
@@ -14,7 +15,7 @@ interface HeaderProps {
 
 function Header({ setShowMobileSearch, logoMain }: HeaderProps) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-
+  const location = useLocation();
   //   function toggleMobileSearch()
   function SearchBarMobile() {
     const SearchBar = document.getElementById('SearchBarMobile');
@@ -24,6 +25,11 @@ function Header({ setShowMobileSearch, logoMain }: HeaderProps) {
       SearchBar.style.display = 'flex';
     }
   }
+
+  //fermetur automatique de la navbar mobile a chaque changement de page/route
+  useEffect(() => {
+    setMobileNavOpen(false);
+  }, [location]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -59,6 +65,7 @@ function Header({ setShowMobileSearch, logoMain }: HeaderProps) {
           <button className="buttonMobileSearchBar" onClick={() => setShowMobileSearch((prev) => !prev)}>
             <LuSearch size={20} />
           </button>
+          
           <NavLink className="profile" to="/profile">
             <LuCircleUser className="profil-icon" size={35} />
           </NavLink>

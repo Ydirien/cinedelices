@@ -2,35 +2,48 @@ import RecipesCards from '../../components/Recipes_cards/RecipesPageCards/Recipe
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import FilterBar from '../../components/FilterBar/FilterBar';
+import NoRecipePage from '../../components/Recipes_cards/RecipesPageCards/NoRecipesFound';
 import './RecipesPage.css';
 import { IRecipe } from '../../../@types/index.d';
 
 interface RecipesPageProps {
-  recipes: IRecipe[];
+  recipes: IRecipe[]; // Tes recettes initiales (toutes)
 }
+
 function RecipesPage({ recipes }: RecipesPageProps) {
+  const [filteredRecipes, setFilteredRecipes] = useState<IRecipe[] | null>(null);
+  const [searchParams] = useSearchParams();
 
-    const [filteredRecipes,setFiltredRecip]= useState<IRecipe[]>([]);
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    async function Filter() {
-    const response = await fetch(`/api/recipes?${searchParams.toString()}`);
-    const data = await response.json();
-    setFiltredRecip(data);
-    console.log(data);
+  async function fetchFilter() {
+    try {
+      const response = await fetch(`/api/recipes?${searchParams.toString()}`);
+      const data = await response.json();
+      setFilteredRecipes(data);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des recettes :", error);
+      setFilteredRecipes([]);
+    }
   }
 
-  useEffect(()=> {
-    Filter();
-  },[])
+  useEffect(() => {
+    fetchFilter();
+  }, [searchParams]);
+
+
+  // Si filteredRecipes est null (en attente du fetch), on montre les recettes de base
+  const recipesToDisplay = filteredRecipes !== null ? filteredRecipes : recipes;
+
   return (
     <section className="recipes-page">
       <aside className="recipes-sidebar">
-        <FilterBar onResults={setFiltredRecip}/>
+        <FilterBar onResults={setFilteredRecipes} />
       </aside>
       <div className="recipes-content">
-        {/* On passe le tableau de recettes filtrées au composant de cartes */}
-        <RecipesCards recipes={filteredRecipes.length > 0 ? filteredRecipes : recipes} />
+        {recipesToDisplay.length > 0 ? (
+          <RecipesCards recipes={recipesToDisplay} />
+        ) : (
+          <NoRecipePage />
+        )}
       </div>
     </section>
   );

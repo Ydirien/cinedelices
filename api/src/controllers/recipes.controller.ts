@@ -123,3 +123,66 @@ export async function createRecipe(req: Request, res: Response) {
 
     res.status(201).json(newRecipe);
 }
+
+// Recherche dédiée pour la SearchPage
+// GET /api/recipes/search?q=game
+export async function searchRecipes(req: Request, res: Response) {
+    // Je récupère le mot tapé dans la barre de recherche
+    const search = typeof req.query.q === 'string' ? req.query.q.trim() : '';
+
+    // Si aucun mot n'est envoyé, je retourne une erreur claire
+    if (!search) {
+        return res.status(400).json({
+            message: 'Le paramètre de recherche est manquant.',
+        });
+    }
+
+    // Je cherche les recettes approuvées contenant le mot recherché :
+    // - dans le titre de la recette
+    // - dans la description de la recette
+    // - dans le titre de l'œuvre liée à la recette
+    const recipes = await prisma.recipe.findMany({
+        where: {
+            state: "APPROVED",
+            OR: [
+                {
+                    title: {
+                        contains: search,
+                        mode: 'insensitive' as const,
+                    },
+                },
+                {
+                    description: {
+                        contains: search,
+                        mode: 'insensitive' as const,
+                    },
+                },
+                {
+                    work: {
+                        is: {
+                            title: {
+                                contains: search,
+                                mode: 'insensitive' as const,
+                            },
+                        },
+                    },
+                },
+            ],
+        },
+        include: {
+            // Je récupère aussi l'œuvre liée pour pouvoir l'utiliser côté front si besoin
+            work: {
+                include: {
+                    category: true,
+                },
+            },
+            thematics: {
+                include: {
+                    thematic: true,
+                },
+            },
+        },
+    });
+
+    res.json(recipes);
+}

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { IRecipe } from '../../../@types/index.d';
+import "./FilterBar.css"
 
 interface Props {
   onResults: (recipes: IRecipe[]) => void;
@@ -17,17 +18,26 @@ const thematics = [
   { name: 'Plat' },
   { name: 'Dessert' },
   { name: 'Boisson' },
-
 ];
 
 function FilterBar({ onResults }: Props) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [activeThematic, setActiveThematic] = useState<string | null>(null);
+  const [activeThematics, setActiveThematics] = useState<string[]>([]);
 
-  async function fetchRecipes(category: string | null, thematic: string | null) {
+  // ADAPTATION DU FETCH POUR LES TABLEAUX
+  async function fetchRecipes(category: string | null, thematicsList: string[]) {
     const params = new URLSearchParams();
-    if (category) params.append('category', category);
-    if (thematic) params.append('thematic', thematic);
+    
+    if (category) {
+      params.append('category', category);
+    }
+    
+    // Pour chaque thématique active, on l'ajoute individuellement 
+    // afin de répéter la clé dans l'URL : ?thematic=Plat&thematic=Dessert
+    thematicsList.forEach(thematic => {
+      params.append('thematic', thematic);
+    });
+
     const res = await fetch(`/api/recipes?${params.toString()}`);
     const data = await res.json();
     onResults(data);
@@ -36,18 +46,42 @@ function FilterBar({ onResults }: Props) {
   function handleCategory(name: string) {
     const next = activeCategory === name ? null : name;
     setActiveCategory(next);
-    fetchRecipes(next, activeThematic);
+    fetchRecipes(next, activeThematics); 
   }
 
   function handleThematic(name: string) {
-    const next = activeThematic === name ? null : name;
-    setActiveThematic(next);
-    fetchRecipes(activeCategory, next);
+    let nextThematics: string[];
+    
+    if (activeThematics.includes(name)) {
+      nextThematics = activeThematics.filter(t => t !== name);
+    } else {
+      nextThematics = [...activeThematics, name];
+    }
+    
+    setActiveThematics(nextThematics);
+    fetchRecipes(activeCategory, nextThematics);
+  }
+
+  function handleAllCategories() {
+    setActiveCategory(null);
+    fetchRecipes(null, activeThematics); 
+  }
+
+  function handleAllThematics() {
+    setActiveThematics([]); 
+    fetchRecipes(activeCategory, []); 
   }
 
   return (
     <div className="filter-bar">
       <div className="filter-group">
+        <button 
+          key="all category" 
+          className={`button-AllCategory ${activeCategory === null ? 'active' : ''}`}
+          onClick={handleAllCategories}
+        >
+          All
+        </button>
         {categories.map((category) => (
           <button
             key={category.name}
@@ -58,11 +92,21 @@ function FilterBar({ onResults }: Props) {
           </button>
         ))}
       </div>
+      
       <div className="filter-group">
+        <button 
+          key="all thematic" 
+          className={`button-AllThematic ${activeThematics.length === 0 ? 'active' : ''}`}
+          onClick={handleAllThematics}
+          type="button"
+        >
+          All
+        </button>
+        
         {thematics.map((thematic) => (
           <button
             key={thematic.name}
-            className={activeThematic === thematic.name ? 'active' : ''}
+            className={activeThematics.includes(thematic.name) ? 'active' : ''}
             onClick={() => handleThematic(thematic.name)}
             type="button"
           >

@@ -1,6 +1,63 @@
 .filter-bar {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5em;
   justify-content: center;
+  align-items: center;
+}
+
+.filter-group{
+button {
+  background: var(--secondary-color);
+  --color: var(--quinary-color);
+  
+  padding: 0.5rem 1.5rem; 
+  display: inline-flex;  
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  cursor: pointer;
+  margin: 0.5rem;
+  z-index: 0;
+  color: var(--color);
+  border: 2px solid var(--quinary-color);
+  border-radius: 6px;
+  position: relative;
+  
+  transition: color 0.3s ease-in-out; 
+}
+
+button::before {
+  position: absolute;
+  content: "";
+  background: var(--color);
+  z-index: -1;
+  
+  width: 300%; 
+  aspect-ratio: 1 / 1; 
+  border-radius: 50%; 
+  
+  top: 100%;
+  left: 100%;
+  transform: translate(0, 0); 
+  
+  transition: transform 0.4s ease-in-out; 
+}
+
+button:hover, 
+button.active {
+  color: white;
+}
+
+button:hover::before, 
+button.active::before {
+  transform: translate(-120%, -120%);
+}
+
+button.active {
+  background-color: var(--color);
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
 }

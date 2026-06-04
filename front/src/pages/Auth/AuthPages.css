@@ -1,0 +1,175 @@
+
+.auth-container {
+  background-color: var(--primary-color);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--quaternary-color);
+  font-family: sans-serif;
+  padding: 1.5rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-logo {
+  color: var(--quinary-color);
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+}
+
+.auth-form-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-title {
+  font-size: 1.1rem;
+  font-weight: normal;
+  margin-bottom: 1.5rem;
+}
+
+
+.auth-upload-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.auth-upload-box {
+  width: 160px;
+  height: 110px;
+  background-color: var(--secondary-color); 
+  border: 1px dashed var(--tertiary-color); 
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--tertiary-color);
+}
+
+.auth-upload-plus {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  background: var(--quinary-color); 
+  color: var(--primary-color); 
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* FORMULAIRE & INPUTS */
+.auth-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.auth-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.auth-input-group label {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: var(--quaternary-color);
+}
+
+.auth-input-group input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--secondary-color);
+  padding: 0.6rem 0;
+  color: var(--quaternary-color);
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+}
+
+.auth-input-group input:focus {
+  outline: none;
+  border-bottom-color: var(--quinary-color); 
+}
+
+.auth-input-group input::placeholder {
+  color: var(--tertiary-color); 
+  font-size: 0.85rem;
+}
+
+/* JAUGE DE FORCE DU MOT DE PASSE */
+.password-strength-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+}
+
+.password-strength-bar {
+  height: 4px;
+  background: var(--secondary-color);
+  width: 100%;
+  border-radius: 2px;
+  position: relative;
+}
+
+.password-strength-bar.medium::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 45%;
+  background: var(--quinary-color); 
+  border-radius: 2px;
+}
+
+.password-strength-text {
+  font-size: 0.75rem;
+  color: var(--tertiary-color);
+}
+
+
+.auth-submit-btn {
+  background-color: rgba(212, 160, 23, 0.15); /
+  border: 1px solid rgba(212, 160, 23, 0.3);
+  color: var(--quinary-color);
+  padding: 0.8rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.auth-submit-btn:hover {
+  background-color: var(--quinary-color); 
+  color: var(--primary-color); 
+}
+
+/* LIEN RETOUR EN BAS */
+.auth-back-to-login {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--tertiary-color);
+  text-decoration: underline;
+  text-align: center;
+  cursor: pointer;
+  display: block;
+}

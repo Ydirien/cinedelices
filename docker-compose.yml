@@ -36,13 +36,11 @@ services:
       - ./api/.env
     environment:
       # Écrase DATABASE_URL du .env : dans Docker, la DB est joignable via le nom du service "database" sur le port interne 5432
-      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
     ports:
       - ${API_LOCAL_PORT}:3010
     networks:
       - cinedelices-network
-    environment:
-      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
 
   front:
     build:

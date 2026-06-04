@@ -26,11 +26,11 @@ function App() {
   useEffect(() => {
     const url = 'http://localhost:3010/';
     async function fetchData() {
-      const category = await fetch(`${url}api/category`);
-      const types = await fetch(`${url}api/type`);
+      const category = await fetch(`${url}api/categories`);
+      const types = await fetch(`${url}api/types`);
       const recipes = await fetch(`${url}api/recipes`);
       const dataRecipes = await recipes.json();
-      setGetAllrecipes(dataRecipes);
+      setGetAllrecipes(dataRecipes.data);
     }
     fetchData();
   }, []);

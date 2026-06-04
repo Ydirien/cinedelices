@@ -1,82 +1,102 @@
+/* Le conteneur de la grille */
+.RecipesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+  width: 100%;
 
-  .RecipesPCard {
-    display: block;
-    position: relative;
-    background: rgba(26, 26, 26, 0.603);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    border: 1.8px solid var(--secondary-color);
-    backdrop-filter: blur(9.5px);
-
-    height: 28vh;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    text-decoration: none;
-    overflow: hidden;
-
-    
-      text-shadow: 0px 0px 6px rgb(0, 0, 0);
-
-    a{
-        text-decoration: none;
-        color: inherit;
-        height: auto;
-    }
-
-    .RecipeIMG {
-      z-index: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-    }
-
-    p {
-      color: var(--quaternary-color);
-      position: relative;
-    }
-
-    .Content-Info {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      text-align: start;
-      min-width: 0;
-      height: 100%;
-      position: relative;
-    }
-
-    .Recipe-Info {
-      line-height:0.2;
-      display: flex;
-      flex-direction: column;
-      h3{
-        
-        margin-bottom: 0;
-        color: var(--quaternary-color);
-      }
-
-      h4{
-        color: var(--quaternary-color);
-        margin-top: 7px;
-      }
-
-      .Rating{
-        margin-top: 5px;
-        display: flex;
-        flewx-direction: row;
-        gap: 5px;
-      }
-    }
-
-    .recetteImage{
-      object-fit: cover;
-    }
-  }
-
-  .RecipesContainer li {
-    list-style: none;
-  }
   
+.RecipeIMG {
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+}
+
+.RecipesPCard {
+  display: block;
+  position: relative;
+  background: rgba(26, 26, 26, 0.603);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1.8px solid var(--secondary-color);
+  backdrop-filter: blur(9.5px);
+  text-shadow: 0px 0px 6px rgb(0, 0, 0);
+
+  min-height: 250px;
+  height: 100%;
+  padding: 1rem;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.RecipesPCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+}
+
+.RecipesPCard a {
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.recetteImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.55); 
+}
+
+.Content-Info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: start;
+  min-width: 0;
+  height: 100%;
+  position: relative;
+  z-index: 1; 
+}
+
+.Recipe-Info {
+  line-height: normal; 
+  display: flex;
+  flex-direction: column;
+  margin-top: auto; 
+}
+
+.Recipe-Info h3 {
+  margin: 0;
+  color: var(--quaternary-color);
+
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  line-height: 1.2; 
+}
+
+.Recipe-Info h4 {
+  color: var(--quaternary-color);
+  margin: 0;
+
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  opacity: 0.8;
+}
+
+.Recipe-Info .Rating {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.RecipesPCard p {
+  color: var(--quaternary-color);
+  position: relative;
+  margin: 0;
+}

@@ -25,11 +25,11 @@ function App() {
 
   // fetch pour appelle de toutes les recettes
   useEffect(() => {
-    const url = 'http://localhost:3010/';
+    const url = 'http://localhost:3010';
     async function fetchData() {
-      const category = await fetch(`${url}api/categories`);
-      const types = await fetch(`${url}api/types`);
-      const recipes = await fetch(`${url}api/recipes`);
+      const category = await fetch(`${url}/api/categories`);
+      const types = await fetch(`${url}/api/types`);
+      const recipes = await fetch(`${url}/api/recipes`);
       const dataRecipes = await recipes.json();
       setGetAllrecipes(dataRecipes.data);
       console.log(dataRecipes.data);

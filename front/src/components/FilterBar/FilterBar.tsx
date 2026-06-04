@@ -36,7 +36,7 @@ function FilterBar({ onResults }: Props) {
       params.append('thematic', thematic);
     }
 
-    const res = await fetch(`http://localhost:3010/api/recipes?${params.toString()}`);
+    const res = await fetch(`/api/recipes?${params.toString()}`);
     const data = await res.json();
     onResults(data.data);
   }

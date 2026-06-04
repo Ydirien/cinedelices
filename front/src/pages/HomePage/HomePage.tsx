@@ -8,10 +8,10 @@ import { IRecipe } from '../../../@types/index.d';
 interface HomePageProps {
   recipes: IRecipe[]
 }
-function HomePage({recipes}: HomePageProps) {
+function HomePage({recipes = []}: HomePageProps) {
 
-  //recette du jours (aléatoir pour l'instant)
-  const [random,setrandom] = useState(1);
+  //recette du jours (aléatoire pour l'instant)
+  const [random,setrandom] = useState(0);
   useEffect(() => {
     if (recipes.length > 0) {
       setrandom(Math.floor(Math.random() * recipes.length));

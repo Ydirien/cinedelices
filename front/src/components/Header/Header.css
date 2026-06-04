@@ -186,3 +186,16 @@
     object-fit: contain;
   }
 }
+.search-submit {
+  background: transparent;
+  border: none;
+  color: var(--quinary-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.search-submit:hover {
+  color: var(--quaternary-color);
+}

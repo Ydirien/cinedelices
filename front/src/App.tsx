@@ -31,6 +31,7 @@ function App() {
       const recipes = await fetch(`${url}api/recipes`);
       const dataRecipes = await recipes.json();
       setGetAllrecipes(dataRecipes.data);
+      console.log(dataRecipes.data);
     }
     fetchData();
   }, []);
@@ -57,14 +58,14 @@ function App() {
           </section>
         )}
         <Routes>
-          <Route path="/" element={<HomePage recipes={getAllRecipes}/>} />
+          <Route path="/" element={<HomePage recipes={getAllRecipes} />} />
           <Route path="/recettes" element={<RecipesPage recipes={getAllRecipes} />} />
           <Route path="/recettes/:recette" element={<RecipePage />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/confidentialite" element={<Confidentialite />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/passwordlost" element={<Passwordlost/>} />
+          <Route path="/passwordlost" element={<Passwordlost />} />
         </Routes>
       </main>
       <Footer />

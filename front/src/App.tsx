@@ -32,6 +32,7 @@ function App() {
       const recipes = await fetch(`${url}api/recipes`);
       const dataRecipes = await recipes.json();
       setGetAllrecipes(dataRecipes.data);
+      console.log(dataRecipes.data);
     }
     fetchData();
   }, []);

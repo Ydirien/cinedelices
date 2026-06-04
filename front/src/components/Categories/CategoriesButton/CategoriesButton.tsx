@@ -89,15 +89,14 @@ const types = [
                 ))}
               </div>
             </div>
-          </div>
-
-          <button
+            <button
             className={`carousel-arrow carousel-arrow--right ${showRight ? 'visible' : ''}`}
             onClick={() => scroll('right')}
             aria-label="Suivant"
           >
             &#8250;
           </button>
+          </div>
         </div>
       </section>
   );

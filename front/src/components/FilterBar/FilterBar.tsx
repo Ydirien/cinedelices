@@ -22,21 +22,19 @@ const thematics = [
 
 function FilterBar({ onResults }: Props) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [activeThematics, setActiveThematics] = useState<string[]>([]);
+  // 1. Changement : On passe d'un tableau [] à une valeur unique ou null
+  const [activeThematic, setActiveThematic] = useState<string | null>(null);
 
-  // ADAPTATION DU FETCH POUR LES TABLEAUX
-  async function fetchRecipes(category: string | null, thematicsList: string[]) {
+  async function fetchRecipes(category: string | null, thematic: string | null) {
     const params = new URLSearchParams();
     
     if (category) {
       params.append('category', category);
     }
     
-    // Pour chaque thématique active, on l'ajoute individuellement 
-    // afin de répéter la clé dans l'URL : ?thematic=Plat&thematic=Dessert
-    thematicsList.forEach(thematic => {
+    if (thematic) {
       params.append('thematic', thematic);
-    });
+    }
 
     const res = await fetch(`/api/recipes?${params.toString()}`);
     const data = await res.json();
@@ -46,30 +44,25 @@ function FilterBar({ onResults }: Props) {
   function handleCategory(name: string) {
     const next = activeCategory === name ? null : name;
     setActiveCategory(next);
-    fetchRecipes(next, activeThematics); 
+    fetchRecipes(next, activeThematic); 
   }
 
+  //sélection unique pour les thématiques
   function handleThematic(name: string) {
-    let nextThematics: string[];
-    
-    if (activeThematics.includes(name)) {
-      nextThematics = activeThematics.filter(t => t !== name);
-    } else {
-      nextThematics = [...activeThematics, name];
-    }
-    
-    setActiveThematics(nextThematics);
-    fetchRecipes(activeCategory, nextThematics);
+    const next = activeThematic === name ? null : name;
+    setActiveThematic(next);
+    fetchRecipes(activeCategory, next);
   }
 
   function handleAllCategories() {
     setActiveCategory(null);
-    fetchRecipes(null, activeThematics); 
+    fetchRecipes(null, activeThematic); 
   }
 
+  //remise à zéro
   function handleAllThematics() {
-    setActiveThematics([]); 
-    fetchRecipes(activeCategory, []); 
+    setActiveThematic(null); 
+    fetchRecipes(activeCategory, null); 
   }
 
   return (
@@ -96,7 +89,8 @@ function FilterBar({ onResults }: Props) {
       <div className="filter-group">
         <button 
           key="all thematic" 
-          className={`button-AllThematic ${activeThematics.length === 0 ? 'active' : ''}`}
+          // 5. Mise à jour de la condition active pour "All"
+          className={`button-AllThematic ${activeThematic === null ? 'active' : ''}`}
           onClick={handleAllThematics}
           type="button"
         >
@@ -106,7 +100,8 @@ function FilterBar({ onResults }: Props) {
         {thematics.map((thematic) => (
           <button
             key={thematic.name}
-            className={activeThematics.includes(thematic.name) ? 'active' : ''}
+            // 6. Comparaison directe de la chaîne au lieu de .includes()
+            className={activeThematic === thematic.name ? 'active' : ''}
             onClick={() => handleThematic(thematic.name)}
             type="button"
           >

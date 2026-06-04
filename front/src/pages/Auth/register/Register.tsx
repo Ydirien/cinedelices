@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { LuCircleUser } from 'react-icons/lu';
 import '../AuthPages.css';
 
 export default function Register() {
@@ -10,10 +11,7 @@ export default function Register() {
           <h2 className="auth-title">Inscription</h2>
           
           <div className="auth-upload-wrapper">
-            <div className="auth-upload-box">
-              <span className="material-icons">image</span>
-              <div className="auth-upload-plus">+</div>
-            </div>
+            <LuCircleUser size={150}/>
           </div>
 
           <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
@@ -42,7 +40,7 @@ export default function Register() {
               <span className="password-strength-text">Moyen</span>
             </div>
 
-            <button type="submit" className="auth-submit-btn">—</button>
+            <button type="submit" className="auth-submit-btn">Suivant</button>
           </form>
 
           <Link to="/login" className="auth-back-to-login">

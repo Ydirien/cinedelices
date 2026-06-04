@@ -8,6 +8,10 @@ RUN npm install
 
 COPY ./ ./
 
+# Regénère le client Prisma depuis le schéma avant la compilation TypeScript
+RUN npx prisma generate
+
+RUN npm run build
 RUN npx prisma generate && npm run build
 
 EXPOSE 3010

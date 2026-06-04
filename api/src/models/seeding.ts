@@ -2,6 +2,13 @@ import argon2 from 'argon2';
 import { prisma } from './index.js';
 
 async function seed() {
+  // Si les recettes existent déjà, le seed est complet — on ne re-seed pas
+  const existingRecipes = await prisma.recipe.count();
+  if (existingRecipes > 0) {
+    console.log('Base déjà seedée, seed ignoré.');
+    return;
+  }
+
   // CATEGORIES
   const [catFilm, catSerie, catAnime, catDessinAnime] = await Promise.all([
     prisma.category.create({

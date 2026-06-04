@@ -10,11 +10,11 @@ interface RecipesPageProps {
 }
 function RecipesPage({ recipes }: RecipesPageProps) {
 
-    const [filteredRecipes,setFiltredRecip]= useState([]);
+    const [filteredRecipes,setFiltredRecip]= useState<IRecipe[]>([]);
     const [searchParams, setSearchParams] = useSearchParams();
 
     async function Filter() {
-    const response = await fetch(`http://localhost:3010/api/recipes?${searchParams.toString()}`);
+    const response = await fetch(`/api/recipes?${searchParams.toString()}`);
     const data = await response.json();
     setFiltredRecip(data);
     console.log(data);

@@ -3,10 +3,13 @@ import RecoHomePage from '../../components/Recipes_cards/Recommandation/HomePage
 import RecipesOftheDay from '../../components/RecipeOftheDay/RecipesOftheDay';
 import './homePage.css';
 import { useState, useEffect } from 'react';
-import { IRecipe } from '../../../@types/index.d';
+import { ICategory, IRecipe } from '../../../@types/index.d';
 
 interface HomePageProps {
-  recipes: IRecipe[]
+  recipes: IRecipe[],
+  categories: ICategory[],
+  types: ITypes[],
+
 }
 function HomePage({recipes = []}: HomePageProps) {
 

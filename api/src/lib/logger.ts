@@ -13,7 +13,7 @@ export const logger = createLogger({
             timestamp,
             level,
             message,
-            service: "oquiz-api",
+            service: "CinéDélices-api",
             pid: process.pid,
             ...meta,
         });

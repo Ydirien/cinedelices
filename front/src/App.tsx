@@ -10,7 +10,7 @@ import SearchBar from './components/SearchBar/SearchBar';
 import { useState } from 'react';
 import MentionsLegales from './pages/MentionsPage/MentionsPage';
 import Confidentialite from './pages/ConfidentialPage/ConfidentialPage';
-import { IRecipe } from '../@types/index.d';
+import { ICategory, IRecipe, IType } from '../@types/index.d';
 import recipes from '../data/recipe.json';
 import logoMain from '../public/Logo/LOGO_pricipal_allonger.png';
 import Register from './pages/Auth/register/Register';
@@ -20,6 +20,10 @@ import SearchPage from './pages/SearchPage/SearchPage';
 
 function App() {
   const [getAllRecipes, setGetAllrecipes] = useState<IRecipe[]>([]); // recupérer les données de la data recipe en attendants la bdd
+
+  const [getAllCategories, setGetAllCategories] = useState<ICategory[]>([]);
+
+  const [getAllTypes, setGetAllTypes] = useState<IType[]>([]);
 
   const [showMobileSearch, setShowMobileSearch] = useState(false); // useState pour cacher/montrer la barre de recherche en version mobile
 

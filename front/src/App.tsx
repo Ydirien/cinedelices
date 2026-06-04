@@ -64,7 +64,7 @@ function App() {
         )}
         <Routes>
           <Route path="/" element={<HomePage categories={getAllCategories} types={getAllTypes} recipes={getAllRecipes}/>} />
-          <Route path="/recettes" element={<RecipesPage recipes={getAllRecipes} />} />
+          <Route path="/recettes" element={<RecipesPage categories={getAllCategories} types={getAllTypes} recipes={getAllRecipes} />} />
           <Route path="/recettes/:recette" element={<RecipePage />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/confidentialite" element={<Confidentialite />} />

@@ -29,8 +29,9 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
+      const url = 'http://localhost:3010'
       try {
-        const response = await fetch('/api/recipes');
+        const response = await fetch(`${url}/api/recipes`);
         const dataRecipes = await response.json();
         setGetAllrecipes(dataRecipes.data);
       } catch (error) {

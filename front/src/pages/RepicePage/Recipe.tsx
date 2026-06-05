@@ -1,4 +1,6 @@
-import "./Recipe.css"
+import "./Recipe.css";
+import { API_URL } from "../../constants";
+import { IRecipeDetail } from "../../../@types/index.d";
 import StarsRating from "../../components/Recipes_cards/Stars/StarsRating";
 import { GiCook } from "react-icons/gi";
 import { IoTimer } from "react-icons/io5";
@@ -11,18 +13,30 @@ function RecipePage() {
   const [NavSwitch, SetNav] = useState(1);
   const {recette} = useParams();
 
-  const [recipe, setRecipe] = useState(null); 
+  const [recipe, setRecipe] = useState<IRecipeDetail | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  async function getRecipeById(){
-    const response = await fetch(`/api/recipes/${recette}`);
-    const data = await response.json();
-    setRecipe(data);
+  async function getRecipeById() {
+    try {
+      const response = await fetch(`${API_URL}/api/recipes/${recette}`);
+      const data = await response.json();
+      console.log('recette:', data);
+      if (!response.ok) {
+        setError(`Erreur ${response.status} : ${data.message ?? 'Recette introuvable'}`);
+        return;
+      }
+      setRecipe(data);
+    } catch (err) {
+      console.error('Fetch échoué :', err);
+      setError('Impossible de contacter le serveur.');
+    }
   }
   
   useEffect(() => {
     getRecipeById();
   }, [recette]);
 
+if (error) return <p>{error}</p>;
 if (!recipe) return <p>Chargement...</p>; 
 
   return (

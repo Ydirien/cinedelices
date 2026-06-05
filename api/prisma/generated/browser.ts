@@ -33,6 +33,11 @@ export type Ingredient = Prisma.IngredientModel
  */
 export type Recipe = Prisma.RecipeModel
 /**
+ * Model Comment
+ * 
+ */
+export type Comment = Prisma.CommentModel
+/**
  * Model Like
  * 
  */

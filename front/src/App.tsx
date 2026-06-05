@@ -31,12 +31,15 @@ function App() {
   useEffect(() => {
     const url = 'http://localhost:3010';
     async function fetchData() {
-      const category = await fetch(`${url}/api/categories`);
-      const types = await fetch(`${url}/api/types`);
-      const recipes = await fetch(`${url}/api/recipes`);
-      const dataRecipes = await recipes.json();
-      setGetAllrecipes(dataRecipes.data);
-      console.log(dataRecipes.data);
+      
+      try {
+        
+        const resRecipes = await fetch(`${API_URL}/api/recipes`);
+        const dataRecipes = await resRecipes.json();
+        setGetAllrecipes(dataRecipes.data);
+        } catch (error) {
+        console.error('Erreur lors du chargement des recettes :', error);
+      }
     }
     fetchData();
   }, []);
@@ -65,7 +68,7 @@ function App() {
         )}
 
         <Routes>
-          <Route path="/" element={<HomePage recipes={getAllRecipes} />} />
+          <Route path="/" element={<HomePage recipes={getAllRecipes}  />} />
           <Route path="/recettes" element={<RecipesPage recipes={getAllRecipes} />} />
           <Route path="/recettes/:recette" element={<RecipePage />} />
           <Route path="/search" element={<SearchPage />} />

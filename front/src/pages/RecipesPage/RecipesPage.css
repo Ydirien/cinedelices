@@ -1,4 +1,75 @@
-.maincontainer{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+/* ============================================================
+   RecipesPage — mise en page principale
+   Approche mobile-first : on part du plus petit écran
+   et on ajoute des media queries pour les grands écrans.
+   ============================================================ */
+
+/* ── Base mobile : filterbar au-dessus, cartes en dessous ── */
+.recipes-page {
+  display: flex;
+  flex-direction: column; /* empilement vertical sur mobile */
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+  max-width: 1400px; /* limite la largeur sur très grands écrans */
+  margin: 0 auto;    /* centre la page horizontalement */
+  box-sizing: border-box;
+}
+
+/* Encadré de la barre de filtres */
+.recipes-sidebar {
+  background: #464646b6;       /* fond semi-transparent sombre */
+  border: 2px solid #d4a017;  /* bordure dorée caractéristique du thème */
+  border-radius: 16px;
+  padding: 1rem;
+  width: 100%;        /* prend toute la largeur sur mobile */
+  box-sizing: border-box;
+  height: 100%; /* s'adapte à la hauteur du contenu */
+}
+
+/* Zone qui contient la grille de cartes */
+.recipes-content {
+  width: 100%;
+  min-width: 0; /* évite que le contenu dépasse son conteneur flex */
+}
+
+/* ── Tablet 768px+ : un peu plus d'espace, toujours empilé ── */
+@media (min-width: 768px) {
+  .recipes-page {
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+}
+
+/* ── Desktop 1024px+ : layout deux panneaux, seul le contenu scrolle ── */
+@media (min-width: 1024px) {
+  .recipes-page {
+    flex-direction: row;
+    align-items: stretch;       /* les deux colonnes s'étirent à la même hauteur */
+    gap: 2rem;
+    padding: 2rem;
+
+    /* Le main a margin-top: 120px (hauteur du header fixe).
+       On fixe la hauteur de la page au viewport restant pour que le scroll
+       soit interne à .recipes-content et non sur le body entier. */
+    height: calc(100dvh - 120px);
+    overflow: hidden;           /* bloque le scroll au niveau du body sur cette section */
+  }
+
+  .recipes-sidebar {
+    width: 260px;
+    min-width: 260px;
+    overflow-y: auto;           /* scrollable si les filtres deviennent très longs un jour */
+  }
+
+  .recipes-content {
+    flex: 1;
+    min-width: 0;
+    overflow-y: auto;           /* SEULE cette zone scrolle */
+    height: 100%;
+  }
+  .title-page {
+    font-size: 2rem;
+    text-align: start;
+  }
 }

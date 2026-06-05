@@ -11,7 +11,8 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
   const recipesToDisplay = recipes;
 
   return (
-    <section className="RecipesContainer">
+    <section className="RecipeGrid">
+      <h2 className="title-page">Recettes</h2>
       {/* Remplacement du ul par une div dédiée à la grille */}
       <div className="RecipesGrid">
         {recipesToDisplay.map((recipe) => {
@@ -21,6 +22,7 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
           return (
             /* La clé "key" passe directement sur la carte principale */
             <div className="RecipesPCard" key={recipe.id}>
+              
               <NavLink to={`/recettes/${recipe.id}`}>
                 <div className="RecipeIMG">
                   <img src={recipe.image} alt={recipe.title} className="recetteImage" />

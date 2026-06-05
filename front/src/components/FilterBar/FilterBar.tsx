@@ -38,7 +38,7 @@ function FilterBar({ onResults }: Props) {
 
     const res = await fetch(`http://localhost:3010/api/recipes?${params.toString()}`);
     const data = await res.json();
-    onResults(data.data);
+    onResults(data);
   }
 
   function handleCategory(name: string) {

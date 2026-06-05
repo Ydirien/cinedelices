@@ -22,6 +22,24 @@ export function checkRoles(roles: Role[]) {
     };
 }
 
+// Middleware optionnel : hydrate req.user si un token valide est présent, ne bloque pas sinon
+export function softAuth(req: Request, _res: Response, next: NextFunction) {
+    const authHeader = req.headers?.authorization;
+    if (typeof authHeader !== "string") return next();
+
+    const token = authHeader.split(" ")[1];
+    if (!token) return next();
+
+    try {
+        const { id, role } = verifyAndDecodeJWT(token);
+        req.user = { id, role };
+    } catch {
+        // token invalide ou expiré → on ignore, la route reste accessible
+    }
+
+    next();
+}
+
 function extractAccessToken(req: Request): string {
     if (typeof req.headers?.authorization === "string") {
         const token = req.headers.authorization.split(" ")[1];

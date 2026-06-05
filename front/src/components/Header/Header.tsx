@@ -65,6 +65,7 @@ function Header({ setShowMobileSearch, logoMain }: HeaderProps) {
           <button className="buttonMobileSearchBar" onClick={() => setShowMobileSearch((prev) => !prev)}>
             <LuSearch size={20} />
           </button>
+          <NavLink to="/profil"><LuCircleUser size={35} /></NavLink>
         </div>
       </section>
       {mobileNavOpen && (

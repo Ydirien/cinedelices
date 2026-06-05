@@ -2,9 +2,9 @@ import { NavLink } from 'react-router-dom';
 import StarsRating from '../Stars/StarsRating';
 import { IRecipe } from '../../../../@types/index.d';
 interface RecipesReco {
-  reco: IRecipe;
+  reco: IRecipe[];
 }
-export default function RecoHomePage({ reco }: RecipesReco) {
+export default function RecoHomePage({ reco = [] }: RecipesReco) {
   return (
     <section className="reco-home-page">
       <h2 className="subtitle">Recommandations</h2>

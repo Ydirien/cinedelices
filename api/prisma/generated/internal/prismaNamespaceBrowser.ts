@@ -54,6 +54,7 @@ export const ModelName = {
   User: 'User',
   Ingredient: 'Ingredient',
   Recipe: 'Recipe',
+  Like: 'Like',
   Step: 'Step',
   RecipeIngredient: 'RecipeIngredient',
   Thematic: 'Thematic',
@@ -85,7 +86,9 @@ export const UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   createdAt: 'createdAt',
-  role: 'role'
+  role: 'role',
+  resetToken: 'resetToken',
+  resetTokenExpiry: 'resetTokenExpiry'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -116,6 +119,15 @@ export const RecipeScalarFieldEnum = {
 } as const
 
 export type RecipeScalarFieldEnum = (typeof RecipeScalarFieldEnum)[keyof typeof RecipeScalarFieldEnum]
+
+
+export const LikeScalarFieldEnum = {
+  userId: 'userId',
+  recipeId: 'recipeId',
+  createdAt: 'createdAt'
+} as const
+
+export type LikeScalarFieldEnum = (typeof LikeScalarFieldEnum)[keyof typeof LikeScalarFieldEnum]
 
 
 export const StepScalarFieldEnum = {
@@ -203,4 +215,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

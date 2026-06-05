@@ -273,7 +273,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   resetTokenExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   recipes?: Prisma.RecipeListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
-  likes?: Prisma.LikeListRelationFilter
 }, "id" | "username" | "email" | "resetToken">
 
 export type UserOrderByWithAggregationInput = {
@@ -570,73 +569,6 @@ export type UserUncheckedUpdateWithoutRecipesInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
-  likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutLikesInput = {
-  username: string
-  email: string
-  password: string
-  createdAt?: Date | string
-  role?: $Enums.Role
-  resetToken?: string | null
-  resetTokenExpiry?: Date | string | null
-  recipes?: Prisma.RecipeCreateNestedManyWithoutUserInput
-  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutLikesInput = {
-  id?: number
-  username: string
-  email: string
-  password: string
-  createdAt?: Date | string
-  role?: $Enums.Role
-  resetToken?: string | null
-  resetTokenExpiry?: Date | string | null
-  recipes?: Prisma.RecipeUncheckedCreateNestedManyWithoutUserInput
-  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutLikesInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutLikesInput, Prisma.UserUncheckedCreateWithoutLikesInput>
-}
-
-export type UserUpsertWithoutLikesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutLikesInput, Prisma.UserUncheckedUpdateWithoutLikesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutLikesInput, Prisma.UserUncheckedCreateWithoutLikesInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutLikesInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutLikesInput, Prisma.UserUncheckedUpdateWithoutLikesInput>
-}
-
-export type UserUpdateWithoutLikesInput = {
-  username?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipes?: Prisma.RecipeUpdateManyWithoutUserNestedInput
-  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutLikesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  username?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resetTokenExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipes?: Prisma.RecipeUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 

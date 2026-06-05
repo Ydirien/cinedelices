@@ -3,12 +3,12 @@ import RecoHomePage from '../../components/Recipes_cards/Recommandation/HomePage
 import RecipesOftheDay from '../../components/RecipeOftheDay/RecipesOftheDay';
 import './homePage.css';
 import { useState, useEffect } from 'react';
-import { ICategory, IRecipe } from '../../../@types/index.d';
+import { ICategory, IRecipe, IType } from '../../../@types/index.d';
 
 interface HomePageProps {
   recipes: IRecipe[],
   categories: ICategory[],
-  types: ITypes[],
+  types: IType[],
 
 }
 function HomePage({recipes = []}: HomePageProps) {
@@ -31,7 +31,7 @@ function HomePage({recipes = []}: HomePageProps) {
     }
   }, [recipes]);
 
-
+  if (!recipes) return <p>Chargement...</p>;
   return (
     <>
       <section className="section-container ">

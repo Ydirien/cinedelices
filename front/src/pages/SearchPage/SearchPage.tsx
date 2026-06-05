@@ -37,7 +37,7 @@ export default function SearchPage() {
 
         // J'appelle ma route API dédiée à la recherche de recettes
         const response = await fetch(
-          `/api/recipes/search?q=${encodeURIComponent(query)}`
+          `http://localhost:3010/api/recipes/search?q=${encodeURIComponent(query)}`
         );
 
         // Si la réponse n'est pas correcte, je déclenche une erreur

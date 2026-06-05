@@ -77,14 +77,14 @@ export async function getRecipeById(req: Request, res: Response) {
     const id = Number(req.params.id);
     if (!Number.isInteger(id)) throw new NotFoundError("Recipe not found");
 
-    const recipe = await prisma.recipe.findUnique({
+    const recipe = await prisma.recipe.findFirst({
         where: { id, state: "APPROVED" },
         include: {
             work: { include: { category: true } },
             thematics: { include: { thematic: true } },
             steps: { orderBy: { order: 'asc' } },
             recipeIngredients: { include: { ingredient: true } },
-            _count: { select: { likes: true } },
+            // _count: { select: { likes: true } },
         },
     });
 

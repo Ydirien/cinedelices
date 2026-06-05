@@ -8,7 +8,7 @@
 		"build": "tsc",
 		"docker:start": "npx prisma db push && npx tsx ./src/models/seeding.ts && npm run dev",
 		"======= Pour le dev ========": "========================",
-		"dev": "tsx --watch server.ts",
+		"dev": "nodemon --exec tsx server.ts --legacy-watch --delay 1",
 		"======= Pour la BDD ========": "========================",
 		"db:migrate:dev": "prisma migrate dev",
 		"db:migrate:deploy": "prisma migrate deploy",

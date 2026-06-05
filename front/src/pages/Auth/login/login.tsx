@@ -91,9 +91,15 @@ export default function Login() {
             </button>
           </form>
 
-          <NavLink to="/passwordlost" className="auth-back-to-login">
-            Mot de passe oublié ? 
-          </NavLink>
+          <div>
+            <NavLink to="/passwordlost" className="auth-back-to-login">
+              Mot de passe oublié ? 
+            </NavLink>
+            <NavLink to="/register" className="auth-back-to-login">
+              Pas encore de compte ? 
+            </NavLink>
+          </div>
+          
         </div>
       </div>
     </div>

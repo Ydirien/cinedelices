@@ -80,20 +80,25 @@ export async function getRecipeById(req: Request, res: Response) {
     const recipe = await prisma.recipe.findUnique({
         where: { id, state: "APPROVED" },
         include: {
-            // MVP : film ou série associé à la recette
             work: { include: { category: true } },
             thematics: { include: { thematic: true } },
-            // MVP : instructions de préparation étape par étape, triées par ordre
             steps: { orderBy: { order: 'asc' } },
-            // MVP : ingrédients avec nom, quantité et unité (ex: "200g de farine")
             recipeIngredients: { include: { ingredient: true } },
+            _count: { select: { likes: true } },
         },
     });
 
     if (!recipe) throw new NotFoundError("Recipe not found");
 
-    // MVP : le champ description couvre les informations complémentaires (anecdotes, contexte)
-    res.json(recipe);
+    let isLiked = false;
+    if (req.user) {
+        const like = await prisma.like.findUnique({
+            where: { userId_recipeId: { userId: req.user.id, recipeId: id } },
+        });
+        isLiked = !!like;
+    }
+
+    res.json({ ...recipe, isLiked });
 }
 
 export async function createRecipe(req: Request, res: Response) {
@@ -185,4 +190,37 @@ export async function searchRecipes(req: Request, res: Response) {
     });
 
     res.json(recipes);
+}
+
+export async function likedRecipes(req: Request, res: Response) {
+    const recipeId = Number(req.params.id);
+    if (!Number.isInteger(recipeId)) throw new NotFoundError("Recipe not found");
+
+    const recipe = await prisma.recipe.findUnique({ where: { id: recipeId, state: "APPROVED" } });
+    if (!recipe) throw new NotFoundError("Recipe not found");
+
+    const existingLike = await prisma.like.findUnique({
+        where: { userId_recipeId: { userId: req.user.id, recipeId } },
+    });
+    if (existingLike) throw new ConflictError("Recipe already liked");
+
+    await prisma.like.create({ data: { userId: req.user.id, recipeId } });
+
+    res.status(201).json({ message: "Recipe liked" });
+}
+
+export async function unlikedRecipes(req: Request, res: Response) {
+    const recipeId = Number(req.params.id);
+    if (!Number.isInteger(recipeId)) throw new NotFoundError("Recipe not found");
+
+    const existingLike = await prisma.like.findUnique({
+        where: { userId_recipeId: { userId: req.user.id, recipeId } },
+    });
+    if (!existingLike) throw new NotFoundError("Like not found");
+
+    await prisma.like.delete({
+        where: { userId_recipeId: { userId: req.user.id, recipeId } },
+    });
+
+    res.status(200).json({ message: "Recipe unliked" });
 }

@@ -31,7 +31,7 @@ export default function Passwordlost() {
       }
 
       // Si tout est OK, on stocke le message de l'API :
-      setMessage(typeof data === 'string' ? data : data.message);
+      setMessage(data);
       setEmail(''); 
 
     } catch (err: any) {

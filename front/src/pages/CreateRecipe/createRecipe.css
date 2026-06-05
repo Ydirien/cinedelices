@@ -1,0 +1,111 @@
+.CreateRecipe{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.Add-Header{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .RecipeImg{
+        align-self: center;
+        width: 65%;
+        height: 200px;
+        border-radius: 10px;
+        background-color: var(--secondary-color);
+    }
+}
+
+.AddRecipeInfo{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    
+    label{
+        text-align: left;
+        font-size: 0.85rem;
+        font-weight: bold;
+        color: var(--quaternary-color);
+    }
+}
+
+.Recipe-name-input{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+.Recipe-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  
+  textarea{
+    background: transparent;
+    border: 2px solid var(--secondary-color);
+    padding: 0.6rem 0;
+    color: var(--quaternary-color);
+    font-size: 0.95rem;
+    border-radius: 5px;
+    rezize: none;
+    height: 10rem;
+  }
+}
+
+.Recipe-input-group input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--secondary-color);
+  padding: 0.6rem 0;
+  color: var(--quaternary-color);
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+}
+
+.Recipe-input-group textarea:focus {
+  outline: none;
+  border-color: var(--quinary-color); 
+}
+
+.Recipe-input-group input:focus {
+  outline: none;
+  border-bottom-color: var(--quinary-color); 
+}
+
+.Difficulty-PrepaTime{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 2.5rem;
+}
+
+.dropdownDefaultButton{
+    width: 25vw;
+}
+
+.dropdown{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 1rem;
+        background: var(--secondary-color);
+        border-radius: 10px;
+
+        button{
+            background: transparent;
+            border: none;
+            color: var(--quaternary-color);
+            font-size: 0.95rem;
+            text-align: start;
+            color: var(--quaternary-color);
+            font-size: 0.95rem;
+            margin: 0.5rem 0 1rem 0.2rem;
+        }
+}    

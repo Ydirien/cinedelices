@@ -1,0 +1,82 @@
+/* ── Conteneur centré en bas de la grille ── */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.5rem 0;
+}
+
+/* Bouton générique (numéro + flèches) */
+.pagination__btn {
+  min-width: 2.2rem;
+  height: 2.2rem;
+  padding: 0 0.5rem;
+
+  background: var(--secondary-color);
+  color: var(--quaternary-color);
+  border: 2px solid var(--quinary-color);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Cercle d'animation identique aux boutons FilterBar */
+.pagination__btn::before {
+  content: '';
+  position: absolute;
+  background: var(--quinary-color);
+  z-index: -1;
+  width: 300%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  top: 100%;
+  left: 100%;
+  transform: translate(0, 0);
+  transition: transform 0.4s ease-in-out;
+}
+
+.pagination__btn:hover:not(:disabled)::before {
+  transform: translate(-120%, -120%);
+}
+
+.pagination__btn:hover:not(:disabled) {
+  color: white;
+}
+
+/* Page actuellement affichée */
+.pagination__btn--active {
+  background-color: var(--quinary-color);
+  color: white;
+  font-weight: bold;
+  cursor: default;
+}
+
+/* Flèches ‹ › légèrement plus grandes */
+.pagination__btn--arrow {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+/* Bouton désactivé (première/dernière page) */
+.pagination__btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  border-color: var(--tertiary-color);
+}
+
+/* Points de suspension */
+.pagination__ellipsis {
+  color: var(--tertiary-color);
+  padding: 0 0.2rem;
+  user-select: none;
+}

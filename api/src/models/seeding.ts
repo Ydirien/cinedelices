@@ -167,9 +167,9 @@ async function seed() {
 
   const recRatatouille = await prisma.recipe.create({
     data: {
-      title: 'Ratatouille confit de Rémy',
+      title: 'Ratatouille confite de Rémy',
       description:
-        'La célèbre ratatouille confit qui a fait chavirer le cœur du critique Anton Ego. Fines tranches de légumes en rosace sur un coulis de tomate parfumé au thym.',
+        'La célèbre ratatouille confite qui a fait chavirer le cœur du critique Anton Ego. Fines tranches de légumes en rosace sur un coulis de tomate parfumé au thym.',
       image: 'https://placehold.co/800x600?text=Ratatouille+Confit',
       prepTime: 45,
       cookTime: 90,

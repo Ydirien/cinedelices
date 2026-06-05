@@ -31,7 +31,7 @@ function HomePage({recipes}: HomePageProps) {
     }
   }, [recipes]);
 
-
+  if (!recipes) return <p>Chargement...</p>;
   return (
     <>
       <section className="section-container ">

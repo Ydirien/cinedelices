@@ -1,0 +1,8 @@
+### GET all recipes
+GET http://localhost:3010/api/recipes
+
+### GET a single recipe by ID
+GET http://localhost:3010/api/recipes/2
+
+### GET a search for recipes by name
+GET http://localhost:3010/api/recipes/search?q=miel

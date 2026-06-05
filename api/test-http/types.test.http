@@ -1,0 +1,2 @@
+### GET All types
+GET GET http://localhost:3010/api/types

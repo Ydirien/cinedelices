@@ -1,0 +1,5 @@
+### GET All works
+GET http://localhost:3010/api/works
+
+### GET One work by ID
+GET http://localhost:3010/api/works/3

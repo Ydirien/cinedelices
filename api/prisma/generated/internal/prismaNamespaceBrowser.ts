@@ -54,6 +54,7 @@ export const ModelName = {
   User: 'User',
   Ingredient: 'Ingredient',
   Recipe: 'Recipe',
+  Like: 'Like',
   Step: 'Step',
   RecipeIngredient: 'RecipeIngredient',
   Thematic: 'Thematic',
@@ -118,6 +119,15 @@ export const RecipeScalarFieldEnum = {
 } as const
 
 export type RecipeScalarFieldEnum = (typeof RecipeScalarFieldEnum)[keyof typeof RecipeScalarFieldEnum]
+
+
+export const LikeScalarFieldEnum = {
+  userId: 'userId',
+  recipeId: 'recipeId',
+  createdAt: 'createdAt'
+} as const
+
+export type LikeScalarFieldEnum = (typeof LikeScalarFieldEnum)[keyof typeof LikeScalarFieldEnum]
 
 
 export const StepScalarFieldEnum = {

@@ -219,6 +219,16 @@ export interface PrismaClient<
   get recipe(): Prisma.RecipeDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
+   * `prisma.like`: Exposes CRUD operations for the **Like** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Likes
+    * const likes = await prisma.like.findMany()
+    * ```
+    */
+  get like(): Prisma.LikeDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
    * `prisma.step`: Exposes CRUD operations for the **Step** model.
     * Example usage:
     * ```ts

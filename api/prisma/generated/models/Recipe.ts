@@ -297,6 +297,7 @@ export type RecipeWhereInput = {
   work?: Prisma.XOR<Prisma.WorkScalarRelationFilter, Prisma.WorkWhereInput>
   recipeIngredients?: Prisma.RecipeIngredientListRelationFilter
   thematics?: Prisma.RecipeThematicListRelationFilter
+  likes?: Prisma.LikeListRelationFilter
 }
 
 export type RecipeOrderByWithRelationInput = {
@@ -317,6 +318,7 @@ export type RecipeOrderByWithRelationInput = {
   work?: Prisma.WorkOrderByWithRelationInput
   recipeIngredients?: Prisma.RecipeIngredientOrderByRelationAggregateInput
   thematics?: Prisma.RecipeThematicOrderByRelationAggregateInput
+  likes?: Prisma.LikeOrderByRelationAggregateInput
 }
 
 export type RecipeWhereUniqueInput = Prisma.AtLeast<{
@@ -340,6 +342,7 @@ export type RecipeWhereUniqueInput = Prisma.AtLeast<{
   work?: Prisma.XOR<Prisma.WorkScalarRelationFilter, Prisma.WorkWhereInput>
   recipeIngredients?: Prisma.RecipeIngredientListRelationFilter
   thematics?: Prisma.RecipeThematicListRelationFilter
+  likes?: Prisma.LikeListRelationFilter
 }, "id" | "workId">
 
 export type RecipeOrderByWithAggregationInput = {
@@ -395,6 +398,7 @@ export type RecipeCreateInput = {
   work: Prisma.WorkCreateNestedOneWithoutRecipeInput
   recipeIngredients?: Prisma.RecipeIngredientCreateNestedManyWithoutRecipeInput
   thematics?: Prisma.RecipeThematicCreateNestedManyWithoutRecipeInput
+  likes?: Prisma.LikeCreateNestedManyWithoutRecipeInput
 }
 
 export type RecipeUncheckedCreateInput = {
@@ -413,6 +417,7 @@ export type RecipeUncheckedCreateInput = {
   steps?: Prisma.StepUncheckedCreateNestedManyWithoutRecipeInput
   recipeIngredients?: Prisma.RecipeIngredientUncheckedCreateNestedManyWithoutRecipeInput
   thematics?: Prisma.RecipeThematicUncheckedCreateNestedManyWithoutRecipeInput
+  likes?: Prisma.LikeUncheckedCreateNestedManyWithoutRecipeInput
 }
 
 export type RecipeUpdateInput = {
@@ -430,6 +435,7 @@ export type RecipeUpdateInput = {
   work?: Prisma.WorkUpdateOneRequiredWithoutRecipeNestedInput
   recipeIngredients?: Prisma.RecipeIngredientUpdateManyWithoutRecipeNestedInput
   thematics?: Prisma.RecipeThematicUpdateManyWithoutRecipeNestedInput
+  likes?: Prisma.LikeUpdateManyWithoutRecipeNestedInput
 }
 
 export type RecipeUncheckedUpdateInput = {
@@ -448,6 +454,7 @@ export type RecipeUncheckedUpdateInput = {
   steps?: Prisma.StepUncheckedUpdateManyWithoutRecipeNestedInput
   recipeIngredients?: Prisma.RecipeIngredientUncheckedUpdateManyWithoutRecipeNestedInput
   thematics?: Prisma.RecipeThematicUncheckedUpdateManyWithoutRecipeNestedInput
+  likes?: Prisma.LikeUncheckedUpdateManyWithoutRecipeNestedInput
 }
 
 export type RecipeCreateManyInput = {
@@ -625,6 +632,20 @@ export type EnumStateFieldUpdateOperationsInput = {
   set?: $Enums.State
 }
 
+export type RecipeCreateNestedOneWithoutLikesInput = {
+  create?: Prisma.XOR<Prisma.RecipeCreateWithoutLikesInput, Prisma.RecipeUncheckedCreateWithoutLikesInput>
+  connectOrCreate?: Prisma.RecipeCreateOrConnectWithoutLikesInput
+  connect?: Prisma.RecipeWhereUniqueInput
+}
+
+export type RecipeUpdateOneRequiredWithoutLikesNestedInput = {
+  create?: Prisma.XOR<Prisma.RecipeCreateWithoutLikesInput, Prisma.RecipeUncheckedCreateWithoutLikesInput>
+  connectOrCreate?: Prisma.RecipeCreateOrConnectWithoutLikesInput
+  upsert?: Prisma.RecipeUpsertWithoutLikesInput
+  connect?: Prisma.RecipeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RecipeUpdateToOneWithWhereWithoutLikesInput, Prisma.RecipeUpdateWithoutLikesInput>, Prisma.RecipeUncheckedUpdateWithoutLikesInput>
+}
+
 export type RecipeCreateNestedOneWithoutStepsInput = {
   create?: Prisma.XOR<Prisma.RecipeCreateWithoutStepsInput, Prisma.RecipeUncheckedCreateWithoutStepsInput>
   connectOrCreate?: Prisma.RecipeCreateOrConnectWithoutStepsInput
@@ -713,6 +734,7 @@ export type RecipeCreateWithoutUserInput = {
   work: Prisma.WorkCreateNestedOneWithoutRecipeInput
   recipeIngredients?: Prisma.RecipeIngredientCreateNestedManyWithoutRecipeInput
   thematics?: Prisma.RecipeThematicCreateNestedManyWithoutRecipeInput
+  likes?: Prisma.LikeCreateNestedManyWithoutRecipeInput
 }
 
 export type RecipeUncheckedCreateWithoutUserInput = {
@@ -730,6 +752,7 @@ export type RecipeUncheckedCreateWithoutUserInput = {
   steps?: Prisma.StepUncheckedCreateNestedManyWithoutRecipeInput
   recipeIngredients?: Prisma.RecipeIngredientUncheckedCreateNestedManyWithoutRecipeInput
   thematics?: Prisma.RecipeThematicUncheckedCreateNestedManyWithoutRecipeInput
+  likes?: Prisma.LikeUncheckedCreateNestedManyWithoutRecipeInput
 }
 
 export type RecipeCreateOrConnectWithoutUserInput = {
@@ -776,6 +799,92 @@ export type RecipeScalarWhereInput = {
   workId?: Prisma.IntFilter<"Recipe"> | number
 }
 
+export type RecipeCreateWithoutLikesInput = {
+  title: string
+  description: string
+  image: string
+  prepTime: number
+  cookTime: number
+  servings: number
+  difficulty: $Enums.Difficulty
+  state?: $Enums.State
+  createdAt?: Date | string
+  steps?: Prisma.StepCreateNestedManyWithoutRecipeInput
+  user: Prisma.UserCreateNestedOneWithoutRecipesInput
+  work: Prisma.WorkCreateNestedOneWithoutRecipeInput
+  recipeIngredients?: Prisma.RecipeIngredientCreateNestedManyWithoutRecipeInput
+  thematics?: Prisma.RecipeThematicCreateNestedManyWithoutRecipeInput
+}
+
+export type RecipeUncheckedCreateWithoutLikesInput = {
+  id?: number
+  title: string
+  description: string
+  image: string
+  prepTime: number
+  cookTime: number
+  servings: number
+  difficulty: $Enums.Difficulty
+  state?: $Enums.State
+  createdAt?: Date | string
+  userId: number
+  workId: number
+  steps?: Prisma.StepUncheckedCreateNestedManyWithoutRecipeInput
+  recipeIngredients?: Prisma.RecipeIngredientUncheckedCreateNestedManyWithoutRecipeInput
+  thematics?: Prisma.RecipeThematicUncheckedCreateNestedManyWithoutRecipeInput
+}
+
+export type RecipeCreateOrConnectWithoutLikesInput = {
+  where: Prisma.RecipeWhereUniqueInput
+  create: Prisma.XOR<Prisma.RecipeCreateWithoutLikesInput, Prisma.RecipeUncheckedCreateWithoutLikesInput>
+}
+
+export type RecipeUpsertWithoutLikesInput = {
+  update: Prisma.XOR<Prisma.RecipeUpdateWithoutLikesInput, Prisma.RecipeUncheckedUpdateWithoutLikesInput>
+  create: Prisma.XOR<Prisma.RecipeCreateWithoutLikesInput, Prisma.RecipeUncheckedCreateWithoutLikesInput>
+  where?: Prisma.RecipeWhereInput
+}
+
+export type RecipeUpdateToOneWithWhereWithoutLikesInput = {
+  where?: Prisma.RecipeWhereInput
+  data: Prisma.XOR<Prisma.RecipeUpdateWithoutLikesInput, Prisma.RecipeUncheckedUpdateWithoutLikesInput>
+}
+
+export type RecipeUpdateWithoutLikesInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  prepTime?: Prisma.IntFieldUpdateOperationsInput | number
+  cookTime?: Prisma.IntFieldUpdateOperationsInput | number
+  servings?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  state?: Prisma.EnumStateFieldUpdateOperationsInput | $Enums.State
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  steps?: Prisma.StepUpdateManyWithoutRecipeNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutRecipesNestedInput
+  work?: Prisma.WorkUpdateOneRequiredWithoutRecipeNestedInput
+  recipeIngredients?: Prisma.RecipeIngredientUpdateManyWithoutRecipeNestedInput
+  thematics?: Prisma.RecipeThematicUpdateManyWithoutRecipeNestedInput
+}
+
+export type RecipeUncheckedUpdateWithoutLikesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  prepTime?: Prisma.IntFieldUpdateOperationsInput | number
+  cookTime?: Prisma.IntFieldUpdateOperationsInput | number
+  servings?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  state?: Prisma.EnumStateFieldUpdateOperationsInput | $Enums.State
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  workId?: Prisma.IntFieldUpdateOperationsInput | number
+  steps?: Prisma.StepUncheckedUpdateManyWithoutRecipeNestedInput
+  recipeIngredients?: Prisma.RecipeIngredientUncheckedUpdateManyWithoutRecipeNestedInput
+  thematics?: Prisma.RecipeThematicUncheckedUpdateManyWithoutRecipeNestedInput
+}
+
 export type RecipeCreateWithoutStepsInput = {
   title: string
   description: string
@@ -790,6 +899,7 @@ export type RecipeCreateWithoutStepsInput = {
   work: Prisma.WorkCreateNestedOneWithoutRecipeInput
   recipeIngredients?: Prisma.RecipeIngredientCreateNestedManyWithoutRecipeInput
   thematics?: Prisma.RecipeThematicCreateNestedManyWithoutRecipeInput
+  likes?: Prisma.LikeCreateNestedManyWithoutRecipeInput
 }
 
 export type RecipeUncheckedCreateWithoutStepsInput = {
@@ -807,6 +917,7 @@ export type RecipeUncheckedCreateWithoutStepsInput = {
   workId: number
   recipeIngredients?: Prisma.RecipeIngredientUncheckedCreateNestedManyWithoutRecipeInput
   thematics?: Prisma.RecipeThematicUncheckedCreateNestedManyWithoutRecipeInput
+  likes?: Prisma.LikeUncheckedCreateNestedManyWithoutRecipeInput
 }
 
 export type RecipeCreateOrConnectWithoutStepsInput = {
@@ -839,6 +950,7 @@ export type RecipeUpdateWithoutStepsInput = {
   work?: Prisma.WorkUpdateOneRequiredWithoutRecipeNestedInput
   recipeIngredients?: Prisma.RecipeIngredientUpdateManyWithoutRecipeNestedInput
   thematics?: Prisma.RecipeThematicUpdateManyWithoutRecipeNestedInput
+  likes?: Prisma.LikeUpdateManyWithoutRecipeNestedInput
 }
 
 export type RecipeUncheckedUpdateWithoutStepsInput = {
@@ -856,6 +968,7 @@ export type RecipeUncheckedUpdateWithoutStepsInput = {
   workId?: Prisma.IntFieldUpdateOperationsInput | number
   recipeIngredients?: Prisma.RecipeIngredientUncheckedUpdateManyWithoutRecipeNestedInput
   thematics?: Prisma.RecipeThematicUncheckedUpdateManyWithoutRecipeNestedInput
+  likes?: Prisma.LikeUncheckedUpdateManyWithoutRecipeNestedInput
 }
 
 export type RecipeCreateWithoutRecipeIngredientsInput = {
@@ -872,6 +985,7 @@ export type RecipeCreateWithoutRecipeIngredientsInput = {
   user: Prisma.UserCreateNestedOneWithoutRecipesInput
   work: Prisma.WorkCreateNestedOneWithoutRecipeInput
   thematics?: Prisma.RecipeThematicCreateNestedManyWithoutRecipeInput
+  likes?: Prisma.LikeCreateNestedManyWithoutRecipeInput
 }
 
 export type RecipeUncheckedCreateWithoutRecipeIngredientsInput = {
@@ -889,6 +1003,7 @@ export type RecipeUncheckedCreateWithoutRecipeIngredientsInput = {
   workId: number
   steps?: Prisma.StepUncheckedCreateNestedManyWithoutRecipeInput
   thematics?: Prisma.RecipeThematicUncheckedCreateNestedManyWithoutRecipeInput
+  likes?: Prisma.LikeUncheckedCreateNestedManyWithoutRecipeInput
 }
 
 export type RecipeCreateOrConnectWithoutRecipeIngredientsInput = {
@@ -921,6 +1036,7 @@ export type RecipeUpdateWithoutRecipeIngredientsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutRecipesNestedInput
   work?: Prisma.WorkUpdateOneRequiredWithoutRecipeNestedInput
   thematics?: Prisma.RecipeThematicUpdateManyWithoutRecipeNestedInput
+  likes?: Prisma.LikeUpdateManyWithoutRecipeNestedInput
 }
 
 export type RecipeUncheckedUpdateWithoutRecipeIngredientsInput = {
@@ -938,6 +1054,7 @@ export type RecipeUncheckedUpdateWithoutRecipeIngredientsInput = {
   workId?: Prisma.IntFieldUpdateOperationsInput | number
   steps?: Prisma.StepUncheckedUpdateManyWithoutRecipeNestedInput
   thematics?: Prisma.RecipeThematicUncheckedUpdateManyWithoutRecipeNestedInput
+  likes?: Prisma.LikeUncheckedUpdateManyWithoutRecipeNestedInput
 }
 
 export type RecipeCreateWithoutThematicsInput = {
@@ -954,6 +1071,7 @@ export type RecipeCreateWithoutThematicsInput = {
   user: Prisma.UserCreateNestedOneWithoutRecipesInput
   work: Prisma.WorkCreateNestedOneWithoutRecipeInput
   recipeIngredients?: Prisma.RecipeIngredientCreateNestedManyWithoutRecipeInput
+  likes?: Prisma.LikeCreateNestedManyWithoutRecipeInput
 }
 
 export type RecipeUncheckedCreateWithoutThematicsInput = {
@@ -971,6 +1089,7 @@ export type RecipeUncheckedCreateWithoutThematicsInput = {
   workId: number
   steps?: Prisma.StepUncheckedCreateNestedManyWithoutRecipeInput
   recipeIngredients?: Prisma.RecipeIngredientUncheckedCreateNestedManyWithoutRecipeInput
+  likes?: Prisma.LikeUncheckedCreateNestedManyWithoutRecipeInput
 }
 
 export type RecipeCreateOrConnectWithoutThematicsInput = {
@@ -1003,6 +1122,7 @@ export type RecipeUpdateWithoutThematicsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutRecipesNestedInput
   work?: Prisma.WorkUpdateOneRequiredWithoutRecipeNestedInput
   recipeIngredients?: Prisma.RecipeIngredientUpdateManyWithoutRecipeNestedInput
+  likes?: Prisma.LikeUpdateManyWithoutRecipeNestedInput
 }
 
 export type RecipeUncheckedUpdateWithoutThematicsInput = {
@@ -1020,6 +1140,7 @@ export type RecipeUncheckedUpdateWithoutThematicsInput = {
   workId?: Prisma.IntFieldUpdateOperationsInput | number
   steps?: Prisma.StepUncheckedUpdateManyWithoutRecipeNestedInput
   recipeIngredients?: Prisma.RecipeIngredientUncheckedUpdateManyWithoutRecipeNestedInput
+  likes?: Prisma.LikeUncheckedUpdateManyWithoutRecipeNestedInput
 }
 
 export type RecipeCreateWithoutWorkInput = {
@@ -1036,6 +1157,7 @@ export type RecipeCreateWithoutWorkInput = {
   user: Prisma.UserCreateNestedOneWithoutRecipesInput
   recipeIngredients?: Prisma.RecipeIngredientCreateNestedManyWithoutRecipeInput
   thematics?: Prisma.RecipeThematicCreateNestedManyWithoutRecipeInput
+  likes?: Prisma.LikeCreateNestedManyWithoutRecipeInput
 }
 
 export type RecipeUncheckedCreateWithoutWorkInput = {
@@ -1053,6 +1175,7 @@ export type RecipeUncheckedCreateWithoutWorkInput = {
   steps?: Prisma.StepUncheckedCreateNestedManyWithoutRecipeInput
   recipeIngredients?: Prisma.RecipeIngredientUncheckedCreateNestedManyWithoutRecipeInput
   thematics?: Prisma.RecipeThematicUncheckedCreateNestedManyWithoutRecipeInput
+  likes?: Prisma.LikeUncheckedCreateNestedManyWithoutRecipeInput
 }
 
 export type RecipeCreateOrConnectWithoutWorkInput = {
@@ -1085,6 +1208,7 @@ export type RecipeUpdateWithoutWorkInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutRecipesNestedInput
   recipeIngredients?: Prisma.RecipeIngredientUpdateManyWithoutRecipeNestedInput
   thematics?: Prisma.RecipeThematicUpdateManyWithoutRecipeNestedInput
+  likes?: Prisma.LikeUpdateManyWithoutRecipeNestedInput
 }
 
 export type RecipeUncheckedUpdateWithoutWorkInput = {
@@ -1102,6 +1226,7 @@ export type RecipeUncheckedUpdateWithoutWorkInput = {
   steps?: Prisma.StepUncheckedUpdateManyWithoutRecipeNestedInput
   recipeIngredients?: Prisma.RecipeIngredientUncheckedUpdateManyWithoutRecipeNestedInput
   thematics?: Prisma.RecipeThematicUncheckedUpdateManyWithoutRecipeNestedInput
+  likes?: Prisma.LikeUncheckedUpdateManyWithoutRecipeNestedInput
 }
 
 export type RecipeCreateManyUserInput = {
@@ -1132,6 +1257,7 @@ export type RecipeUpdateWithoutUserInput = {
   work?: Prisma.WorkUpdateOneRequiredWithoutRecipeNestedInput
   recipeIngredients?: Prisma.RecipeIngredientUpdateManyWithoutRecipeNestedInput
   thematics?: Prisma.RecipeThematicUpdateManyWithoutRecipeNestedInput
+  likes?: Prisma.LikeUpdateManyWithoutRecipeNestedInput
 }
 
 export type RecipeUncheckedUpdateWithoutUserInput = {
@@ -1149,6 +1275,7 @@ export type RecipeUncheckedUpdateWithoutUserInput = {
   steps?: Prisma.StepUncheckedUpdateManyWithoutRecipeNestedInput
   recipeIngredients?: Prisma.RecipeIngredientUncheckedUpdateManyWithoutRecipeNestedInput
   thematics?: Prisma.RecipeThematicUncheckedUpdateManyWithoutRecipeNestedInput
+  likes?: Prisma.LikeUncheckedUpdateManyWithoutRecipeNestedInput
 }
 
 export type RecipeUncheckedUpdateManyWithoutUserInput = {
@@ -1174,12 +1301,14 @@ export type RecipeCountOutputType = {
   steps: number
   recipeIngredients: number
   thematics: number
+  likes: number
 }
 
 export type RecipeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   steps?: boolean | RecipeCountOutputTypeCountStepsArgs
   recipeIngredients?: boolean | RecipeCountOutputTypeCountRecipeIngredientsArgs
   thematics?: boolean | RecipeCountOutputTypeCountThematicsArgs
+  likes?: boolean | RecipeCountOutputTypeCountLikesArgs
 }
 
 /**
@@ -1213,6 +1342,13 @@ export type RecipeCountOutputTypeCountThematicsArgs<ExtArgs extends runtime.Type
   where?: Prisma.RecipeThematicWhereInput
 }
 
+/**
+ * RecipeCountOutputType without action
+ */
+export type RecipeCountOutputTypeCountLikesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LikeWhereInput
+}
+
 
 export type RecipeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1232,6 +1368,7 @@ export type RecipeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   work?: boolean | Prisma.WorkDefaultArgs<ExtArgs>
   recipeIngredients?: boolean | Prisma.Recipe$recipeIngredientsArgs<ExtArgs>
   thematics?: boolean | Prisma.Recipe$thematicsArgs<ExtArgs>
+  likes?: boolean | Prisma.Recipe$likesArgs<ExtArgs>
   _count?: boolean | Prisma.RecipeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["recipe"]>
 
@@ -1291,6 +1428,7 @@ export type RecipeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   work?: boolean | Prisma.WorkDefaultArgs<ExtArgs>
   recipeIngredients?: boolean | Prisma.Recipe$recipeIngredientsArgs<ExtArgs>
   thematics?: boolean | Prisma.Recipe$thematicsArgs<ExtArgs>
+  likes?: boolean | Prisma.Recipe$likesArgs<ExtArgs>
   _count?: boolean | Prisma.RecipeCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RecipeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1310,6 +1448,7 @@ export type $RecipePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     work: Prisma.$WorkPayload<ExtArgs>
     recipeIngredients: Prisma.$RecipeIngredientPayload<ExtArgs>[]
     thematics: Prisma.$RecipeThematicPayload<ExtArgs>[]
+    likes: Prisma.$LikePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1723,6 +1862,7 @@ export interface Prisma__RecipeClient<T, Null = never, ExtArgs extends runtime.T
   work<T extends Prisma.WorkDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WorkDefaultArgs<ExtArgs>>): Prisma.Prisma__WorkClient<runtime.Types.Result.GetResult<Prisma.$WorkPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   recipeIngredients<T extends Prisma.Recipe$recipeIngredientsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Recipe$recipeIngredientsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecipeIngredientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   thematics<T extends Prisma.Recipe$thematicsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Recipe$thematicsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecipeThematicPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  likes<T extends Prisma.Recipe$likesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Recipe$likesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2234,6 +2374,30 @@ export type Recipe$thematicsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.RecipeThematicScalarFieldEnum | Prisma.RecipeThematicScalarFieldEnum[]
+}
+
+/**
+ * Recipe.likes
+ */
+export type Recipe$likesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Like
+   */
+  select?: Prisma.LikeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Like
+   */
+  omit?: Prisma.LikeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LikeInclude<ExtArgs> | null
+  where?: Prisma.LikeWhereInput
+  orderBy?: Prisma.LikeOrderByWithRelationInput | Prisma.LikeOrderByWithRelationInput[]
+  cursor?: Prisma.LikeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LikeScalarFieldEnum | Prisma.LikeScalarFieldEnum[]
 }
 
 /**

@@ -16,6 +16,7 @@ model User {
   createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz
   recipes          Recipe[]
   refreshTokens    RefreshToken[]
+  likes            Like[]
   role             Role      @default(USER)
   resetToken       String?   @unique @map("reset_token")
   resetTokenExpiry DateTime? @map("reset_token_expiry") @db.Timestamptz
@@ -50,8 +51,20 @@ model Recipe {
   work              Work               @relation(fields: [workId], references: [id])
   recipeIngredients RecipeIngredient[]
   thematics         RecipeThematic[]
+  likes             Like[]
 
   @@map("recipe")
+}
+
+model Like {
+  userId    Int      @map("user_id")
+  recipeId  Int      @map("recipe_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  user      User     @relation(fields: [userId], references: [id])
+  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+
+  @@id([userId, recipeId])
+  @@map("like")
 }
 
 model Step {

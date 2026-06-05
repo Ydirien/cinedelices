@@ -3,18 +3,17 @@ import RecoHomePage from '../../components/Recipes_cards/Recommandation/HomePage
 import RecipesOftheDay from '../../components/RecipeOftheDay/RecipesOftheDay';
 import './homePage.css';
 import { useState, useEffect } from 'react';
-import { ICategory, IRecipe, IType } from '../../../@types/index.d';
+import { IRecipe } from '../../../@types/index.d';
 
 interface HomePageProps {
   recipes: IRecipe[],
-  categories: ICategory[],
-  types: IType[],
+  
 
 }
-function HomePage({recipes}: HomePageProps) {
+function HomePage({recipes = []}: HomePageProps) {
 
-  //recette du jours (aléatoir pour l'instant)
-  const [random,setrandom] = useState(1);
+  //recette du jours (aléatoire pour l'instant)
+  const [random,setrandom] = useState(0);
   useEffect(() => {
     if (recipes.length > 0) {
       setrandom(Math.floor(Math.random() * recipes.length));

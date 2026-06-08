@@ -11,7 +11,6 @@ import { useState } from 'react';
 import MentionsLegales from './pages/MentionsPage/MentionsPage';
 import Confidentialite from './pages/ConfidentialPage/ConfidentialPage';
 import { ICategory, IRecipe, IType } from '../@types/index.d';
-
 import logoMain from '../public/Logo/LOGO_pricipal_allonger.png';
 import Register from './pages/Auth/register/Register';
 import Login from './pages/Auth/login/login';

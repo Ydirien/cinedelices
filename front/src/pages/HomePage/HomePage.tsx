@@ -33,7 +33,7 @@ function HomePage() {
     if (getAllRecipes.length > 0) {
       setrandom(Math.floor(Math.random() * getAllRecipes.length));
     }
-  }, []);
+  }, [getAllRecipes]);
 
   useEffect(() => {
     if (getAllRecipes.length >= 3) {

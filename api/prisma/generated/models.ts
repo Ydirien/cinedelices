@@ -11,6 +11,8 @@
 export type * from './models/User.ts'
 export type * from './models/Ingredient.ts'
 export type * from './models/Recipe.ts'
+export type * from './models/Comment.ts'
+export type * from './models/Like.ts'
 export type * from './models/Step.ts'
 export type * from './models/RecipeIngredient.ts'
 export type * from './models/Thematic.ts'

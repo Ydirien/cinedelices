@@ -1,10 +1,5 @@
-import { useState } from 'react';
-import { IRecipe } from '../../../@types/index.d';
-import "./FilterBar.css"
-
-interface Props {
-  onResults: (recipes: IRecipe[]) => void;
-}
+import { useSearchParams } from 'react-router-dom';
+import './FilterBar.css';
 
 const categories = [
   { name: 'Film' },
@@ -20,94 +15,76 @@ const thematics = [
   { name: 'Boisson' },
 ];
 
-function FilterBar({ onResults }: Props) {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  // 1. Changement : On passe d'un tableau [] à une valeur unique ou null
-  const [activeThematic, setActiveThematic] = useState<string | null>(null);
+// FilterBar met à jour les searchParams de l'URL.
+// RecipesPage écoute ces params via useEffect([searchParams])
+// et relance fetchFilter — ce qui met aussi à jour totalPages pour la pagination.
+function FilterBar() {
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  async function fetchRecipes(category: string | null, thematic: string | null) {
-    const params = new URLSearchParams();
-    
-    if (category) {
-      params.append('category', category);
-    }
-    
-    if (thematic) {
-      params.append('thematic', thematic);
-    }
+  const activeCategory = searchParams.get('category');
+  const activeThematic = searchParams.get('thematic');
 
-    const res = await fetch(`/api/recipes?${params.toString()}`);
-    const data = await res.json();
-    onResults(data.data);
+  function setParam(key: string, value: string | null) {
+    setSearchParams(prev => {
+      const p = new URLSearchParams(prev);
+      if (value) p.set(key, value);
+      else p.delete(key);
+      return p;
+    });
   }
 
   function handleCategory(name: string) {
-    const next = activeCategory === name ? null : name;
-    setActiveCategory(next);
-    fetchRecipes(next, activeThematic); 
+    setParam('category', activeCategory === name ? null : name);
   }
 
-  //sélection unique pour les thématiques
   function handleThematic(name: string) {
-    const next = activeThematic === name ? null : name;
-    setActiveThematic(next);
-    fetchRecipes(activeCategory, next);
-  }
-
-  function handleAllCategories() {
-    setActiveCategory(null);
-    fetchRecipes(null, activeThematic); 
-  }
-
-  //remise à zéro
-  function handleAllThematics() {
-    setActiveThematic(null); 
-    fetchRecipes(activeCategory, null); 
+    setParam('thematic', activeThematic === name ? null : name);
   }
 
   return (
     <div className="filter-bar">
-      <div className="filter-group">
-        <button 
-          key="all category" 
-          className={`button-AllCategory ${activeCategory === null ? 'active' : ''}`}
-          onClick={handleAllCategories}
-        >
-          All
-        </button>
-        {categories.map((category) => (
+      <div className="filter-group categories-group">
+        <h4>Catégories</h4>
+        <section className="buttons-group">
           <button
-            key={category.name}
-            className={activeCategory === category.name ? 'active' : ''}
-            onClick={() => handleCategory(category.name)}
+            className={`button-AllCategory ${activeCategory === null ? 'active' : ''}`}
+            onClick={() => setParam('category', null)}
           >
-            {category.name}
+            All
           </button>
-        ))}
+          {categories.map((category) => (
+            <button
+              key={category.name}
+              className={activeCategory === category.name ? 'active' : ''}
+              onClick={() => handleCategory(category.name)}
+            >
+              {category.name}
+            </button>
+          ))}
+        </section>
       </div>
-      
-      <div className="filter-group">
-        <button 
-          key="all thematic" 
-          // 5. Mise à jour de la condition active pour "All"
-          className={`button-AllThematic ${activeThematic === null ? 'active' : ''}`}
-          onClick={handleAllThematics}
-          type="button"
-        >
-          All
-        </button>
-        
-        {thematics.map((thematic) => (
+
+      <div className="filter-group types-group">
+        <h4>Types</h4>
+        <section className="buttons-group">
           <button
-            key={thematic.name}
-            // 6. Comparaison directe de la chaîne au lieu de .includes()
-            className={activeThematic === thematic.name ? 'active' : ''}
-            onClick={() => handleThematic(thematic.name)}
+            className={`button-AllThematic ${activeThematic === null ? 'active' : ''}`}
+            onClick={() => setParam('thematic', null)}
             type="button"
           >
-            {thematic.name}
+            All
           </button>
-        ))}
+          {thematics.map((thematic) => (
+            <button
+              key={thematic.name}
+              className={activeThematic === thematic.name ? 'active' : ''}
+              onClick={() => handleThematic(thematic.name)}
+              type="button"
+            >
+              {thematic.name}
+            </button>
+          ))}
+        </section>
       </div>
     </div>
   );

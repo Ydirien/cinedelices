@@ -19,6 +19,7 @@ import Passwordlost from './pages/Auth/passwordlost/passwordlost';
 import SearchPage from './pages/SearchPage/SearchPage';
 import UserProfilePage from './pages/ProfilePage/UserProfilePage';
 import AdminProfilePage from './pages/ProfilePage/AdminProfilePage';
+import CreatRecipe from './pages/CreateRecipe/CreateRecipe';
 
 function App() {
   const [getAllRecipes, setGetAllrecipes] = useState<IRecipe[]>([]); // recupérer les données de la data recipe en attendants la bdd
@@ -30,13 +31,15 @@ function App() {
   const [showMobileSearch, setShowMobileSearch] = useState(false); // useState pour cacher/montrer la barre de recherche en version mobile
 
   useEffect(() => {
+
     async function fetchData() {
-      const url = 'http://localhost:3010'
+      
       try {
-        const response = await fetch(`${url}/api/recipes`);
-        const dataRecipes = await response.json();
+        
+        const resRecipes = await fetch(`${API_URL}/api/recipes`);
+        const dataRecipes = await resRecipes.json();
         setGetAllrecipes(dataRecipes.data);
-      } catch (error) {
+        } catch (error) {
         console.error('Erreur lors du chargement des recettes :', error);
       }
     }
@@ -67,7 +70,7 @@ function App() {
         )}
 
         <Routes>
-          <Route path="/" element={<HomePage recipes={getAllRecipes} />} />
+          <Route path="/" element={<HomePage recipes={getAllRecipes}  />} />
           <Route path="/recettes" element={<RecipesPage recipes={getAllRecipes} />} />
           <Route path="/recettes/:recette" element={<RecipePage />} />
           <Route path="/search" element={<SearchPage />} />
@@ -78,6 +81,7 @@ function App() {
           <Route path="/profil" element={<UserProfilePage />} />
             <Route path="/admin/profil" element={<AdminProfilePage />} />
           <Route path="/passwordlost" element={<Passwordlost />} />
+          <Route path="/createrecipe" element={<CreatRecipe />} />
         </Routes>
       </main>
       <Footer />

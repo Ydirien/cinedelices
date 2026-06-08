@@ -1,78 +1,103 @@
+/* ============================================================
+   FilterBar — barre de filtres (catégories + types)
+   Mobile-first : boutons enroulables sur mobile,
+   légèrement plus grands sur desktop.
+   ============================================================ */
+
+/* Conteneur principal de la barre de filtres */
 .filter-bar {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 0.5em;
-  justify-content: center;
-  align-items: center;
-  width: 100%; 
+  flex-direction: column; /* empile les groupes (Catégories puis Types) */
+  gap: 1rem;
+  width: 100%;
 }
 
+/* Un groupe = un titre (h4) + sa rangée de boutons */
 .filter-group {
   display: flex;
-  flex-direction: row; 
-  flex-wrap: nowrap;  /* Toujours sur une seule ligne */
-  width: 100%;        /* Occupe 100% de la largeur de la sidebar */
-  justify-content: space-between; /* Répartit les boutons sur toute la largeur */
-  padding: 0.2rem;
+  flex-direction: column; /* titre au-dessus, boutons en dessous */
+  gap: 0.5rem;
+  width: 100%;
 }
 
+/* Titre du groupe (ex : "CATÉGORIES", "TYPES") */
+.filter-group h4 {
+  margin: 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;  /* mise en majuscule pour l'aspect section */
+  letter-spacing: 0.06em;     /* léger espacement des lettres */
+  opacity: 0.8;
+}
+
+/* Rangée de boutons : wrap permet aux boutons de passer à la ligne
+   si l'espace est insuffisant (sur mobile notamment) */
+.buttons-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* Style de base des boutons de filtre */
 .filter-group button {
   background: var(--secondary-color);
-  --color: var(--quinary-color);
-  
-  padding: 0.5rem 0.5rem; /* Réduit le padding horizontal pour donner de la flexibilité */
-  display: inline-flex;  
+  --color: var(--quinary-color); /* variable locale réutilisée dans ::before et active */
+
+  padding: 0.4rem 0.75rem;
+  font-size: 0.82rem;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  /* --- LA MAGIE DE L'ADAPTATION ICI --- */
-  flex-grow: 1;       /* Permet aux boutons de grandir pour occuper l'espace vide */
-  flex-shrink: 1;     /* Permet aux boutons de rétrécir si l'écran devient trop petit */
-  min-width: 0;       /* Casse la largeur minimale par défaut des boutons */
-  
-  /* Permet au texte trop long de mettre des "..." si l'écran est vraiment minuscule */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; 
-
+  white-space: nowrap; /* empêche le texte du bouton de se couper sur deux lignes */
   cursor: pointer;
-  margin: 0.25rem; /* Légèrement réduit pour gagner de la place */
-  z-index: 0;
+
   color: var(--color);
   border: 2px solid var(--quinary-color);
   border-radius: 6px;
-  position: relative;
-  
-  transition: color 0.3s ease-in-out; 
+  position: relative;  /* nécessaire pour positionner le ::before */
+  overflow: hidden;    /* masque le cercle d'animation quand il sort du bouton */
+  z-index: 0;
+
+  transition: color 0.3s ease-in-out;
 }
 
-/* Le reste de tes effets (::before, hover, active) reste identique */
+/* Cercle d'animation qui remonte au hover/active
+   Il part du coin bas-droit et glisse vers le haut-gauche */
 .filter-group button::before {
-  position: absolute;
   content: "";
+  position: absolute;
   background: var(--color);
-  z-index: -1;
-  width: 300%; 
-  aspect-ratio: 1 / 1; 
-  border-radius: 50%; 
-  top: 100%;
-  left: 100%;
-  transform: translate(0, 0); 
-  transition: transform 0.4s ease-in-out; 
+  z-index: -1;          /* derrière le texte du bouton */
+  width: 300%;          /* beaucoup plus grand que le bouton pour le couvrir entièrement */
+  aspect-ratio: 1 / 1;  /* forme carrée → border-radius le rend circulaire */
+  border-radius: 50%;
+  top: 100%;            /* position de départ : hors du bouton en bas */
+  left: 100%;           /* position de départ : hors du bouton à droite */
+  transform: translate(0, 0);
+  transition: transform 0.4s ease-in-out;
 }
 
-.filter-group button:hover, 
+/* Au survol ou quand le filtre est actif : le texte passe en blanc */
+.filter-group button:hover,
 .filter-group button.active {
   color: white;
 }
 
-.filter-group button:hover::before, 
+/* Le cercle remonte et couvre le bouton */
+.filter-group button:hover::before,
 .filter-group button.active::before {
   transform: translate(-120%, -120%);
 }
 
+/* Le bouton actif garde le fond coloré même sans survol */
 .filter-group button.active {
   background-color: var(--color);
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+/* ── Desktop 1024px+ : boutons légèrement plus grands ── */
+@media (min-width: 1024px) {
+  .filter-group button {
+    padding: 0.45rem 0.9rem;
+    font-size: 0.88rem;
+  }
 }

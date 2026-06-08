@@ -17,9 +17,7 @@ import Register from './pages/Auth/register/Register';
 import Login from './pages/Auth/login/login';
 import Passwordlost from './pages/Auth/passwordlost/passwordlost';
 import SearchPage from './pages/SearchPage/SearchPage';
-import { API_URL } from './constants';
-
-
+import CreatRecipe from './pages/CreateRecipe/CreateRecipe';
 
 function App() {
   const [getAllRecipes, setGetAllrecipes] = useState<IRecipe[]>([]); // recupérer les données de la data recipe en attendants la bdd
@@ -79,6 +77,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/passwordlost" element={<Passwordlost />} />
+          <Route path="/createrecipe" element={<CreatRecipe />} />
         </Routes>
       </main>
       <Footer />

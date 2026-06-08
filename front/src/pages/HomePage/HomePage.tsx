@@ -4,33 +4,45 @@ import RecipesOftheDay from '../../components/RecipeOftheDay/RecipesOftheDay';
 import './homePage.css';
 import { useState, useEffect } from 'react';
 import { IRecipe } from '../../../@types/index.d';
+import { API_URL } from '../../constants';
 
-interface HomePageProps {
-  recipes: IRecipe[],
-  
 
-}
-function HomePage({recipes = []}: HomePageProps) {
+function HomePage() {
+  const [getAllRecipes, setGetAllrecipes] = useState<IRecipe[]>([]); // recupérer les données de la data recipe en attendants la bdd
 
   //recette du jours (aléatoire pour l'instant)
-  const [random,setrandom] = useState(0);
-  useEffect(() => {
-    if (recipes.length > 0) {
-      setrandom(Math.floor(Math.random() * recipes.length));
-    }
-  }, [recipes]);
-
+  const [random, setrandom] = useState(0);
+  
   //recommandation (aléatoir aussi)
   const [recommendedRecipes, setRecommendedRecipes] = useState<IRecipe[]>([]);
+  
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const resRecipes = await fetch(`${API_URL}/api/recipes`);
+        const dataRecipes = await resRecipes.json();
+        setGetAllrecipes(dataRecipes.data);
+      } catch (error) {
+        console.error('Erreur lors du chargement des recettes :', error);
+      }
+    }
+    fetchData();
+  }, []);
+  
+  useEffect(() => {
+    if (getAllRecipes.length > 0) {
+      setrandom(Math.floor(Math.random() * getAllRecipes.length));
+    }
+  }, []);
 
   useEffect(() => {
-    if (recipes.length >= 3) {
-      const recoSetter = [...recipes].sort(() => Math.random() - 0.5);
+    if (getAllRecipes.length >= 3) {
+      const recoSetter = [...getAllRecipes].sort(() => Math.random() - 0.5);
       setRecommendedRecipes(recoSetter.slice(0, 3));
     }
-  }, [recipes]);
+  }, [getAllRecipes]);
 
-  if (!recipes) return <p>Chargement...</p>;
+  if (!getAllRecipes) return <p>Chargement...</p>;
   return (
     <>
       <section className="section-container ">
@@ -51,12 +63,8 @@ function HomePage({recipes = []}: HomePageProps) {
         </div>
       </section>
       <CategoriesButton />
-      {recipes[random] && (
-      <RecipesOftheDay recipe={recipes[random]} />
-      )}
-      {recipes && (
-      <RecoHomePage reco={recommendedRecipes}/>
-      )}
+      {getAllRecipes[random] && <RecipesOftheDay recipe={getAllRecipes[random]} />}
+      {getAllRecipes && <RecoHomePage reco={recommendedRecipes} />}
     </>
   );
 }

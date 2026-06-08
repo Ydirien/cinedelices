@@ -10,15 +10,27 @@ import { API_URL } from '../../constants';
 
 const LIMIT = 9; // nombre de recettes par page
 
-interface RecipesPageProps {
-  recipes: IRecipe[];
-}
 
-function RecipesPage({ recipes }: RecipesPageProps) {
+
+function RecipesPage() {
+  const [getAllRecipes, setGetAllrecipes] = useState<IRecipe[]>([]); // recupérer les données de la data recipe en attendants la bdd
   const [filteredRecipes, setFilteredRecipes] = useState<IRecipe[] | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const resRecipes = await fetch(`${API_URL}/api/recipes`);
+        const dataRecipes = await resRecipes.json();
+        setGetAllrecipes(dataRecipes.data);
+      } catch (error) {
+        console.error('Erreur lors du chargement des recettes :', error);
+      }
+    }
+    fetchData();
+  }, []);
 
   async function fetchFilter(page = 1) {
     try {
@@ -51,7 +63,7 @@ function RecipesPage({ recipes }: RecipesPageProps) {
     document.querySelector('.recipes-content')?.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  const recipesToDisplay = filteredRecipes !== null ? filteredRecipes : recipes;
+  const recipesToDisplay = filteredRecipes !== null ? filteredRecipes : getAllRecipes;
 
   return (
     <section className="recipes-page">
@@ -63,11 +75,7 @@ function RecipesPage({ recipes }: RecipesPageProps) {
         {recipesToDisplay.length > 0 ? (
           <>
             <RecipesCards recipes={recipesToDisplay} />
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
           </>
         ) : (
           <NoRecipePage />

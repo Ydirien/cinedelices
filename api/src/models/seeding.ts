@@ -183,7 +183,7 @@ async function seed() {
       title: 'Ratatouille',
       releaseYear: 2007,
       synopsis: "Un rat passionné de cuisine devient chef à l'Auberge Gusteau, le meilleur restaurant de Paris.",
-      image: 'https://placehold.co/400x600?text=Ratatouille',
+      image: 'https://images.pexels.com/photos/7439978/pexels-photo-7439978.jpeg',
       categoryId: catFilm.id,
     },
   });
@@ -193,7 +193,7 @@ async function seed() {
       title: 'Ratatouille confite de Rémy',
       description:
         'La célèbre ratatouille confite qui a fait chavirer le cœur du critique Anton Ego. Fines tranches de légumes en rosace sur un coulis de tomate parfumé au thym.',
-      image: 'https://placehold.co/800x600?text=Ratatouille+Confit',
+      image: '../../../public/recipes-picture/ratatouille de rémy.jpg',
       prepTime: 45,
       cookTime: 90,
       servings: 4,
@@ -263,7 +263,7 @@ async function seed() {
       releaseYear: 2009,
       synopsis:
         'Julie Powell cuisine les 524 recettes de Julia Child en 365 jours, en parallèle de la vie de la cuisinière en France dans les années 50.',
-      image: 'https://placehold.co/400x600?text=Julie+Julia',
+      image: 'https://images.pexels.com/photos/34636420/pexels-photo-34636420.jpeg',
       categoryId: catFilm.id,
     },
   });
@@ -273,7 +273,7 @@ async function seed() {
       title: 'Bœuf bourguignon de Julia Child',
       description:
         "Le plat emblématique du livre « Mastering the Art of French Cooking ». Braisé de bœuf au Bourgogne, lardons et champignons, mijoté jusqu'à la perfection absolue.",
-      image: 'https://placehold.co/800x600?text=Boeuf+Bourguignon',
+      image: 'https://images.pexels.com/photos/34636420/pexels-photo-34636420.jpeg',
       prepTime: 40,
       cookTime: 180,
       servings: 6,
@@ -341,7 +341,7 @@ async function seed() {
       releaseYear: 2014,
       synopsis:
         'Un chef renommé quitte son restaurant pour ouvrir un food truck et retrouver sa créativité en parcourant les États-Unis avec son fils.',
-      image: 'https://placehold.co/400x600?text=Chef',
+      image: 'https://images.pexels.com/photos/9751155/pexels-photo-9751155.jpeg',
       categoryId: catFilm.id,
     },
   });
@@ -351,7 +351,7 @@ async function seed() {
       title: 'Cubano sandwich de Carl Casper',
       description:
         'Le sandwich iconique du food truck. Porc effiloché, jambon, emmental fondant, cornichons croquants et moutarde entre deux tranches de pain pressées à la perfection.',
-      image: 'https://placehold.co/800x600?text=Cubano',
+      image: 'https://images.pexels.com/photos/9751155/pexels-photo-9751155.jpeg',
       prepTime: 15,
       cookTime: 10,
       servings: 2,
@@ -417,7 +417,7 @@ async function seed() {
       releaseYear: 2000,
       synopsis:
         'Vianne Thierry ouvre une chocolaterie dans un village conservateur français, bousculant les habitants en plein Carême.',
-      image: 'https://placehold.co/400x600?text=Chocolat',
+      image: 'https://images.pexels.com/photos/691147/pexels-photo-691147.jpeg',
       categoryId: catFilm.id,
     },
   });
@@ -427,7 +427,7 @@ async function seed() {
       title: 'Mousse au chocolat noir de Vianne',
       description:
         'La mousse au chocolat diaboliquement fondante de Vianne Thierry, avec une touche de piment chipotle pour réchauffer les âmes les plus froides du village.',
-      image: 'https://placehold.co/800x600?text=Mousse+Chocolat',
+      image: 'https://images.pexels.com/photos/691147/pexels-photo-691147.jpeg',
       prepTime: 20,
       cookTime: 5,
       servings: 6,
@@ -502,7 +502,7 @@ async function seed() {
       title: 'Tourte médiévale aux champignons et chèvre',
       description:
         'Inspirée des fastueux banquets de Port-Réal. Pâte dorée et croustillante, garnie de champignons sauvages, fromage de chèvre fondant et crème fraîche.',
-      image: 'https://placehold.co/800x600?text=Tourte+Medievale',
+      image: '../../../public/recipes-picture/Tourte_médieval.png',
       prepTime: 30,
       cookTime: 45,
       servings: 6,
@@ -575,7 +575,7 @@ async function seed() {
       title: 'Le "Moist Maker" de Ross Geller',
       description:
         'Le sandwich de Thanksgiving le plus célèbre de la télévision. La tranche centrale imbibée de jus de dinde — le fameux Moist Maker — fait toute la différence. On ne rigole pas avec le sandwich de Ross.',
-      image: 'https://placehold.co/800x600?text=Moist+Maker',
+      image: '../../../public/recipes-picture/Le Moist Maker de Ross Geller.png',
       prepTime: 10,
       cookTime: 0,
       servings: 1,
@@ -647,7 +647,7 @@ async function seed() {
       title: 'Gyudon de Soma Yukihira',
       description:
         "Le bol de bœuf qui a vaincu les élites de Totsuki. Fines tranches de bœuf et oignons dans un tsuyu sucré-salé sur riz vapeur, couronné d'un œuf onsen fondant.",
-      image: 'https://placehold.co/800x600?text=Gyudon',
+      image: 'https://images.pexels.com/photos/31303467/pexels-photo-31303467.jpeg',
       prepTime: 10,
       cookTime: 20,
       servings: 2,
@@ -722,7 +722,7 @@ async function seed() {
       title: 'Ramen Ichiraku de Naruto',
       description:
         'Le ramen préféré de Naruto, servi chez Ichiraku Ramen à Konoha. Bouillon de porc intense et fumé, chashu fondant, œuf mariné, nori et maïs.',
-      image: 'https://placehold.co/800x600?text=Ramen+Naruto',
+      image: 'https://images.pexels.com/photos/31393444/pexels-photo-31393444.jpeg',
       prepTime: 30,
       cookTime: 240,
       servings: 2,
@@ -809,7 +809,7 @@ async function seed() {
       title: "Cake au miel façon Winnie l'Ourson",
       description:
         "Doux comme un câlin de nounours. Un cake moelleux au beurre noisette et au miel doré, parsemé d'amandes effilées, aussi réconfortant que les aventures dans les Cent Acres.",
-      image: 'https://placehold.co/800x600?text=Cake+Miel',
+      image: 'https://images.pexels.com/photos/12106434/pexels-photo-12106434.jpeg',
       prepTime: 15,
       cookTime: 45,
       servings: 8,
@@ -881,7 +881,7 @@ async function seed() {
       title: 'Cailles en sarcophage de Babette',
       description:
         "Le plat-vedette du festin : des cailles farcies au foie gras et à la truffe, nichées dans un écrin de pâte feuilletée et nappées d'une sauce au Madère.",
-      image: 'https://placehold.co/800x600?text=Cailles+Sarcophage',
+      image: 'https://www.jackiecuisine.com/wp-content/uploads/caille-sarcophage-5w-774x516.jpg',
       prepTime: 60,
       cookTime: 40,
       servings: 4,
@@ -936,7 +936,7 @@ async function seed() {
       title: 'Crème brûlée d\'Amélie',
       description:
         "Le plaisir simple préféré d'Amélie : craquer la fine croûte de caramel à la petite cuillère pour révéler une crème vanillée d'une douceur infinie.",
-      image: 'https://placehold.co/800x600?text=Creme+Brulee',
+      image: '../../../public/recipes-picture/Crème brûlée d\'Amélie.png',
       prepTime: 20,
       cookTime: 50,
       servings: 4,
@@ -987,7 +987,7 @@ async function seed() {
       title: 'Bière au beurre des Trois Balais',
       description:
         "La boisson réconfortante servie à Pré-au-Lard. Une base crémeuse au caramel beurre salé, surmontée d'une mousse onctueuse. Sans alcool, pour petits et grands sorciers.",
-      image: 'https://placehold.co/800x600?text=Biereaubeurre',
+      image: 'https://static.wikia.nocookie.net/harrypotter/images/b/ba/Bi%C3%A8raubeurre_Wizarding_World_of_Harry_Potter.jpg/revision/latest/scale-to-width-down/1000?cb=20150813104238&path-prefix=fr',
       prepTime: 10,
       cookTime: 10,
       servings: 4,
@@ -1039,7 +1039,7 @@ async function seed() {
       title: "Gaufres d'Eleven",
       description:
         "Les gaufres dont Eleven raffole. Croustillantes dehors, moelleuses dedans, nappées de sirop d'érable. Le réconfort ultime tout droit sorti du congélateur de Hawkins.",
-      image: 'https://placehold.co/800x600?text=Gaufres+Eleven',
+      image: 'https://images.pexels.com/photos/7786846/pexels-photo-7786846.jpeg',
       prepTime: 15,
       cookTime: 15,
       servings: 4,
@@ -1092,7 +1092,7 @@ async function seed() {
       title: 'Poulet frit Los Pollos Hermanos',
       description:
         "Le poulet frit de la célèbre chaîne de Gus Fring. Une panure ultra-croustillante et épicée, une chair juteuse marinée au babeurre. Recette parfaitement maîtrisée, comme tout le reste.",
-      image: 'https://placehold.co/800x600?text=Los+Pollos',
+      image: 'https://images.pexels.com/photos/8081264/pexels-photo-8081264.jpeg',
       prepTime: 30,
       cookTime: 20,
       servings: 4,
@@ -1145,7 +1145,7 @@ async function seed() {
       title: 'Onigiri réconfortants de Haku',
       description:
         "Les boulettes de riz que Haku offre à Chihiro pour lui redonner des forces. Du riz japonais pressé à la main, garni d'umeboshi ou de saumon, enveloppé de nori.",
-      image: 'https://placehold.co/800x600?text=Onigiri',
+      image: 'https://images.pexels.com/photos/30874708/pexels-photo-30874708.jpeg',
       prepTime: 20,
       cookTime: 15,
       servings: 4,
@@ -1196,7 +1196,7 @@ async function seed() {
       title: 'La Viande sur l\'os de Luffy',
       description:
         "Le mets favori de Luffy : une énorme pièce de viande rôtie à déguster à pleines dents, glacée au miel et caramélisée. Le carburant du futur Roi des Pirates.",
-      image: 'https://placehold.co/800x600?text=Viande+Luffy',
+      image: 'https://images.pexels.com/photos/36829362/pexels-photo-36829362.jpeg',
       prepTime: 20,
       cookTime: 90,
       servings: 4,
@@ -1249,7 +1249,7 @@ async function seed() {
       title: 'Beignets de Tiana',
       description:
         "Les beignets dorés et gonflés de Tiana, saupoudrés de sucre glace. Une douceur typique de La Nouvelle-Orléans, aussi légère qu'un rêve qui prend forme.",
-      image: 'https://placehold.co/800x600?text=Beignets',
+      image: 'https://images.pexels.com/photos/13988842/pexels-photo-13988842.jpeg',
       prepTime: 90,
       cookTime: 15,
       servings: 6,

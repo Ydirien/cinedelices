@@ -9,5 +9,5 @@ router.post('/register', rateLimiters.register, authController.registerUser);
 router.post('/login', rateLimiters.login, authController.loginUser);
 router.post('/logout', checkRoles(['USER', 'ADMIN']), authController.logoutUser);
 router.post('/refresh', rateLimiters.refresh, authController.refreshTokens);
-router.post("/forgot-password", authController.forgetPassword);
+router.post("/forgot-password", rateLimiters.forgetPassword, authController.forgetPassword);
 router.post("/reset-password", authController.resetPassword);

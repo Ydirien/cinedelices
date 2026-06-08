@@ -86,7 +86,9 @@ export async function updateRecipeState(req: Request, res: Response) {
 
 export async function updateRecipe(req: Request, res: Response) {
     const recipeId = Number(req.params.id);
-    const { steps, recipeIngredients, thematics, ...scalarData } = updateRecipeSchema.parse(req.body);
+    const { steps, recipeIngredients, thematics, image: imageUrl, ...scalarData } = updateRecipeSchema.parse(req.body);
+
+    const image = req.file ? req.file.path.replace(/\\/g, "/") : imageUrl;
 
     const foundRecipe = await prisma.recipe.findUnique({ where: { id: recipeId } });
     if (!foundRecipe) throw new NotFoundError("Recipe not found");
@@ -102,6 +104,7 @@ export async function updateRecipe(req: Request, res: Response) {
         where: { id: recipeId },
         data: {
             ...scalarData,
+            ...(image && { image }),
             ...(steps && { steps: { deleteMany: {}, create: steps } }),
             ...(recipeIngredients && { recipeIngredients: { deleteMany: {}, create: recipeIngredients } }),
             ...(thematics && { thematics: { deleteMany: {}, create: thematics.map((thematicId) => ({ thematicId })) } }),

@@ -28,14 +28,17 @@ h2 {
     margin-bottom: 0rem;
   }
 
-  .img-container{
-    justify-content: flex-end;
+  .img-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 12px;
   }
   .RecipeOfTheDayImg {
-    height: 100%;
     width: 100%;
-    object-fit: cover; /* Remplit parfaitement la carte */
-    filter: brightness(0.55); /* Assombrit pour lire le texte */
+    height: 100%;
+    object-fit: cover; /* Remplit et recadre le conteneur sans déformer l'image */
+    
   }
 
   p {
@@ -215,9 +218,16 @@ h2 {
     text-decoration: none;
     overflow: hidden;
 
-    .RecipeOfTheDayImg {
+    .img-container {
+      width: 45%;
       height: 100%;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    .RecipeOfTheDayImg {
       width: 100%;
+      height: 100%;
       object-fit: cover;
       border-radius: 16px;
     }

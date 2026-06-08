@@ -24,5 +24,6 @@ function recipesOftheDay({ recipe }: RecipesOftheDayProps) {
     </section>
   );
 }
+<img src="../../../public/recipes-picture/Tourte_médieval.png" alt="" />
 
 export default recipesOftheDay;

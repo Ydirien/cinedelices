@@ -88,6 +88,7 @@
 }
 
 .category-buttons::after {
+  height: 60px;
   content: none;
 }
 }
@@ -215,13 +216,12 @@ img {
 
 .button-category {
   width: 120px;
-  height: 120px;
+  height: 40px;
   border-radius: 20px;
   background-color: var(--secondary-color);
-  padding: 1rem;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.521);
   &:hover {
-    background-color: #d49e175b;
+    box-shadow: 0 4px 30px rgba(212, 160, 23, 0.521);
     transition: background-color 0.5s ease-in-out;
   }
 }

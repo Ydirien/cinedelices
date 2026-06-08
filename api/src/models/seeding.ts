@@ -984,7 +984,7 @@ async function seed() {
 
   const recBiereaubeurre = await prisma.recipe.create({
     data: {
-      title: 'Bièraubeurre des Trois Balais',
+      title: 'Bière au beurre des Trois Balais',
       description:
         "La boisson réconfortante servie à Pré-au-Lard. Une base crémeuse au caramel beurre salé, surmontée d'une mousse onctueuse. Sans alcool, pour petits et grands sorciers.",
       image: 'https://placehold.co/800x600?text=Biereaubeurre',

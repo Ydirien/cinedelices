@@ -1,74 +1,70 @@
-import "./Recipe.css";
-import { API_URL } from "../../constants";
-import { IRecipeDetail } from "../../../@types/index.d";
-import StarsRating from "../../components/Recipes_cards/Stars/StarsRating";
-import { GiCook } from "react-icons/gi";
-import { IoTimer } from "react-icons/io5";
-import { BiSolidFilm } from "react-icons/bi";
-import { BsForkKnife } from "react-icons/bs";
-import { useState,useEffect } from "react";
-import { useParams } from "react-router-dom";
+import './Recipe.css';
+import { API_URL } from '../../constants';
+import { IRecipeDetail } from '../../../@types/index.d';
+import StarsRating from '../../components/Recipes_cards/Stars/StarsRating';
+import { GiCook } from 'react-icons/gi';
+import { IoTimer } from 'react-icons/io5';
+import { BiSolidFilm } from 'react-icons/bi';
+import { BsForkKnife } from 'react-icons/bs';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 function RecipePage() {
   const [NavSwitch, SetNav] = useState(1);
-  const {recette} = useParams();
-
+  const { recette } = useParams();
   const [recipe, setRecipe] = useState<IRecipeDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  async function getRecipeById() {
-    try {
-      const response = await fetch(`${API_URL}/api/recipes/${recette}`);
-      const data = await response.json();
-      console.log('recette:', data);
-      if (!response.ok) {
-        setError(`Erreur ${response.status} : ${data.message ?? 'Recette introuvable'}`);
-        return;
-      }
-      setRecipe(data);
-    } catch (err) {
-      console.error('Fetch échoué :', err);
-      setError('Impossible de contacter le serveur.');
-    }
-  }
   
   useEffect(() => {
+    async function getRecipeById() {
+      try {
+        const response = await fetch(`${API_URL}/api/recipes/${recette}`);
+        const data = await response.json();
+        console.log('recette:', data);
+        if (!response.ok) {
+          setError(`Erreur ${response.status} : ${data.message ?? 'Recette introuvable'}`);
+          return;
+        }
+        setRecipe(data);
+      } catch (err) {
+        console.error('Fetch échoué :', err);
+        setError('Impossible de contacter le serveur.');
+      }
+    }
     getRecipeById();
   }, [recette]);
 
-if (error) return <p>{error}</p>;
-if (!recipe) return <p>Chargement...</p>; 
+  if (error) return <p>{error}</p>;
+  if (!recipe) return <p>Chargement...</p>;
 
   return (
     <div className="RecipePage">
       <section className="RecipeImage">
-          <img src={recipe.image} alt="" />
+        <img src={recipe.image} alt="" />
       </section>
       <section className="Info">
         <h2>{recipe.title}</h2>
         <h4>{recipe.work.title}</h4>
-        <StarsRating/>
-        <p>
-          {recipe.work.synopsis}
-        </p>
+        <StarsRating />
+        <p>{recipe.work.synopsis}</p>
         <ul className="Recipe-Info">
-        <li>
-            <IoTimer size={22}/>
+          <li>
+            <IoTimer size={22} />
             <span>{recipe.prepTime} min</span>
-        </li>
-        <li>
+          </li>
+          <li>
             <GiCook size={22} />
             <span>{recipe.difficulty}</span>
-        </li>
-        <li>
-            <BiSolidFilm  size={22}/>
+          </li>
+          <li>
+            <BiSolidFilm size={22} />
             <span>{recipe.work.category.name}</span>
-        </li>
+          </li>
 
-        <li>
-            <BsForkKnife size={20}/>
+          <li>
+            <BsForkKnife size={20} />
             <span>{recipe.servings} pers.</span>
-        </li>
+          </li>
         </ul>
       </section>
       <section className="Nav">
@@ -102,17 +98,19 @@ if (!recipe) return <p>Chargement...</p>;
       </section>
       {NavSwitch == 1 && (
         <section className="Ingredients">
-        <div className="List">
+          <div className="List">
             <ul>
               {recipe.recipeIngredients.map((Ingredient) => (
                 <li key={Ingredient.id}>
-                  <span>{Ingredient.quantity} {Ingredient.unit} - </span>
+                  <span>
+                    {Ingredient.quantity} {Ingredient.unit} -{' '}
+                  </span>
                   <span> {Ingredient.ingredient.name}</span>
                 </li>
               ))}
             </ul>
-        </div>
-      </section>
+          </div>
+        </section>
       )}
       {NavSwitch == 2 && (
         <section className="Steps">
@@ -143,7 +141,9 @@ if (!recipe) return <p>Chargement...</p>;
                 <h4> Romain Hoff.</h4>
                 <div className="Stars">★★★★☆</div>
               </div>
-              <p>Hoff... les chocolatine c'est qu'une dockerisation du pain au chocolat, de toute façon je suis legitime!</p>
+              <p>
+                Hoff... les chocolatine c'est qu'une dockerisation du pain au chocolat, de toute façon je suis legitime!
+              </p>
             </article>
             <article className="Comment">
               <div className="CommentHeader">

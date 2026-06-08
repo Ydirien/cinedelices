@@ -18,8 +18,15 @@ const refreshRateLimiter = rateLimit({
     message: { status: 429, error: "Too many requests, please try again later" },
 });
 
+const forgetPasswordRateLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 5,
+    message: { status: 429, error: "Too many requests, please try again later" },
+});
+
 export const rateLimiters = {
     register: registerRateLimiter,
     login: loginRateLimiter,
     refresh: refreshRateLimiter,
+    forgetPassword: forgetPasswordRateLimiter,
 };

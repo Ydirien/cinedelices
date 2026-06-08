@@ -1,11 +1,13 @@
 import argon2 from "argon2";
 import z from "zod";
+import jwt from "jsonwebtoken";
 import type { Request, Response } from "express";
 import type { User } from "../models/index.ts"
 import { prisma } from "../models/index.ts";
 import { ConflictError, UnauthorizedError } from "../lib/errors.ts";
 import { generateAuthTokens, generateResetPasswordToken, type Token } from "../lib/tokens.ts";
 import { sendResetPasswordEmail } from "../lib/mailer.ts";
+import { config } from "../../config.ts";
 
 export async function registerUser(req: Request, res: Response) {
     const registerUserBodySchema = z
@@ -121,7 +123,7 @@ async function replaceRefreshTokenInDatabase(refreshToken: Token, user: User) {
 }
 
 export async function forgetPassword(req: Request, res: Response) {
-    const { email } = req.body;
+    const { email } = z.object({ email: z.email() }).parse(req.body);
 
     // On cherche l'utilisateur par email
     const user = await prisma.user.findFirst({ where: { email } });
@@ -154,7 +156,13 @@ export async function resetPassword(req: Request, res: Response) {
     const resetPasswordBodySchema = z.object({
         email: z.email(),
         resetToken: z.string(),
-        newPassword: z.string().min(8),
+        newPassword: z
+            .string()
+            .min(12)
+            .max(30)
+            .regex(/[a-z]/, "Password must contain at least one lowercase character")
+            .regex(/[A-Z]/, "Password must contain at least one uppercase character")
+            .regex(/[0-9]/, "Password must contain at least one number"),
     });
 
     const { email, resetToken, newPassword } = await resetPasswordBodySchema.parseAsync(req.body);
@@ -162,6 +170,12 @@ export async function resetPassword(req: Request, res: Response) {
     const user = await prisma.user.findFirst({ where: { email } });
 
     if (!user || !user.resetToken) {
+        throw new UnauthorizedError("Invalid or expired reset token");
+    }
+
+    try {
+        jwt.verify(resetToken, config.resetTokenSecret);
+    } catch {
         throw new UnauthorizedError("Invalid or expired reset token");
     }
 

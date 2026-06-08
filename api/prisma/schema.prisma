@@ -20,7 +20,6 @@ model User {
   comments         Comment[]
   role             Role      @default(USER)
   resetToken       String?   @unique @map("reset_token")
-  resetTokenExpiry DateTime? @map("reset_token_expiry") @db.Timestamptz
 
   @@map("user")
 }
@@ -65,8 +64,8 @@ model Comment {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
   userId    Int      @map("user_id")
   recipeId  Int      @map("recipe_id")
-  user      User     @relation(fields: [userId], references: [id])
-  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
 
   @@unique([userId, recipeId])
   @@map("comment")
@@ -76,8 +75,8 @@ model Like {
   userId    Int      @map("user_id")
   recipeId  Int      @map("recipe_id")
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
-  user      User     @relation(fields: [userId], references: [id])
-  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe    Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
 
   @@id([userId, recipeId])
   @@map("like")
@@ -88,7 +87,7 @@ model Step {
   order    Int
   content  String
   recipeId Int    @map("recipe_id")
-  recipe   Recipe @relation(fields: [recipeId], references: [id])
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
 
   @@map("step")
 }
@@ -99,7 +98,7 @@ model RecipeIngredient {
   ingredientId Int        @map("ingredient_id")
   quantity     Float
   unit         String
-  recipe       Recipe     @relation(fields: [recipeId], references: [id])
+  recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   ingredient   Ingredient @relation(fields: [ingredientId], references: [id])
 
   @@map("recipe_ingredient")
@@ -117,7 +116,7 @@ model Thematic {
 model RecipeThematic {
   recipeId    Int      @map("recipe_id")
   thematicId  Int      @map("thematic_id")
-  recipe      Recipe   @relation(fields: [recipeId], references: [id])
+  recipe      Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
   thematic    Thematic @relation(fields: [thematicId], references: [id])
 
   @@id([recipeId, thematicId])
@@ -151,7 +150,7 @@ model RefreshToken {
   id        Int      @id @default(autoincrement())
   token     String
   userId            Int                @map("user_id")
-  user              User               @relation(fields: [userId], references: [id])
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   issuedAt  DateTime @default(now()) @map("issued_at") @db.Timestamptz
   expiresAt DateTime @map("expires_at") @db.Timestamptz
 

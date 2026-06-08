@@ -233,7 +233,7 @@ export type WorkWhereInput = {
   image?: Prisma.StringFilter<"Work"> | string
   categoryId?: Prisma.IntFilter<"Work"> | number
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
-  recipe?: Prisma.XOR<Prisma.RecipeNullableScalarRelationFilter, Prisma.RecipeWhereInput> | null
+  recipe?: Prisma.RecipeListRelationFilter
 }
 
 export type WorkOrderByWithRelationInput = {
@@ -244,7 +244,7 @@ export type WorkOrderByWithRelationInput = {
   image?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   category?: Prisma.CategoryOrderByWithRelationInput
-  recipe?: Prisma.RecipeOrderByWithRelationInput
+  recipe?: Prisma.RecipeOrderByRelationAggregateInput
 }
 
 export type WorkWhereUniqueInput = Prisma.AtLeast<{
@@ -258,7 +258,7 @@ export type WorkWhereUniqueInput = Prisma.AtLeast<{
   image?: Prisma.StringFilter<"Work"> | string
   categoryId?: Prisma.IntFilter<"Work"> | number
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
-  recipe?: Prisma.XOR<Prisma.RecipeNullableScalarRelationFilter, Prisma.RecipeWhereInput> | null
+  recipe?: Prisma.RecipeListRelationFilter
 }, "id">
 
 export type WorkOrderByWithAggregationInput = {
@@ -293,7 +293,7 @@ export type WorkCreateInput = {
   synopsis: string
   image: string
   category: Prisma.CategoryCreateNestedOneWithoutWorksInput
-  recipe?: Prisma.RecipeCreateNestedOneWithoutWorkInput
+  recipe?: Prisma.RecipeCreateNestedManyWithoutWorkInput
 }
 
 export type WorkUncheckedCreateInput = {
@@ -303,7 +303,7 @@ export type WorkUncheckedCreateInput = {
   synopsis: string
   image: string
   categoryId: number
-  recipe?: Prisma.RecipeUncheckedCreateNestedOneWithoutWorkInput
+  recipe?: Prisma.RecipeUncheckedCreateNestedManyWithoutWorkInput
 }
 
 export type WorkUpdateInput = {
@@ -312,7 +312,7 @@ export type WorkUpdateInput = {
   synopsis?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutWorksNestedInput
-  recipe?: Prisma.RecipeUpdateOneWithoutWorkNestedInput
+  recipe?: Prisma.RecipeUpdateManyWithoutWorkNestedInput
 }
 
 export type WorkUncheckedUpdateInput = {
@@ -322,7 +322,7 @@ export type WorkUncheckedUpdateInput = {
   synopsis?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.IntFieldUpdateOperationsInput | number
-  recipe?: Prisma.RecipeUncheckedUpdateOneWithoutWorkNestedInput
+  recipe?: Prisma.RecipeUncheckedUpdateManyWithoutWorkNestedInput
 }
 
 export type WorkCreateManyInput = {
@@ -515,7 +515,7 @@ export type WorkCreateWithoutCategoryInput = {
   releaseYear: number
   synopsis: string
   image: string
-  recipe?: Prisma.RecipeCreateNestedOneWithoutWorkInput
+  recipe?: Prisma.RecipeCreateNestedManyWithoutWorkInput
 }
 
 export type WorkUncheckedCreateWithoutCategoryInput = {
@@ -524,7 +524,7 @@ export type WorkUncheckedCreateWithoutCategoryInput = {
   releaseYear: number
   synopsis: string
   image: string
-  recipe?: Prisma.RecipeUncheckedCreateNestedOneWithoutWorkInput
+  recipe?: Prisma.RecipeUncheckedCreateNestedManyWithoutWorkInput
 }
 
 export type WorkCreateOrConnectWithoutCategoryInput = {
@@ -578,7 +578,7 @@ export type WorkUpdateWithoutCategoryInput = {
   releaseYear?: Prisma.IntFieldUpdateOperationsInput | number
   synopsis?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  recipe?: Prisma.RecipeUpdateOneWithoutWorkNestedInput
+  recipe?: Prisma.RecipeUpdateManyWithoutWorkNestedInput
 }
 
 export type WorkUncheckedUpdateWithoutCategoryInput = {
@@ -587,7 +587,7 @@ export type WorkUncheckedUpdateWithoutCategoryInput = {
   releaseYear?: Prisma.IntFieldUpdateOperationsInput | number
   synopsis?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
-  recipe?: Prisma.RecipeUncheckedUpdateOneWithoutWorkNestedInput
+  recipe?: Prisma.RecipeUncheckedUpdateManyWithoutWorkNestedInput
 }
 
 export type WorkUncheckedUpdateManyWithoutCategoryInput = {
@@ -599,6 +599,35 @@ export type WorkUncheckedUpdateManyWithoutCategoryInput = {
 }
 
 
+/**
+ * Count Type WorkCountOutputType
+ */
+
+export type WorkCountOutputType = {
+  recipe: number
+}
+
+export type WorkCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  recipe?: boolean | WorkCountOutputTypeCountRecipeArgs
+}
+
+/**
+ * WorkCountOutputType without action
+ */
+export type WorkCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WorkCountOutputType
+   */
+  select?: Prisma.WorkCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * WorkCountOutputType without action
+ */
+export type WorkCountOutputTypeCountRecipeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RecipeWhereInput
+}
+
 
 export type WorkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -609,6 +638,7 @@ export type WorkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   categoryId?: boolean
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   recipe?: boolean | Prisma.Work$recipeArgs<ExtArgs>
+  _count?: boolean | Prisma.WorkCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["work"]>
 
 export type WorkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -644,6 +674,7 @@ export type WorkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type WorkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   recipe?: boolean | Prisma.Work$recipeArgs<ExtArgs>
+  _count?: boolean | Prisma.WorkCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type WorkIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
@@ -656,7 +687,7 @@ export type $WorkPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "Work"
   objects: {
     category: Prisma.$CategoryPayload<ExtArgs>
-    recipe: Prisma.$RecipePayload<ExtArgs> | null
+    recipe: Prisma.$RecipePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1060,7 +1091,7 @@ readonly fields: WorkFieldRefs;
 export interface Prisma__WorkClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  recipe<T extends Prisma.Work$recipeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Work$recipeArgs<ExtArgs>>): Prisma.Prisma__RecipeClient<runtime.Types.Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  recipe<T extends Prisma.Work$recipeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Work$recipeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RecipePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1513,6 +1544,11 @@ export type Work$recipeArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   include?: Prisma.RecipeInclude<ExtArgs> | null
   where?: Prisma.RecipeWhereInput
+  orderBy?: Prisma.RecipeOrderByWithRelationInput | Prisma.RecipeOrderByWithRelationInput[]
+  cursor?: Prisma.RecipeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RecipeScalarFieldEnum | Prisma.RecipeScalarFieldEnum[]
 }
 
 /**

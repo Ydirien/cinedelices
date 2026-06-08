@@ -325,7 +325,6 @@ export type RecipeOrderByWithRelationInput = {
 
 export type RecipeWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  workId?: number
   AND?: Prisma.RecipeWhereInput | Prisma.RecipeWhereInput[]
   OR?: Prisma.RecipeWhereInput[]
   NOT?: Prisma.RecipeWhereInput | Prisma.RecipeWhereInput[]
@@ -339,6 +338,7 @@ export type RecipeWhereUniqueInput = Prisma.AtLeast<{
   state?: Prisma.EnumStateFilter<"Recipe"> | $Enums.State
   createdAt?: Prisma.DateTimeFilter<"Recipe"> | Date | string
   userId?: Prisma.IntFilter<"Recipe"> | number
+  workId?: Prisma.IntFilter<"Recipe"> | number
   steps?: Prisma.StepListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   work?: Prisma.XOR<Prisma.WorkScalarRelationFilter, Prisma.WorkWhereInput>
@@ -346,7 +346,7 @@ export type RecipeWhereUniqueInput = Prisma.AtLeast<{
   thematics?: Prisma.RecipeThematicListRelationFilter
   likes?: Prisma.LikeListRelationFilter
   comments?: Prisma.CommentListRelationFilter
-}, "id" | "workId">
+}, "id">
 
 export type RecipeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -584,11 +584,6 @@ export type RecipeScalarRelationFilter = {
   isNot?: Prisma.RecipeWhereInput
 }
 
-export type RecipeNullableScalarRelationFilter = {
-  is?: Prisma.RecipeWhereInput | null
-  isNot?: Prisma.RecipeWhereInput | null
-}
-
 export type RecipeCreateNestedManyWithoutUserInput = {
   create?: Prisma.XOR<Prisma.RecipeCreateWithoutUserInput, Prisma.RecipeUncheckedCreateWithoutUserInput> | Prisma.RecipeCreateWithoutUserInput[] | Prisma.RecipeUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.RecipeCreateOrConnectWithoutUserInput | Prisma.RecipeCreateOrConnectWithoutUserInput[]
@@ -709,36 +704,46 @@ export type RecipeUpdateOneRequiredWithoutThematicsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.RecipeUpdateToOneWithWhereWithoutThematicsInput, Prisma.RecipeUpdateWithoutThematicsInput>, Prisma.RecipeUncheckedUpdateWithoutThematicsInput>
 }
 
-export type RecipeCreateNestedOneWithoutWorkInput = {
-  create?: Prisma.XOR<Prisma.RecipeCreateWithoutWorkInput, Prisma.RecipeUncheckedCreateWithoutWorkInput>
-  connectOrCreate?: Prisma.RecipeCreateOrConnectWithoutWorkInput
-  connect?: Prisma.RecipeWhereUniqueInput
+export type RecipeCreateNestedManyWithoutWorkInput = {
+  create?: Prisma.XOR<Prisma.RecipeCreateWithoutWorkInput, Prisma.RecipeUncheckedCreateWithoutWorkInput> | Prisma.RecipeCreateWithoutWorkInput[] | Prisma.RecipeUncheckedCreateWithoutWorkInput[]
+  connectOrCreate?: Prisma.RecipeCreateOrConnectWithoutWorkInput | Prisma.RecipeCreateOrConnectWithoutWorkInput[]
+  createMany?: Prisma.RecipeCreateManyWorkInputEnvelope
+  connect?: Prisma.RecipeWhereUniqueInput | Prisma.RecipeWhereUniqueInput[]
 }
 
-export type RecipeUncheckedCreateNestedOneWithoutWorkInput = {
-  create?: Prisma.XOR<Prisma.RecipeCreateWithoutWorkInput, Prisma.RecipeUncheckedCreateWithoutWorkInput>
-  connectOrCreate?: Prisma.RecipeCreateOrConnectWithoutWorkInput
-  connect?: Prisma.RecipeWhereUniqueInput
+export type RecipeUncheckedCreateNestedManyWithoutWorkInput = {
+  create?: Prisma.XOR<Prisma.RecipeCreateWithoutWorkInput, Prisma.RecipeUncheckedCreateWithoutWorkInput> | Prisma.RecipeCreateWithoutWorkInput[] | Prisma.RecipeUncheckedCreateWithoutWorkInput[]
+  connectOrCreate?: Prisma.RecipeCreateOrConnectWithoutWorkInput | Prisma.RecipeCreateOrConnectWithoutWorkInput[]
+  createMany?: Prisma.RecipeCreateManyWorkInputEnvelope
+  connect?: Prisma.RecipeWhereUniqueInput | Prisma.RecipeWhereUniqueInput[]
 }
 
-export type RecipeUpdateOneWithoutWorkNestedInput = {
-  create?: Prisma.XOR<Prisma.RecipeCreateWithoutWorkInput, Prisma.RecipeUncheckedCreateWithoutWorkInput>
-  connectOrCreate?: Prisma.RecipeCreateOrConnectWithoutWorkInput
-  upsert?: Prisma.RecipeUpsertWithoutWorkInput
-  disconnect?: Prisma.RecipeWhereInput | boolean
-  delete?: Prisma.RecipeWhereInput | boolean
-  connect?: Prisma.RecipeWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.RecipeUpdateToOneWithWhereWithoutWorkInput, Prisma.RecipeUpdateWithoutWorkInput>, Prisma.RecipeUncheckedUpdateWithoutWorkInput>
+export type RecipeUpdateManyWithoutWorkNestedInput = {
+  create?: Prisma.XOR<Prisma.RecipeCreateWithoutWorkInput, Prisma.RecipeUncheckedCreateWithoutWorkInput> | Prisma.RecipeCreateWithoutWorkInput[] | Prisma.RecipeUncheckedCreateWithoutWorkInput[]
+  connectOrCreate?: Prisma.RecipeCreateOrConnectWithoutWorkInput | Prisma.RecipeCreateOrConnectWithoutWorkInput[]
+  upsert?: Prisma.RecipeUpsertWithWhereUniqueWithoutWorkInput | Prisma.RecipeUpsertWithWhereUniqueWithoutWorkInput[]
+  createMany?: Prisma.RecipeCreateManyWorkInputEnvelope
+  set?: Prisma.RecipeWhereUniqueInput | Prisma.RecipeWhereUniqueInput[]
+  disconnect?: Prisma.RecipeWhereUniqueInput | Prisma.RecipeWhereUniqueInput[]
+  delete?: Prisma.RecipeWhereUniqueInput | Prisma.RecipeWhereUniqueInput[]
+  connect?: Prisma.RecipeWhereUniqueInput | Prisma.RecipeWhereUniqueInput[]
+  update?: Prisma.RecipeUpdateWithWhereUniqueWithoutWorkInput | Prisma.RecipeUpdateWithWhereUniqueWithoutWorkInput[]
+  updateMany?: Prisma.RecipeUpdateManyWithWhereWithoutWorkInput | Prisma.RecipeUpdateManyWithWhereWithoutWorkInput[]
+  deleteMany?: Prisma.RecipeScalarWhereInput | Prisma.RecipeScalarWhereInput[]
 }
 
-export type RecipeUncheckedUpdateOneWithoutWorkNestedInput = {
-  create?: Prisma.XOR<Prisma.RecipeCreateWithoutWorkInput, Prisma.RecipeUncheckedCreateWithoutWorkInput>
-  connectOrCreate?: Prisma.RecipeCreateOrConnectWithoutWorkInput
-  upsert?: Prisma.RecipeUpsertWithoutWorkInput
-  disconnect?: Prisma.RecipeWhereInput | boolean
-  delete?: Prisma.RecipeWhereInput | boolean
-  connect?: Prisma.RecipeWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.RecipeUpdateToOneWithWhereWithoutWorkInput, Prisma.RecipeUpdateWithoutWorkInput>, Prisma.RecipeUncheckedUpdateWithoutWorkInput>
+export type RecipeUncheckedUpdateManyWithoutWorkNestedInput = {
+  create?: Prisma.XOR<Prisma.RecipeCreateWithoutWorkInput, Prisma.RecipeUncheckedCreateWithoutWorkInput> | Prisma.RecipeCreateWithoutWorkInput[] | Prisma.RecipeUncheckedCreateWithoutWorkInput[]
+  connectOrCreate?: Prisma.RecipeCreateOrConnectWithoutWorkInput | Prisma.RecipeCreateOrConnectWithoutWorkInput[]
+  upsert?: Prisma.RecipeUpsertWithWhereUniqueWithoutWorkInput | Prisma.RecipeUpsertWithWhereUniqueWithoutWorkInput[]
+  createMany?: Prisma.RecipeCreateManyWorkInputEnvelope
+  set?: Prisma.RecipeWhereUniqueInput | Prisma.RecipeWhereUniqueInput[]
+  disconnect?: Prisma.RecipeWhereUniqueInput | Prisma.RecipeWhereUniqueInput[]
+  delete?: Prisma.RecipeWhereUniqueInput | Prisma.RecipeWhereUniqueInput[]
+  connect?: Prisma.RecipeWhereUniqueInput | Prisma.RecipeWhereUniqueInput[]
+  update?: Prisma.RecipeUpdateWithWhereUniqueWithoutWorkInput | Prisma.RecipeUpdateWithWhereUniqueWithoutWorkInput[]
+  updateMany?: Prisma.RecipeUpdateManyWithWhereWithoutWorkInput | Prisma.RecipeUpdateManyWithWhereWithoutWorkInput[]
+  deleteMany?: Prisma.RecipeScalarWhereInput | Prisma.RecipeScalarWhereInput[]
 }
 
 export type RecipeCreateWithoutUserInput = {
@@ -1314,52 +1319,25 @@ export type RecipeCreateOrConnectWithoutWorkInput = {
   create: Prisma.XOR<Prisma.RecipeCreateWithoutWorkInput, Prisma.RecipeUncheckedCreateWithoutWorkInput>
 }
 
-export type RecipeUpsertWithoutWorkInput = {
-  update: Prisma.XOR<Prisma.RecipeUpdateWithoutWorkInput, Prisma.RecipeUncheckedUpdateWithoutWorkInput>
-  create: Prisma.XOR<Prisma.RecipeCreateWithoutWorkInput, Prisma.RecipeUncheckedCreateWithoutWorkInput>
-  where?: Prisma.RecipeWhereInput
+export type RecipeCreateManyWorkInputEnvelope = {
+  data: Prisma.RecipeCreateManyWorkInput | Prisma.RecipeCreateManyWorkInput[]
+  skipDuplicates?: boolean
 }
 
-export type RecipeUpdateToOneWithWhereWithoutWorkInput = {
-  where?: Prisma.RecipeWhereInput
+export type RecipeUpsertWithWhereUniqueWithoutWorkInput = {
+  where: Prisma.RecipeWhereUniqueInput
+  update: Prisma.XOR<Prisma.RecipeUpdateWithoutWorkInput, Prisma.RecipeUncheckedUpdateWithoutWorkInput>
+  create: Prisma.XOR<Prisma.RecipeCreateWithoutWorkInput, Prisma.RecipeUncheckedCreateWithoutWorkInput>
+}
+
+export type RecipeUpdateWithWhereUniqueWithoutWorkInput = {
+  where: Prisma.RecipeWhereUniqueInput
   data: Prisma.XOR<Prisma.RecipeUpdateWithoutWorkInput, Prisma.RecipeUncheckedUpdateWithoutWorkInput>
 }
 
-export type RecipeUpdateWithoutWorkInput = {
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  image?: Prisma.StringFieldUpdateOperationsInput | string
-  prepTime?: Prisma.IntFieldUpdateOperationsInput | number
-  cookTime?: Prisma.IntFieldUpdateOperationsInput | number
-  servings?: Prisma.IntFieldUpdateOperationsInput | number
-  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
-  state?: Prisma.EnumStateFieldUpdateOperationsInput | $Enums.State
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  steps?: Prisma.StepUpdateManyWithoutRecipeNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutRecipesNestedInput
-  recipeIngredients?: Prisma.RecipeIngredientUpdateManyWithoutRecipeNestedInput
-  thematics?: Prisma.RecipeThematicUpdateManyWithoutRecipeNestedInput
-  likes?: Prisma.LikeUpdateManyWithoutRecipeNestedInput
-  comments?: Prisma.CommentUpdateManyWithoutRecipeNestedInput
-}
-
-export type RecipeUncheckedUpdateWithoutWorkInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  image?: Prisma.StringFieldUpdateOperationsInput | string
-  prepTime?: Prisma.IntFieldUpdateOperationsInput | number
-  cookTime?: Prisma.IntFieldUpdateOperationsInput | number
-  servings?: Prisma.IntFieldUpdateOperationsInput | number
-  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
-  state?: Prisma.EnumStateFieldUpdateOperationsInput | $Enums.State
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
-  steps?: Prisma.StepUncheckedUpdateManyWithoutRecipeNestedInput
-  recipeIngredients?: Prisma.RecipeIngredientUncheckedUpdateManyWithoutRecipeNestedInput
-  thematics?: Prisma.RecipeThematicUncheckedUpdateManyWithoutRecipeNestedInput
-  likes?: Prisma.LikeUncheckedUpdateManyWithoutRecipeNestedInput
-  comments?: Prisma.CommentUncheckedUpdateManyWithoutRecipeNestedInput
+export type RecipeUpdateManyWithWhereWithoutWorkInput = {
+  where: Prisma.RecipeScalarWhereInput
+  data: Prisma.XOR<Prisma.RecipeUpdateManyMutationInput, Prisma.RecipeUncheckedUpdateManyWithoutWorkInput>
 }
 
 export type RecipeCreateManyUserInput = {
@@ -1425,6 +1403,71 @@ export type RecipeUncheckedUpdateManyWithoutUserInput = {
   state?: Prisma.EnumStateFieldUpdateOperationsInput | $Enums.State
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workId?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type RecipeCreateManyWorkInput = {
+  id?: number
+  title: string
+  description: string
+  image: string
+  prepTime: number
+  cookTime: number
+  servings: number
+  difficulty: $Enums.Difficulty
+  state?: $Enums.State
+  createdAt?: Date | string
+  userId: number
+}
+
+export type RecipeUpdateWithoutWorkInput = {
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  prepTime?: Prisma.IntFieldUpdateOperationsInput | number
+  cookTime?: Prisma.IntFieldUpdateOperationsInput | number
+  servings?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  state?: Prisma.EnumStateFieldUpdateOperationsInput | $Enums.State
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  steps?: Prisma.StepUpdateManyWithoutRecipeNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutRecipesNestedInput
+  recipeIngredients?: Prisma.RecipeIngredientUpdateManyWithoutRecipeNestedInput
+  thematics?: Prisma.RecipeThematicUpdateManyWithoutRecipeNestedInput
+  likes?: Prisma.LikeUpdateManyWithoutRecipeNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutRecipeNestedInput
+}
+
+export type RecipeUncheckedUpdateWithoutWorkInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  prepTime?: Prisma.IntFieldUpdateOperationsInput | number
+  cookTime?: Prisma.IntFieldUpdateOperationsInput | number
+  servings?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  state?: Prisma.EnumStateFieldUpdateOperationsInput | $Enums.State
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  steps?: Prisma.StepUncheckedUpdateManyWithoutRecipeNestedInput
+  recipeIngredients?: Prisma.RecipeIngredientUncheckedUpdateManyWithoutRecipeNestedInput
+  thematics?: Prisma.RecipeThematicUncheckedUpdateManyWithoutRecipeNestedInput
+  likes?: Prisma.LikeUncheckedUpdateManyWithoutRecipeNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutRecipeNestedInput
+}
+
+export type RecipeUncheckedUpdateManyWithoutWorkInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  prepTime?: Prisma.IntFieldUpdateOperationsInput | number
+  cookTime?: Prisma.IntFieldUpdateOperationsInput | number
+  servings?: Prisma.IntFieldUpdateOperationsInput | number
+  difficulty?: Prisma.EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+  state?: Prisma.EnumStateFieldUpdateOperationsInput | $Enums.State
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 

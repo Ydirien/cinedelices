@@ -7,30 +7,28 @@
 /* Conteneur principal de la barre de filtres */
 .filter-bar {
   display: flex;
-  flex-direction: column; /* empile les groupes (Catégories puis Types) */
+  flex-direction: column; 
   gap: 1rem;
   width: 100%;
 }
 
-/* Un groupe = un titre (h4) + sa rangée de boutons */
 .filter-group {
   display: flex;
-  flex-direction: column; /* titre au-dessus, boutons en dessous */
+  flex-direction: column; 
   gap: 0.5rem;
   width: 100%;
 }
 
-/* Titre du groupe (ex : "CATÉGORIES", "TYPES") */
+/* Titre du groupe */
 .filter-group h4 {
   margin: 0;
   font-size: 0.85rem;
-  text-transform: uppercase;  /* mise en majuscule pour l'aspect section */
-  letter-spacing: 0.06em;     /* léger espacement des lettres */
+  text-transform: uppercase;  
+  letter-spacing: 0.06em;     
   opacity: 0.8;
 }
 
-/* Rangée de boutons : wrap permet aux boutons de passer à la ligne
-   si l'espace est insuffisant (sur mobile notamment) */
+
 .buttons-group {
   display: flex;
   flex-wrap: wrap;
@@ -40,38 +38,38 @@
 /* Style de base des boutons de filtre */
 .filter-group button {
   background: var(--secondary-color);
-  --color: var(--quinary-color); /* variable locale réutilisée dans ::before et active */
+  --color: var(--quinary-color); 
 
   padding: 0.4rem 0.75rem;
   font-size: 0.82rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  white-space: nowrap; /* empêche le texte du bouton de se couper sur deux lignes */
+  white-space: nowrap; 
   cursor: pointer;
 
   color: var(--color);
   border: 2px solid var(--quinary-color);
   border-radius: 6px;
-  position: relative;  /* nécessaire pour positionner le ::before */
-  overflow: hidden;    /* masque le cercle d'animation quand il sort du bouton */
+  position: relative;  
+  overflow: hidden;    
   z-index: 0;
 
   transition: color 0.3s ease-in-out;
 }
 
-/* Cercle d'animation qui remonte au hover/active
-   Il part du coin bas-droit et glisse vers le haut-gauche */
+/* Cercle d'animation qui remonte au hover/active*/
+
 .filter-group button::before {
   content: "";
   position: absolute;
   background: var(--color);
-  z-index: -1;          /* derrière le texte du bouton */
-  width: 300%;          /* beaucoup plus grand que le bouton pour le couvrir entièrement */
-  aspect-ratio: 1 / 1;  /* forme carrée → border-radius le rend circulaire */
+  z-index: -1;         
+  width: 300%;        
+  aspect-ratio: 1 / 1; 
   border-radius: 50%;
-  top: 100%;            /* position de départ : hors du bouton en bas */
-  left: 100%;           /* position de départ : hors du bouton à droite */
+  top: 100%;            
+  left: 100%;         
   transform: translate(0, 0);
   transition: transform 0.4s ease-in-out;
 }

@@ -48,7 +48,7 @@ model Recipe {
   createdAt         DateTime           @default(now()) @map("created_at") @db.Timestamptz
   userId            Int                @map("user_id")
   user              User               @relation(fields: [userId], references: [id])
-  workId            Int                @unique @map("work_id")
+  workId            Int                @map("work_id")
   work              Work               @relation(fields: [workId], references: [id])
   recipeIngredients RecipeIngredient[]
   thematics         RecipeThematic[]
@@ -132,7 +132,7 @@ model Work {
   image       String
   categoryId  Int      @map("category_id")
   category    Category @relation(fields: [categoryId], references: [id])
-  recipe      Recipe?
+  recipe      Recipe[]
 
   @@map("work")
 }

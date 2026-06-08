@@ -34,7 +34,7 @@ function App() {
       
       try {
         
-        const resRecipes = await fetch(`${API_URL}/api/recipes`);
+        const resRecipes = await fetch(`${url}/api/recipes`);
         const dataRecipes = await resRecipes.json();
         setGetAllrecipes(dataRecipes.data);
         } catch (error) {

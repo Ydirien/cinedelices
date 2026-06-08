@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./createRecipe.css";
 
 export default function CreatRecipe() {
@@ -20,6 +20,16 @@ export default function CreatRecipe() {
   const [ingredients, setIngredients] = useState<string[]>(['']);
   const [steps, setSteps] = useState<string[]>(['']);
 
+  const [works, setWorks] = useState<{id: number, title: string}[]>([]);
+  const [selectedWorkId, setSelectedWorkId] = useState<number>(0);
+
+  useEffect(() => {
+    fetch("http://localhost:3010/api/works", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` }
+    })
+      .then(r => r.json())
+      .then(data => setWorks(data));
+  }, []);
 
   const handleIngredientChange = (index: number, value: string) => {
     const newIngredients = [...ingredients];
@@ -54,10 +64,11 @@ export default function CreatRecipe() {
       title: title,
       description: description,
       prepTime: Number(prepTime),
-      cookTime: 15,    
+      cookTime: Number(prepTime),    
       servings: 2,     
       difficulty: selectedDifficulty,
-      workId: 1,      
+      workId: selectedWorkId,      
+      image: "https://via.placeholder.com/300",
       
       // Adaptation du tableau simple en tableau d'objets structurés [{ order, content }]
       steps: steps.map((content, idx) => ({
@@ -81,7 +92,7 @@ export default function CreatRecipe() {
         headers: {
           "Content-Type": "application/json",
           // sécurité par token
-        //   "Authorization": `Bearer ${localStorage.getItem("token")}` 
+        "Authorization": `Bearer ${localStorage.getItem("accessToken")}` 
         },
         body: JSON.stringify(recipePayload),
       });
@@ -101,6 +112,7 @@ export default function CreatRecipe() {
     }
   };
 
+  
   return (
     <section className="CreateRecipe">
 
@@ -124,14 +136,13 @@ export default function CreatRecipe() {
               />
             </div>
             <div className="Recipe-input-group">
-              <label>Movie Name</label>
-              <input 
-                type="text" 
-                placeholder="R+3" 
-                value={movieName}
-                onChange={(e) => setMovieName(e.target.value)}
-                required
-              />
+              <label>Movie / Series</label>
+              <select value={selectedWorkId} onChange={(e) => setSelectedWorkId(Number(e.target.value))} required>
+                <option value={0}>-- Choisir une œuvre --</option>
+                {works.map(w => (
+                  <option key={w.id} value={w.id}>{w.title}</option>
+                ))}
+              </select>
             </div>
           </div>
           
@@ -148,30 +159,22 @@ export default function CreatRecipe() {
           <div className="Difficulty-PrepaTime-Thematic">
 
             <div className="dropdown-container">
-              <button className="dropdownDefaultButton" type="button" onClick={() => setDropDownThematic(!dropdownThematic)}>
-                Thematic: {selectedThematicId === 1 ? "Film" : selectedThematicId === 2 ? "Série" : selectedThematicId === 3 ? "Manga" : "Dessin Animé"}
-              </button>
-              {dropdownThematic && (
-                <div className="dropdown">
-                  <button type="button" onClick={() => { setSelectedThematicId(1); setDropDownThematic(false); }}>Film</button>
-                  <button type="button" onClick={() => { setSelectedThematicId(2); setDropDownThematic(false); }}>Série</button>
-                  <button type="button" onClick={() => { setSelectedThematicId(3); setDropDownThematic(false); }}>Manga</button>
-                  <button type="button" onClick={() => { setSelectedThematicId(4); setDropDownThematic(false); }}>Dessin Animé</button>
-                </div>
-              )}
+              <label>Thematic</label>
+              <select value={selectedThematicId} onChange={(e) => setSelectedThematicId(Number(e.target.value))}>
+                <option value={1}>Film</option>
+                <option value={2}>Série</option>
+                <option value={3}>Manga</option>
+                <option value={4}>Dessin Animé</option>
+              </select>
             </div>
 
             <div className="dropdown-container">
-              <button className="dropdownDefaultButton" type="button" onClick={() => setDropDownDifficulty(!dropdownDifficulty)}>
-                Difficulty: {selectedDifficulty}
-              </button>
-              {dropdownDifficulty && (
-                <div className="dropdown">
-                  <button type="button" onClick={() => { setSelectedDifficulty("EASY"); setDropDownDifficulty(false); }}>EAZY</button>
-                  <button type="button" onClick={() => { setSelectedDifficulty("MEDIUM"); setDropDownDifficulty(false); }}>MEDIUM</button>
-                  <button type="button" onClick={() => { setSelectedDifficulty("HARD"); setDropDownDifficulty(false); }}>HARD</button>
-                </div>
-              )}
+              <label>Difficulty</label>
+              <select value={selectedDifficulty} onChange={(e) => setSelectedDifficulty(e.target.value as "EASY" | "MEDIUM" | "HARD")}>
+                <option value="EASY">EASY</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="HARD">HARD</option>
+              </select>
             </div>
           </div>
         <div className="Recipe-input-group">

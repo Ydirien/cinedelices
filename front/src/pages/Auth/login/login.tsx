@@ -27,12 +27,12 @@ export default function Login() {
 
       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Identifiants incorrects');
-      }
+    if (!response.ok) {
+      throw new Error(data.message || 'Identifiants incorrects');
+    }
 
-      localStorage.setItem('accessToken', data.accessToken);
-      localStorage.setItem('refreshToken', data.refreshToken);
+      localStorage.setItem('accessToken', data.accessToken.token);
+      localStorage.setItem('refreshToken', data.refreshToken.token);
 
       console.log('Connexion réussie !');
       
@@ -50,19 +50,16 @@ export default function Login() {
       <div className="auth-card">
         <div className="auth-form-wrapper">
           <h2 className="auth-title">Connexion</h2>
-          
           <div className="auth-upload-wrapper">
             <LuCircleUser size={150}/>
           </div>
 
-          {/* Affichage des erreurs d'authentification */}
           {error && (
             <div className="auth-error-message" style={{ color: 'red', marginBottom: '15px', textAlign: 'center' }}>
               {error}
             </div>
           )}
 
-          {/* 5. Liaison du handleSubmit au formulaire */}
           <form className="auth-form" onSubmit={handleSubmit}>
             <div className="auth-input-group">
               <label>Email</label>

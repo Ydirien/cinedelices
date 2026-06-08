@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useFetcher } from 'react-router-dom';
 import './CategoriesButton.css';
-import logoFilms from '../../../assets/Logo-categories/logo-films.png';
-import logoSeries from '../../../assets/Logo-categories/logo-series.png';
-import logoAnimes from '../../../assets/Logo-categories/logo-naime.png';
-import logoEntrees from '../../../assets/Logo-types/logo-entrees.png';
-import logoDesserts from '../../../assets/Logo-types/logo-desserts.png';
+import logoFilms from '../../../assets/Logo-categories/Bouttons_films.png';
+import logoSeries from '../../../assets/Logo-categories/Bouttons_series.png';
+import logoAnimes from '../../../assets/Logo-categories/Bouttons_anime.png';
+import logoDA from '../../../assets/Logo-categories/Bouttons_dessinanime.png';
+import logoEntrees from '../../../assets/Logo-types/Bouttons_entree.png';
+import logoDesserts from '../../../assets/Logo-types/Boutton_desserts.png';
+import logoPlats from '../../../assets/Logo-types/Bouttons_plats.png';
+import logoBoissons from '../../../assets/Logo-types/Boutton_boissons.png';
 import { ICategory, IType } from '../../../../@types/index.d';
 import { API_URL } from '../../../constants';
 
@@ -60,13 +63,14 @@ function CategoriesButton() {
     Film: logoFilms,
     Série: logoSeries,
     'Manga / Anime': logoAnimes,
+    'Dessin animé': logoDA
   };
 
   const typeImages: Record<string, string> = {
     Entrée: logoEntrees,
-    Plat: logoEntrees,
+    Plat: logoPlats,
     Dessert: logoDesserts,
-    Boisson: logoEntrees,
+    Boisson: logoBoissons,
   };
 
   const scroll = (direction: 'left' | 'right') => {

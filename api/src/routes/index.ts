@@ -20,4 +20,3 @@ router.use(categoriesRouter);
 router.use(typesRouter);
 router.use(adminRouter);
 
-

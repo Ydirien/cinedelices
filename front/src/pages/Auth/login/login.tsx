@@ -32,6 +32,8 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     }
 
       localStorage.setItem('accessToken', data.accessToken.token);
+      
+
 
       console.log('Connexion réussie !');
       

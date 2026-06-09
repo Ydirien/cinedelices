@@ -21,15 +21,17 @@ import AdminProfilePage from './pages/ProfilePage/AdminProfilePage';
 import CreatRecipe from './pages/CreateRecipe/CreateRecipe';
 import AdminDashboardPage from './pages/AdminDashboardPage/AdminDashboardPage';
 import { API_URL } from './constants';
+import { AuthProvider } from '../context/AuthContext/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 function App() {
 
   return (
-    <>
+    <AuthProvider>
       <Header logoMain={logoMain} />
       <main>
         <Routes>
-          <Route path="/" element={<HomePage   />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/recettes" element={<RecipesPage />} />
           <Route path="/recettes/:recette" element={<RecipePage />} />
           <Route path="/search" element={<SearchPage />} />
@@ -37,16 +39,15 @@ function App() {
           <Route path="/confidentialite" element={<Confidentialite />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/profil" element={<UserProfilePage />} />
-          <Route path="/admin/profil" element={<AdminProfilePage />} />
           <Route path="/passwordlost" element={<Passwordlost />} />
-          <Route path="/create" element={<CreatRecipe />} />
-          <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
-          
+          <Route path="/profil" element={<ProtectedRoute><UserProfilePage /></ProtectedRoute>} />
+          <Route path="/admin/profil" element={<ProtectedRoute><AdminProfilePage /></ProtectedRoute>} />
+          <Route path="/create" element={<ProtectedRoute><CreatRecipe /></ProtectedRoute>} />
+          <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboardPage /></ProtectedRoute>} />
         </Routes>
       </main>
       <Footer />
-    </>
+    </AuthProvider>
   );
 }
 

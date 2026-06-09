@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import './RecipesStyles.css';
 import { IRecipe } from '../../../../@types/index.d';
 import StarsRating from '../Stars/StarsRating';
+import { Difficulty } from '@prisma/client';
 
 interface RecipesPageCardsProps {
   recipes: IRecipe[];
@@ -9,6 +10,12 @@ interface RecipesPageCardsProps {
 
 export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
   const recipesToDisplay = recipes;
+  // objet pour recuperer les difficulty afin de les traduir en fr
+  const difficultyLabels: Record<Difficulty, string> = {
+    EASY: 'Facile',
+    MEDIUM: 'Moyen',
+    HARD: 'Difficile',
+  };
 
   return (
     <section className="RecipeGrid">
@@ -22,7 +29,6 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
           return (
             /* La clé "key" passe directement sur la carte principale */
             <div className="RecipesPCard" key={recipe.id}>
-              
               <NavLink to={`/recettes/${recipe.id}`}>
                 <div className="RecipeIMG">
                   <img src={recipe.image} alt={recipe.title} className="recetteImage" />
@@ -37,7 +43,7 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
                     <div className="Rating">
                       <StarsRating />
                       <p>
-                        - {recipe.prepTime}min - {recipe.difficulty}
+                        - {recipe.prepTime}min - {difficultyLabels[recipe.difficulty] || recipe.difficulty}
                       </p>
                     </div>
                   </div>

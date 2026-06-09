@@ -23,33 +23,10 @@ import { API_URL } from './constants';
 
 function App() {
 
-  const [showMobileSearch, setShowMobileSearch] = useState(false); // useState pour cacher/montrer la barre de recherche en version mobile
-
-
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 900) {
-        setShowMobileSearch(false);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    handleResize(); // important au chargement
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
     <>
-      <Header setShowMobileSearch={setShowMobileSearch} logoMain={logoMain} />
+      <Header logoMain={logoMain} />
       <main>
-        {showMobileSearch && (
-          <section id="SearchBarMobile">
-            <SearchBar />
-          </section>
-        )}
-
         <Routes>
           <Route path="/" element={<HomePage   />} />
           <Route path="/recettes" element={<RecipesPage />} />
@@ -62,7 +39,7 @@ function App() {
           <Route path="/profil" element={<UserProfilePage />} />
             <Route path="/admin/profil" element={<AdminProfilePage />} />
           <Route path="/passwordlost" element={<Passwordlost />} />
-          <Route path="/createrecipe" element={<CreatRecipe />} />
+          <Route path="/create" element={<CreatRecipe />} />
         </Routes>
       </main>
       <Footer />

@@ -1,15 +1,17 @@
+import { useEffect, useState } from 'react';
 import './UserProfilePage.css';
 
 function UserProfilePage() {
-  const user = {
-    pseudo: 'Utilisateur CinéDélices',
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'utilisateur@cinedelices.fr',
-    role: 'Utilisateur',
-    createdAt: 'Juin 2026',
-  };
+  const [user, setUser] = useState<any>(null);
 
+  useEffect(() => {
+    const data = localStorage.getItem("User");
+    if (data) {
+      setUser(JSON.parse(data)); 
+    }
+  }, []);
+
+  if (!user) return <p>Chargement...</p>;
   return (
     <main className="user-profile-page">
       <section className="user-profile-card">
@@ -18,15 +20,7 @@ function UserProfilePage() {
 
         <div className="user-profile-info">
           <p>
-            <strong>Pseudo :</strong> {user.pseudo}
-          </p>
-
-          <p>
-            <strong>Prénom :</strong> {user.firstName}
-          </p>
-
-          <p>
-            <strong>Nom :</strong> {user.lastName}
+            <strong>Pseudo :</strong> {user.username}
           </p>
 
           <p>

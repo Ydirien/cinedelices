@@ -19,6 +19,7 @@ import SearchPage from './pages/SearchPage/SearchPage';
 import UserProfilePage from './pages/ProfilePage/UserProfilePage';
 import AdminProfilePage from './pages/ProfilePage/AdminProfilePage';
 import CreatRecipe from './pages/CreateRecipe/CreateRecipe';
+import AdminDashboardPage from './pages/AdminDashboardPage/AdminDashboardPage';
 import { API_URL } from './constants';
 
 function App() {
@@ -60,9 +61,11 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profil" element={<UserProfilePage />} />
-            <Route path="/admin/profil" element={<AdminProfilePage />} />
+          <Route path="/admin/profil" element={<AdminProfilePage />} />
           <Route path="/passwordlost" element={<Passwordlost />} />
           <Route path="/createrecipe" element={<CreatRecipe />} />
+          <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+          
         </Routes>
       </main>
       <Footer />

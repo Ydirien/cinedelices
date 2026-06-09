@@ -40,7 +40,7 @@ function App() {
           <Route path="/profil" element={<UserProfilePage />} />
           <Route path="/admin/profil" element={<AdminProfilePage />} />
           <Route path="/passwordlost" element={<Passwordlost />} />
-          <Route path="/createrecipe" element={<CreatRecipe />} />
+          <Route path="/create" element={<CreatRecipe />} />
           <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
           
         </Routes>

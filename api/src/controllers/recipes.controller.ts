@@ -176,7 +176,33 @@ export async function createRecipe(req: Request, res: Response) {
     const alreadyExists = await prisma.recipe.findFirst({ where: { title: scalarData.title } });
     if (alreadyExists) throw new ConflictError("Recipe already exists");
 
-    res.status(201).json(rawBody);
+    // Créer la recette en base de données
+    const recipe = await prisma.recipe.create({
+        data: {
+            ...scalarData,
+            image,
+            userId: req.user.id,
+            state: "PENDING",
+            steps: {
+                create: steps,
+            },
+            recipeIngredients: {
+                create: recipeIngredients,
+            },
+            thematics: {
+                create: thematics.map(thematicId => ({
+                    thematic: { connect: { id: thematicId } },
+                })),
+            },
+        },
+        include: {
+            steps: true,
+            recipeIngredients: true,
+            thematics: { include: { thematic: true } },
+        },
+    });
+
+    res.status(201).json(recipe);
 }
 
 // POST /recipes/:id/like

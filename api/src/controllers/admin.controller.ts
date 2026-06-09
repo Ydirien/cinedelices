@@ -28,7 +28,6 @@ const updateStateSchema = z.object({
     state: z.enum(["PENDING", "APPROVED", "REJECTED"]),
 });
 
-// GET /admin/recipes?state=PENDING&page=1&limit=10
 export async function getAllRecipes(req: Request, res: Response) {
     const { state, page, limit } = req.query;
 

@@ -21,7 +21,7 @@ export default function CreatRecipe() {
   const [steps, setSteps] = useState<string[]>(['']);
 
   const [works, setWorks] = useState<{id: number, title: string}[]>([]);
-  const [selectedWorkId, setSelectedWorkId] = useState<number>(0);
+  const [selectedWorkId, setSelectedWorkId] = useState<number>(0);  
 
   useEffect(() => {
     fetch("http://localhost:3010/api/works", {

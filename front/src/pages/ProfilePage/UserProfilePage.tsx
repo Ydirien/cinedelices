@@ -1,14 +1,34 @@
+import { useEffect, useState } from 'react';
 import './UserProfilePage.css';
 
 function UserProfilePage() {
-  const user = {
-    pseudo: 'Utilisateur CinéDélices',
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'utilisateur@cinedelices.fr',
-    role: 'Utilisateur',
-    createdAt: 'Juin 2026',
+  const [user,SetUser] = useState({
+    username: '',
+    email: '',
+    role: '',
+    createdAt: '',
+  });
+
+  async function fetcher(){
+     const response = await fetch('http://localhost:3010/api/profile', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+           "Authorization": `Bearer ${localStorage.getItem("accessToken")}` 
+        },
+      });
+
+      if (!response.ok) {
+      throw new Error('Internal error');
+      }
+
+      const data = await response.json();
+       SetUser(data);
   };
+
+  useEffect(() => {
+    fetcher();
+  },[])
 
   return (
     <main className="user-profile-page">
@@ -18,15 +38,7 @@ function UserProfilePage() {
 
         <div className="user-profile-info">
           <p>
-            <strong>Pseudo :</strong> {user.pseudo}
-          </p>
-
-          <p>
-            <strong>Prénom :</strong> {user.firstName}
-          </p>
-
-          <p>
-            <strong>Nom :</strong> {user.lastName}
+            <strong>Pseudo :</strong> {user.username}
           </p>
 
           <p>

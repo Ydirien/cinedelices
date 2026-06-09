@@ -5,7 +5,7 @@ import Footer from './components/Footer/Footer';
 import HomePage from './pages/HomePage/HomePage';
 import RecipesPage from './pages/RecipesPage/RecipesPage';
 import RecipePage from './pages/RepicePage/Recipe';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes,Navigate } from 'react-router-dom';
 import SearchBar from './components/SearchBar/SearchBar';
 import { useState } from 'react';
 import MentionsLegales from './pages/MentionsPage/MentionsPage';
@@ -24,7 +24,9 @@ import { API_URL } from './constants';
 function App() {
 
   const [showMobileSearch, setShowMobileSearch] = useState(false); // useState pour cacher/montrer la barre de recherche en version mobile
-
+  const [isAuth, setIsAuth] = useState(
+    !!localStorage.getItem("accessToken")
+  );
 
 
   useEffect(() => {
@@ -59,7 +61,7 @@ function App() {
           <Route path="/confidentialite" element={<Confidentialite />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/profil" element={<UserProfilePage />} />
+          <Route path="/profil" element={localStorage.getItem("accesToken") === null ? <UserProfilePage /> : <Navigate to="/login"/>}  />
             <Route path="/admin/profil" element={<AdminProfilePage />} />
           <Route path="/passwordlost" element={<Passwordlost />} />
           <Route path="/createrecipe" element={<CreatRecipe />} />

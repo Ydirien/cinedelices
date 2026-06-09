@@ -13,15 +13,20 @@ export default function CreatRecipe() {
   const [selectedThematicId, setSelectedThematicId] = useState<number>(1); 
 
 
-  const [dropdownDifficulty, setDropDownDifficulty] = useState(false);
-  const [dropdownThematic, setDropDownThematic] = useState(false);
-
-
   const [ingredients, setIngredients] = useState<string[]>(['']);
   const [steps, setSteps] = useState<string[]>(['']);
 
   const [works, setWorks] = useState<{id: number, title: string}[]>([]);
   const [selectedWorkId, setSelectedWorkId] = useState<number>(0);
+  const [workSearch, setWorkSearch] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const filteredWorks = works.filter(w =>
+    w.title.toLowerCase().includes(workSearch.toLowerCase())
+  );
+
+  const [image, setImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("http://localhost:3010/api/works", {
@@ -60,41 +65,53 @@ export default function CreatRecipe() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); 
     
-    const recipePayload = {
-      title: title,
-      description: description,
-      prepTime: Number(prepTime),
-      cookTime: Number(prepTime),    
-      servings: 2,     
-      difficulty: selectedDifficulty,
-      workId: selectedWorkId,      
-      image: "https://via.placeholder.com/300",
-      
-      // Adaptation du tableau simple en tableau d'objets structurés [{ order, content }]
-      steps: steps.map((content, idx) => ({
-        order: idx + 1,
-        content: content || "Étape sans description"
-      })),
-      
-      // Adaptation temporaire des ingrédients 
-      recipeIngredients: ingredients.map((ing) => ({
-        ingredientId: 1,
-        quantity: 1,
-        unit: "pièce(s)"
-      })),
-      
-      thematics: [selectedThematicId] 
-    };
+    const formData = new FormData();
+
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("prepTime", String(Number(prepTime)));
+    formData.append("cookTime", String(Number(prepTime)));
+    formData.append("servings", "2");
+    formData.append("difficulty", selectedDifficulty);
+    formData.append("workId", String(Number(selectedWorkId)));
+
+    formData.append(
+      "steps",
+      JSON.stringify(
+        steps.map((content, idx) => ({
+          order: idx + 1,
+          content: content || "Étape sans description",
+        }))
+      )
+    );
+
+    formData.append(
+      "recipeIngredients",
+      JSON.stringify(
+        ingredients.map(() => ({
+          ingredientId: 1,
+          quantity: 1,
+          unit: "pièce(s)",
+        }))
+      )
+    );
+
+    formData.append(
+      "thematics",
+      JSON.stringify([selectedThematicId])
+    );
+
+    if (image) {
+      formData.append("image", image);
+    }
 
     try {
       const response = await fetch("http://localhost:3010/api/recipes", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          // sécurité par token
-        "Authorization": `Bearer ${localStorage.getItem("accessToken")}` 
-        },
-        body: JSON.stringify(recipePayload),
+  "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+},
+        body: formData,
       });
 
       if (!response.ok) {
@@ -120,7 +137,23 @@ export default function CreatRecipe() {
         
         <div className="Add-Header">
           <h2>Add your Recipe</h2>
-          <div className="RecipeImg"></div>
+          <div className="RecipeImg">
+            {preview ? (
+                <img src={preview} alt="preview" />
+              ) : (
+                <label>Image</label>
+              )}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  setImage(e.target.files[0]);
+                  setPreview(URL.createObjectURL(e.target.files[0]));
+                }
+              }}
+            />
+          </div>
         </div>
         
         <div className="AddRecipeInfo">
@@ -135,17 +168,39 @@ export default function CreatRecipe() {
                 required
               />
             </div>
-            <div className="Recipe-input-group">
+            <div className="Recipe-input-group" style={{ position: 'relative' }}>
               <label>Movie / Series</label>
-              <select value={selectedWorkId} onChange={(e) => setSelectedWorkId(Number(e.target.value))} required>
-                <option value={0}>-- Choisir une œuvre --</option>
-                {works.map(w => (
-                  <option key={w.id} value={w.id}>{w.title}</option>
-                ))}
-              </select>
+              <input
+                type="text"
+                placeholder="Rechercher une œuvre..."
+                value={workSearch}
+                onChange={(e) => {
+                  setWorkSearch(e.target.value);
+                  setSelectedWorkId(0);
+                  setShowSuggestions(true);
+                }}
+                onFocus={() => setShowSuggestions(true)}
+                onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+                required
+              />
+              {showSuggestions && workSearch && filteredWorks.length > 0 && (
+                <ul className="works-suggestions">
+                  {filteredWorks.map(w => (
+                    <li
+                      key={w.id}
+                      onMouseDown={() => {
+                        setSelectedWorkId(w.id);
+                        setWorkSearch(w.title);
+                        setShowSuggestions(false);
+                      }}
+                    >
+                      {w.title}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
-          
           <div className="Recipe-input-group">
             <label>Description</label>
             <textarea 

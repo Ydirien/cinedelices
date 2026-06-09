@@ -61,10 +61,10 @@ function App() {
           <Route path="/confidentialite" element={<Confidentialite />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/profil" element={localStorage.getItem("accesToken") === null ? <UserProfilePage /> : <Navigate to="/login"/>}  />
+          <Route path="/profil" element={localStorage.getItem("User") != null ? <UserProfilePage /> : <Navigate to="/login"/>}  />
             <Route path="/admin/profil" element={<AdminProfilePage />} />
           <Route path="/passwordlost" element={<Passwordlost />} />
-          <Route path="/createrecipe" element={<CreatRecipe />} />
+          <Route path="/create" element={<CreatRecipe />} />
         </Routes>
       </main>
       <Footer />

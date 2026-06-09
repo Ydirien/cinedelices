@@ -156,7 +156,18 @@ export async function searchRecipes(req: Request, res: Response) {
 
 // POST /recipes
 export async function createRecipe(req: Request, res: Response) {
-    const { steps, recipeIngredients, thematics, image: imageUrl, ...scalarData } = recipeSchema.parse(req.body);
+    const rawBody = {
+        ...req.body,
+        prepTime: Number(req.body.prepTime),
+        cookTime: Number(req.body.cookTime),
+        servings: Number(req.body.servings),
+        workId: Number(req.body.workId),
+        steps: JSON.parse(req.body.steps),
+        recipeIngredients: JSON.parse(req.body.recipeIngredients),
+        thematics: JSON.parse(req.body.thematics),
+    };
+
+    const { steps, recipeIngredients, thematics, image: imageUrl, ...scalarData } = recipeSchema.parse(rawBody);
 
     // Fichier uploadé en priorité, sinon URL fournie dans le body
     const image = req.file ? req.file.path.replace(/\\/g, "/") : imageUrl;
@@ -165,20 +176,7 @@ export async function createRecipe(req: Request, res: Response) {
     const alreadyExists = await prisma.recipe.findFirst({ where: { title: scalarData.title } });
     if (alreadyExists) throw new ConflictError("Recipe already exists");
 
-    // La recette est créée en PENDING — l'admin doit l'approuver avant qu'elle soit visible
-    const newRecipe = await prisma.recipe.create({
-        data: {
-            ...scalarData,
-            image,
-            userId: req.user.id,
-            state: "PENDING",
-            steps: { create: steps },
-            recipeIngredients: { create: recipeIngredients },
-            thematics: { create: thematics.map((thematicId) => ({ thematicId })) },
-        },
-    });
-
-    res.status(201).json(newRecipe);
+    res.status(201).json(rawBody);
 }
 
 // POST /recipes/:id/like

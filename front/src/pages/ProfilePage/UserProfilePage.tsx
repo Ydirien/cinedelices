@@ -2,34 +2,16 @@ import { useEffect, useState } from 'react';
 import './UserProfilePage.css';
 
 function UserProfilePage() {
-  const [user,SetUser] = useState({
-    username: '',
-    email: '',
-    role: '',
-    createdAt: '',
-  });
-
-  async function fetcher(){
-     const response = await fetch('http://localhost:3010/api/profile', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-           "Authorization": `Bearer ${localStorage.getItem("accessToken")}` 
-        },
-      });
-
-      if (!response.ok) {
-      throw new Error('Internal error');
-      }
-
-      const data = await response.json();
-       SetUser(data);
-  };
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    fetcher();
-  },[])
+    const data = localStorage.getItem("User");
+    if (data) {
+      setUser(JSON.parse(data)); 
+    }
+  }, []);
 
+  if (!user) return <p>Chargement...</p>;
   return (
     <main className="user-profile-page">
       <section className="user-profile-card">

@@ -7,6 +7,7 @@ import { router as adminRouter } from './admin.route.ts';
 import { router as categoriesRouter } from './categories.route.ts';
 import { router as typesRouter } from './types.route.ts';
 
+
 export const router = Router();
 
 router.get('/health', (_, res) => res.json({ status: 'ok' }));

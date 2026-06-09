@@ -43,7 +43,7 @@ function AdminProfilePage() {
         </div>
 
         <div className="admin-profile-actions">
-          <Link to="/admin" className="admin-profile-button">
+          <Link to="/admin/dashboard" className="admin-profile-button">
             Accéder au tableau de bord
           </Link>
 

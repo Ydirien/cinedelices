@@ -14,8 +14,6 @@ interface HeaderProps {
 }
 
 function Header({ logoMain }: HeaderProps) {
-  const raw = localStorage.getItem('User');
-  const userInfo = raw ? JSON.parse(raw) : null;
   const { isConnected } = useAuth();
 
   const [showMobileSearch, setShowMobileSearch] = useState(false);
@@ -74,7 +72,7 @@ function Header({ logoMain }: HeaderProps) {
           </button>
           {isConnected ? (
             <NavLink to="/profil" className="btn-profil">
-              Mon profil : {userInfo?.username}
+              Mon profil
             </NavLink>
           ) : (
             <NavLink to="/login" className="btn-profil">Se Connecter</NavLink>

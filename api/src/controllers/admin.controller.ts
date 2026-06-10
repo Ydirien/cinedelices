@@ -154,6 +154,26 @@ export async function deleteRecipe(req: Request, res: Response) {
     res.status(204).send();
 }
 
+export async function getRecipeById(req: Request, res: Response) {
+    const recipeId = Number(req.params.id);
+
+    const recipe = await prisma.recipe.findUnique({
+        where: { id: recipeId },
+        include: {
+            work: { include: { category: true } },
+            thematics: { include: { thematic: true } },
+            steps: { orderBy: { order: "asc" } },
+            recipeIngredients: { include: { ingredient: true } },
+            user: { select: { id: true, username: true, email: true } },
+            _count: { select: { likes: true, comments: true } },
+        },
+    });
+
+    if (!recipe) throw new NotFoundError("Recipe not found");
+
+    res.json(recipe);
+}
+
 // Controller du tableau de bord administrateur
 // Il permet de récupérer plusieurs statistiques utiles pour l'espace admin
 export async function getAdminDashboard(req: Request, res: Response) {

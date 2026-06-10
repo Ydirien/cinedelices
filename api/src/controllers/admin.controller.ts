@@ -325,3 +325,45 @@ export async function createRecipe(req: Request, res: Response) {
 
   res.status(201).json(newRecipe);
 }
+
+const updateUserRoleSchema = z.object({
+    role: z.enum(["USER", "ADMIN"]),
+});
+
+export async function updateUserRole(req: Request, res: Response) {
+    const targetId = Number(req.params.id);
+    const { role } = updateUserRoleSchema.parse(req.body);
+
+    if (targetId === req.user.id) {
+        throw new ConflictError("Cannot change your own role");
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: targetId } });
+    if (!user) throw new NotFoundError("User not found");
+
+    const updatedUser = await prisma.user.update({
+        where: { id: targetId },
+        data: { role },
+        omit: { password: true },
+    });
+
+    res.json(updatedUser);
+}
+
+export async function deleteUser(req: Request, res: Response) {
+    const targetId = Number(req.params.id);
+
+    if (targetId === req.user.id) {
+        throw new ConflictError("Cannot delete your own account");
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: targetId } });
+    if (!user) throw new NotFoundError("User not found");
+
+    await prisma.$transaction(async (tx) => {
+        await tx.recipe.deleteMany({ where: { userId: targetId } });
+        await tx.user.delete({ where: { id: targetId } });
+    });
+
+    res.status(204).send();
+}

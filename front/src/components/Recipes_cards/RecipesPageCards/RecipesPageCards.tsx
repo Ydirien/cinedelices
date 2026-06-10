@@ -3,6 +3,7 @@ import './RecipesStyles.css';
 import { IRecipe } from '../../../../@types/index.d';
 import StarsRating from '../Stars/StarsRating';
 import { Difficulty } from '@prisma/client';
+import { API_URL } from '../../../constants';
 
 interface RecipesPageCardsProps {
   recipes: IRecipe[];
@@ -31,7 +32,7 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
             <div className="RecipesPCard" key={recipe.id}>
               <NavLink to={`/recettes/${recipe.id}`}>
                 <div className="RecipeIMG">
-                  <img src={recipe.image} alt={recipe.title} className="recetteImage" />
+                  <img crossOrigin='anonymous' src={recipe.image.includes("upload") ? API_URL+"/"+recipe.image : recipe.image} alt={recipe.title} className="recetteImage" />
                 </div>
                 <div className="Content-Info">
                   <h2 className="Content-Type">

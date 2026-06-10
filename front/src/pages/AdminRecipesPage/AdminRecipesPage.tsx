@@ -55,10 +55,17 @@ function AdminRecipesPage() {
   const apiBaseUrl =
     import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3010/api';
 
+  function getAuthHeaders(): Record<string, string> {
+    const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  }
+
   // Fonction qui va chercher toutes les recettes côté admin
   async function fetchRecipes() {
     try {
-      const response = await fetch(`${apiBaseUrl}/admin/recipes`);
+      const response = await fetch(`${apiBaseUrl}/admin/recipes`, {
+        headers: getAuthHeaders(),
+      });
 
       // Si la réponse n'est pas correcte, je déclenche une erreur
       if (!response.ok) {
@@ -93,6 +100,7 @@ function AdminRecipesPage() {
 
     const response = await fetch(`${apiBaseUrl}/admin/recipes/${id}`, {
       method: 'DELETE',
+      headers: getAuthHeaders(),
     });
 
     if (!response.ok) {
@@ -113,6 +121,7 @@ function AdminRecipesPage() {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        ...getAuthHeaders(),
       },
       body: JSON.stringify({
         state: 'APPROVED',

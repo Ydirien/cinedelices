@@ -134,6 +134,32 @@ select option {
     padding: 10px;
 }
 
+.dropdown-btn {
+    background: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    padding: 0.8rem;
+    color: var(--quaternary-color);
+    font-size: 0.95rem;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dropdown-btn:focus {
+    outline: none;
+    border-color: var(--quinary-color);
+}
+
+.dropdown-btn span {
+    font-size: 0.8rem;
+    color: var(--tertiary-color);
+}
+
 .dropdown-container {
     position: relative;
 }
@@ -167,6 +193,54 @@ select,
 .ingredients-wrapper .Container input,
 .steps-wrapper .Container input {
     transition: border-color 0.2s ease-in-out;
+}
+
+.no-work-found {
+    position: absolute;
+    top: 105%;
+    left: 0;
+    right: 0;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--quinary-color);
+    border-radius: 8px;
+    padding: 0.8rem;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.no-work-found span {
+    color: var(--quaternary-color);
+    font-size: 0.9rem;
+}
+
+.no-work-found button {
+    padding: 0.6rem;
+    border-radius: 20px;
+    border: 1px solid var(--quinary-color);
+    background-color: transparent;
+    color: var(--quinary-color);
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.no-work-found input[type="number"] {
+    background: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    color: var(--quaternary-color);
+    font-size: 0.95rem;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.no-work-found input[type="number"]:focus {
+    border-color: var(--quinary-color);
 }
 
 .Difficulty-PrepaTime-Thematic {

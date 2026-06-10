@@ -26,6 +26,8 @@ function RecipePage() {
           return;
         }
         setRecipe(data);
+        console.log("image url:", data.image);
+
       } catch (err) {
         console.error('Fetch échoué :', err);
         setError('Impossible de contacter le serveur.');

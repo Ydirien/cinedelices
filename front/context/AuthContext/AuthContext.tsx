@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 
-const AuthContext = createContext({ isConnected: false, logout: () => {}, login: ()=>{} });
+const AuthContext = createContext({ isConnected: false, login: ()=>{}, logout: () => {} });
 
 export function AuthProvider({ children }) {
   const [isConnected, setIsConnected] = useState(!!localStorage.getItem('accessToken'));
@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ isConnected, logout, login }}>
+    <AuthContext.Provider value={{ isConnected, login, logout  }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { prisma } from '../models/index.ts';
 import { z } from 'zod';
-import { NotFoundError, ConflictError, BadRequestError } from '../lib/errors.ts';
+import { NotFoundError, ConflictError } from '../lib/errors.ts';
 
 const updateRecipeSchema = z.object({
     title: z.string().min(1).optional(),
@@ -28,6 +28,36 @@ const updateStateSchema = z.object({
     state: z.enum(["PENDING", "APPROVED", "REJECTED"]),
 });
 
+const createRecipeSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+  image: z.url(),
+  prepTime: z.number().int().positive(),
+  cookTime: z.number().int().positive(),
+  servings: z.number().int().positive(),
+  difficulty: z.enum(['EASY', 'MEDIUM', 'HARD']),
+  state: z.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  workId: z.number().int().positive(),
+
+  steps: z.array(
+    z.object({
+      order: z.number().int().positive(),
+      content: z.string().min(1),
+    }),
+  ),
+
+  recipeIngredients: z.array(
+    z.object({
+      ingredientId: z.number().int().positive(),
+      quantity: z.number().positive(),
+      unit: z.string().min(1),
+    }),
+  ),
+
+  thematics: z.array(z.number().int().positive()),
+});
+
+// GET /admin/recipes?state=PENDING&page=1&limit=10
 export async function getAllRecipes(req: Request, res: Response) {
     const { state, page, limit } = req.query;
 
@@ -141,6 +171,8 @@ export async function getRecipeById(req: Request, res: Response) {
     if (!recipe) throw new NotFoundError("Recipe not found");
 
     res.json(recipe);
+}
+
 // Controller du tableau de bord administrateur
 // Il permet de récupérer plusieurs statistiques utiles pour l'espace admin
 export async function getAdminDashboard(req: Request, res: Response) {
@@ -223,4 +255,73 @@ export async function getAdminDashboard(req: Request, res: Response) {
         },
         latestPendingRecipes,
     });
+}
+
+export async function createRecipe(req: Request, res: Response) {
+  const {
+    steps,
+    recipeIngredients,
+    thematics,
+    state,
+    ...scalarData
+  } = createRecipeSchema.parse(req.body);
+
+  const alreadyExists = await prisma.recipe.findFirst({
+    where: {
+      title: scalarData.title,
+    },
+  });
+
+  if (alreadyExists) {
+    throw new ConflictError('Recipe already exists');
+  }
+
+  const newRecipe = await prisma.recipe.create({
+    data: {
+      ...scalarData,
+
+      userId: req.user.id,
+
+      // En admin, on peut choisir le statut directement.
+      state: state ?? 'APPROVED',
+
+      steps: {
+        create: steps,
+      },
+
+      recipeIngredients: {
+        create: recipeIngredients,
+      },
+
+      thematics: {
+        create: thematics.map((thematicId) => ({
+          thematicId,
+        })),
+      },
+    },
+    include: {
+      work: {
+        include: {
+          category: true,
+        },
+      },
+      thematics: {
+        include: {
+          thematic: true,
+        },
+      },
+      steps: {
+        orderBy: {
+          order: 'asc',
+        },
+      },
+      recipeIngredients: {
+        include: {
+          ingredient: true,
+        },
+      },
+    },
+  });
+
+  res.status(201).json(newRecipe);
 }

@@ -1,17 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from '../../../context/AuthContext/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import './UserProfilePage.css';
 
 function UserProfilePage() {
   const [user, setUser] = useState<any>(null);
-  const { logout } = useAuth();
-  const navigate = useNavigate();
-
-  function handleLogout() {
-    logout();
-    navigate('/');
-  }
 
   useEffect(() => {
     const data = localStorage.getItem('User');
@@ -50,9 +41,6 @@ function UserProfilePage() {
           </button>
           <button className="btn-my-recipes" type="button">
             Mes recettes
-          </button>
-          <button className="btn-logout" type="button" onClick={handleLogout}>
-            Déconnection
           </button>
         </div>
       </section>

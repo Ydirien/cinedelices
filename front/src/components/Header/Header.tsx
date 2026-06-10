@@ -1,10 +1,10 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
 import { LuMenu } from 'react-icons/lu';
 import { LuSearch } from 'react-icons/lu';
 import { LuFilter } from 'react-icons/lu';
 import SearchBar from '../SearchBar/SearchBar';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import './Header.css';
 import { useAuth } from '../../../context/AuthContext/AuthContext';
@@ -14,18 +14,42 @@ interface HeaderProps {
 }
 
 function Header({ logoMain }: HeaderProps) {
-  const { isConnected } = useAuth();
+  const raw = localStorage.getItem('User');
+  const userInfo = raw ? JSON.parse(raw) : null;
+  const roleInfo = userInfo?.role
+  const { isConnected, logout } = useAuth();
 
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [showLogo, setShowLogo] = useState(true);
+  const [showProfileMenu, setShowProfileMenu] = useState(false); // affiche/masque la fenêtre déroulante du profil
   const location = useLocation();
+  const navigate = useNavigate(); // pour rediriger vers /login après déconnexion
+  const profileMenuRef = useRef<HTMLDivElement>(null); // référence du menu profil pour détecter les clics extérieurs
   //   function toggleMobileSearch()
 
   //fermetur automatique de la navbar mobile a chaque changement de page/route
   useEffect(() => {
     setMobileNavOpen(false);
   }, [location]);
+
+  // ferme la fenêtre du profil si on clique en dehors
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(e.target as Node)) {
+        setShowProfileMenu(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // déconnecte l'utilisateur, ferme le menu et redirige vers la page de connexion
+  function handleLogout() {
+    logout();
+    setShowProfileMenu(false);
+    navigate('/login');
+  }
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,6 +61,7 @@ function Header({ logoMain }: HeaderProps) {
         setShowMobileSearch(false);
       }
     };
+    handleResize()
 
     window.addEventListener('resize', handleResize);
 
@@ -70,13 +95,36 @@ function Header({ logoMain }: HeaderProps) {
           >
             <LuSearch size={20} />
           </button>
-          {isConnected ? (
-            <NavLink to="/profil" className="btn-profil">
-              Mon profil
-            </NavLink>
-          ) : (
-            <NavLink to="/login" className="btn-profil">Se Connecter</NavLink>
-          )}
+          {/* menu profil : icône cliquable + fenêtre déroulante avec les options */}
+          <div className="btn-menu" ref={profileMenuRef}>
+            {isConnected ? (
+              <div className="profile-menu-wrapper">
+                {/* clic sur l'icône = ouvre/ferme la fenêtre */}
+                <button
+                  className="btn-profil"
+                  onClick={() => setShowProfileMenu((prev) => !prev)}
+                >
+                  <LuCircleUser size={35}/>
+                </button>
+                {showProfileMenu && (
+                  <div className="profile-dropdown">
+                    <NavLink to="/profil" onClick={() => setShowProfileMenu(false)}>
+                      Mon profil
+                    </NavLink>
+                    {/* Dashboard visible uniquement pour les admins */}
+                    {roleInfo === "ADMIN" && (
+                      <NavLink to="/admin/dashboard" onClick={() => setShowProfileMenu(false)}>
+                        Dashboard
+                      </NavLink>
+                    )}
+                    <button onClick={handleLogout}>Déconnexion</button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <NavLink to="/login" className="btn-profil">Se Connecter</NavLink>
+            )}
+          </div>
           
         </div>
       </section>

@@ -23,6 +23,9 @@ import AdminDashboardPage from './pages/AdminDashboardPage/AdminDashboardPage';
 import { API_URL } from './constants';
 import { AuthProvider } from '../context/AuthContext/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import AdminRecipesPage from './pages/AdminRecipesPage/AdminRecipesPage';
+import AdminRecipeDetailPage from './pages/AdminRecipeDetailPage/AdminRecipeDetailPage';
+import AdminRecipeCreatePage from './pages/AdminRecipeCreatePage/AdminRecipeCreatePage';
 
 function App() {
 
@@ -44,6 +47,11 @@ function App() {
           <Route path="/admin/profil" element={<ProtectedRoute><AdminProfilePage /></ProtectedRoute>} />
           <Route path="/create" element={<ProtectedRoute><CreatRecipe /></ProtectedRoute>} />
           <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboardPage /></ProtectedRoute>} />
+          <Route path="/admin/recipes" element={<AdminRecipesPage />} />
+          <Route path="/admin/recipes/new" element={<AdminRecipeCreatePage />} />
+          <Route path="/admin/recipes/:id" element={<AdminRecipeDetailPage />} />
+
+          
         </Routes>
       </main>
       <Footer />

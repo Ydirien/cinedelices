@@ -167,4 +167,22 @@
   .admin-pending-actions {
     flex-direction: column;
   }
+
+  .admin-pending-actions .view-button {
+    width: 100%;
+}
+}
+
+.admin-pending-actions .view-button {
+  text-decoration: none;
+  border-radius: 0.5rem;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #f3c969;
+  color: #111;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }

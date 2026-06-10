@@ -1,0 +1,212 @@
+.admin-recipe-create-page {
+  min-height: 80vh;
+  padding: 2rem 1rem;
+  color: #fff;
+}
+
+.admin-recipe-create-header {
+  max-width: 1100px;
+  margin: 0 auto 2rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: #111;
+  border: 1px solid rgba(243, 201, 105, 0.25);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.admin-recipe-create-header h1 {
+  color: #f3c969;
+  margin: 0 0 1rem;
+}
+
+.admin-recipe-create-header p {
+  margin: 0;
+  color: #f5f5f5;
+}
+
+.admin-recipe-create-header a {
+  text-decoration: none;
+  background-color: #f3c969;
+  color: #111;
+  font-weight: bold;
+  padding: 0.8rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.admin-recipe-create-form {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-create-card {
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: #111;
+  border: 1px solid rgba(243, 201, 105, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-create-card h2 {
+  color: #f3c969;
+  margin-bottom: 1rem;
+}
+
+.admin-create-card label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: #f3c969;
+  font-weight: bold;
+}
+
+.admin-create-card input,
+.admin-create-card textarea,
+.admin-create-card select {
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.admin-create-card textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.admin-create-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.admin-create-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.admin-create-card-header h2 {
+  margin-bottom: 0;
+}
+
+.admin-create-card-header button,
+.admin-create-submit button {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #f3c969;
+  color: #111;
+}
+
+.admin-create-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-create-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 1rem;
+  align-items: end;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.admin-create-step-row {
+  display: grid;
+  grid-template-columns: 100px 1fr auto;
+  gap: 1rem;
+  align-items: end;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.admin-create-row button,
+.admin-create-step-row button {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.danger-button {
+  background-color: #8b1e1e;
+  color: #fff;
+}
+
+.admin-create-submit {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.admin-success-message,
+.admin-error-message {
+  max-width: 1100px;
+  margin: 0 auto 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+}
+
+.admin-success-message {
+  background-color: #1d6b3a;
+  color: #fff;
+}
+
+.admin-error-message {
+  background-color: #8b1e1e;
+  color: #fff;
+}
+
+@media screen and (max-width: 900px) {
+  .admin-recipe-create-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-create-grid,
+  .admin-create-row,
+  .admin-create-step-row {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-create-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-create-submit {
+    justify-content: stretch;
+  }
+
+  .admin-create-submit button {
+    width: 100%;
+  }
+}
+
+.admin-create-user-info {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: rgba(243, 201, 105, 0.12);
+  color: #f5f5f5;
+}
+
+.admin-create-user-info strong {
+  color: #f3c969;
+}

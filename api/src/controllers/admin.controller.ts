@@ -28,6 +28,36 @@ const updateStateSchema = z.object({
     state: z.enum(["PENDING", "APPROVED", "REJECTED"]),
 });
 
+const createRecipeSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+  image: z.url(),
+  prepTime: z.number().int().positive(),
+  cookTime: z.number().int().positive(),
+  servings: z.number().int().positive(),
+  difficulty: z.enum(['EASY', 'MEDIUM', 'HARD']),
+  state: z.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  workId: z.number().int().positive(),
+  userId: z.number().int().positive().optional(),
+
+  steps: z.array(
+    z.object({
+      order: z.number().int().positive(),
+      content: z.string().min(1),
+    }),
+  ),
+
+  recipeIngredients: z.array(
+    z.object({
+      ingredientId: z.number().int().positive(),
+      quantity: z.number().positive(),
+      unit: z.string().min(1),
+    }),
+  ),
+
+  thematics: z.array(z.number().int().positive()),
+});
+
 // GET /admin/recipes?state=PENDING&page=1&limit=10
 export async function getAllRecipes(req: Request, res: Response) {
     const { state, page, limit } = req.query;
@@ -206,4 +236,125 @@ export async function getAdminDashboard(req: Request, res: Response) {
     },
     latestPendingRecipes,
   });
+}
+
+export async function getRecipeById(req: Request, res: Response) {
+  const recipeId = Number(req.params.id);
+
+  if (!Number.isInteger(recipeId)) {
+    throw new NotFoundError('Recipe not found');
+  }
+
+  const recipe = await prisma.recipe.findUnique({
+    where: {
+      id: recipeId,
+    },
+    include: {
+      work: {
+        include: {
+          category: true,
+        },
+      },
+      thematics: {
+        include: {
+          thematic: true,
+        },
+      },
+      user: {
+        select: {
+          id: true,
+          username: true,
+          email: true,
+        },
+      },
+      steps: {
+        orderBy: {
+          order: 'asc',
+        },
+      },
+      recipeIngredients: {
+        include: {
+          ingredient: true,
+        },
+      },
+    },
+  });
+
+  if (!recipe) {
+    throw new NotFoundError('Recipe not found');
+  }
+
+  res.json(recipe);
+}
+
+export async function createRecipe(req: Request, res: Response) {
+  const {
+    steps,
+    recipeIngredients,
+    thematics,
+    userId,
+    state,
+    ...scalarData
+  } = createRecipeSchema.parse(req.body);
+
+  const alreadyExists = await prisma.recipe.findFirst({
+    where: {
+      title: scalarData.title,
+    },
+  });
+
+  if (alreadyExists) {
+    throw new ConflictError('Recipe already exists');
+  }
+
+  const newRecipe = await prisma.recipe.create({
+    data: {
+      ...scalarData,
+
+      // Temporaire : si l'auth admin n'est pas branchée, on utilise userId envoyé par le front ou 1.
+      // Plus tard, on pourra remplacer par req.user.id.
+      userId: userId ?? 1,
+
+      // En admin, on peut choisir le statut directement.
+      state: state ?? 'APPROVED',
+
+      steps: {
+        create: steps,
+      },
+
+      recipeIngredients: {
+        create: recipeIngredients,
+      },
+
+      thematics: {
+        create: thematics.map((thematicId) => ({
+          thematicId,
+        })),
+      },
+    },
+    include: {
+      work: {
+        include: {
+          category: true,
+        },
+      },
+      thematics: {
+        include: {
+          thematic: true,
+        },
+      },
+      steps: {
+        orderBy: {
+          order: 'asc',
+        },
+      },
+      recipeIngredients: {
+        include: {
+          ingredient: true,
+        },
+      },
+    },
+  });
+
+  res.status(201).json(newRecipe);
 }

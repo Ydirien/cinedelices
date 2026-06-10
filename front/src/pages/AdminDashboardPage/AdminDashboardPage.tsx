@@ -167,6 +167,13 @@ function AdminDashboardPage() {
                 </div>
 
                 <div className="admin-pending-actions">
+                  <Link
+                    to={`/admin/recipes/${recipe.id}`}
+                    className="view-button"
+                  >
+                    Voir
+                  </Link>
+
                   <button
                     type="button"
                     onClick={() => handleApproveRecipe(recipe.id)}

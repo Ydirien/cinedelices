@@ -1,9 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import StarsRating from '../Stars/StarsRating';
-import { IRecipe } from '../../../../@types/index.d';
+import type { IRecipe } from '../../../../@types/index.d';
+
 interface RecipesReco {
   reco: IRecipe[];
 }
+
 export default function RecoHomePage({ reco = [] }: RecipesReco) {
   return (
     <section className="reco-home-page section-container">
@@ -13,19 +15,24 @@ export default function RecoHomePage({ reco = [] }: RecipesReco) {
       <div className="reco-container">
         {reco.map((recipe) => (
           <div key={recipe.id} className="Card">
-          <NavLink to={`/recettes/${recipe.id}`}>
-            <div className="RecipeIMG">
-              <img src={recipe.image} alt="image de la recette" className="recetteImage" />
-            </div>
-            <div className="Recipe-Info">
-              <h3>{recipe.title}</h3>
-              <h4>{recipe.work.title}</h4>
-              <StarsRating />
-            </div>
-          </NavLink>
-        </div>
+            <NavLink to={`/recettes/${recipe.id}`}>
+              <div className="RecipeIMG">
+                <img
+                  src={recipe.image}
+                  alt={recipe.title}
+                  className="recetteImage"
+                />
+              </div>
+
+              <div className="Recipe-Info">
+                <h3>{recipe.title}</h3>
+                <h4>{recipe.work.title}</h4>
+                <StarsRating />
+              </div>
+            </NavLink>
+          </div>
+
         ))}
-        
       </div>
 
       <div className="slider-dots">

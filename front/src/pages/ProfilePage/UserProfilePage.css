@@ -60,9 +60,25 @@
   margin-top: 2rem;
   display: flex;
   gap: 1rem;
+   display:grid;
+  grid-template-areas:
+  "a b"
+  "c c";
+  .btn-edit {
+    grid-area: a;
+  }
+  .btn-my-recipes {
+    grid-area: b;
+  }
+  .btn-logout {
+    grid-area: c;
+  }
+  grid-template-rows: 1fr 1fr ;
+ 
 }
 
-.user-profile-actions button {
+.user-profile-actions .btn-edit, .btn-my-recipes {
+ 
   flex: 1;
   padding: 0.8rem 1rem;
   border: none;
@@ -72,6 +88,20 @@
   background-color: #f3c969;
   color: #111;
   transition: transform 0.2s ease, opacity 0.2s ease;
+  
+}
+.user-profile-actions .btn-logout {
+
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #d30404;
+  color: #ffffff;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  
 }
 
 .user-profile-actions button:hover {

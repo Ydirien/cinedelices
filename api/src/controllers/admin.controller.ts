@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import { prisma } from '../models/index.ts';
 import { z } from 'zod';
-import { NotFoundError, ConflictError, BadRequestError } from '../lib/errors.ts';
+import { NotFoundError, ConflictError } from '../lib/errors.ts';
 
 const updateRecipeSchema = z.object({
     title: z.string().min(1).optional(),
@@ -38,7 +38,6 @@ const createRecipeSchema = z.object({
   difficulty: z.enum(['EASY', 'MEDIUM', 'HARD']),
   state: z.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
   workId: z.number().int().positive(),
-  userId: z.number().int().positive().optional(),
 
   steps: z.array(
     z.object({
@@ -177,134 +176,85 @@ export async function getRecipeById(req: Request, res: Response) {
 // Controller du tableau de bord administrateur
 // Il permet de récupérer plusieurs statistiques utiles pour l'espace admin
 export async function getAdminDashboard(req: Request, res: Response) {
-  // Promise.all permet de lancer plusieurs requêtes Prisma en même temps
-  // Cela évite d'attendre chaque requête une par une
-  const [
-    totalRecipes,
-    approvedRecipes,
-    pendingRecipes,
-    totalUsers,
-    totalCategories,
-    latestPendingRecipes,
-  ] = await Promise.all([
-    // Nombre total de recettes en base
-    prisma.recipe.count(),
+    // Promise.all permet de lancer plusieurs requêtes Prisma en même temps
+    // Cela évite d'attendre chaque requête une par une
+    const [
+        totalRecipes,
+        approvedRecipes,
+        pendingRecipes,
+        totalUsers,
+        totalCategories,
+        latestPendingRecipes,
+    ] = await Promise.all([
+        // Nombre total de recettes en base
+        prisma.recipe.count(),
 
-    // Nombre de recettes validées
-    prisma.recipe.count({
-      where: {
-        state: 'APPROVED',
-      },
-    }),
+        // Nombre de recettes validées
+        prisma.recipe.count({
+        where: {
+            state: 'APPROVED',
+        },
+        }),
 
-    // Nombre de recettes en attente de validation
-    prisma.recipe.count({
-      where: {
-        state: 'PENDING',
-      },
-    }),
+        // Nombre de recettes en attente de validation
+        prisma.recipe.count({
+        where: {
+            state: 'PENDING',
+        },
+        }),
 
-    // Nombre total d'utilisateurs inscrits
-    prisma.user.count(),
+        // Nombre total d'utilisateurs inscrits
+        prisma.user.count(),
 
-    // Nombre total de catégories disponibles
-    prisma.category.count(),
+        // Nombre total de catégories disponibles
+        prisma.category.count(),
 
-    // Récupération des 5 dernières recettes en attente de validation
-    prisma.recipe.findMany({
-      where: {
-        state: 'PENDING',
-      },
-
-      // On affiche les plus récentes en premier
-      orderBy: {
-        createdAt: 'desc',
-      },
-
-      // On limite volontairement à 5 recettes pour le dashboard
-      take: 5,
-
-      // On inclut certaines relations utiles pour l'affichage côté front
-      include: {
-        // Utilisateur ayant proposé la recette
-        user: {
-          select: {
-            id: true,
-            email: true,
-          },
+        // Récupération des 5 dernières recettes en attente de validation
+        prisma.recipe.findMany({
+        where: {
+            state: 'PENDING',
         },
 
-        // Œuvre liée à la recette avec sa catégorie
-        work: {
-          include: {
-            category: true,
-          },
-        },
-      },
-    }),
-  ]);
-
-  // Réponse envoyée au front
-  // Elle contient les statistiques + les dernières recettes en attente
-  res.json({
-    stats: {
-      totalRecipes,
-      approvedRecipes,
-      pendingRecipes,
-      totalUsers,
-      totalCategories,
-    },
-    latestPendingRecipes,
-  });
-}
-
-export async function getRecipeById(req: Request, res: Response) {
-  const recipeId = Number(req.params.id);
-
-  if (!Number.isInteger(recipeId)) {
-    throw new NotFoundError('Recipe not found');
-  }
-
-  const recipe = await prisma.recipe.findUnique({
-    where: {
-      id: recipeId,
-    },
-    include: {
-      work: {
-        include: {
-          category: true,
-        },
-      },
-      thematics: {
-        include: {
-          thematic: true,
-        },
-      },
-      user: {
-        select: {
-          id: true,
-          username: true,
-          email: true,
-        },
-      },
-      steps: {
+        // On affiche les plus récentes en premier
         orderBy: {
-          order: 'asc',
+            createdAt: 'desc',
         },
-      },
-      recipeIngredients: {
+
+        // On limite volontairement à 5 recettes pour le dashboard
+        take: 5,
+
+        // On inclut certaines relations utiles pour l'affichage côté front
         include: {
-          ingredient: true,
+            // Utilisateur ayant proposé la recette
+            user: {
+            select: {
+                id: true,
+                email: true,
+            },
+            },
+
+            // Œuvre liée à la recette avec sa catégorie
+            work: {
+            include: {
+                category: true,
+            },
+            },
         },
-      },
-    },
-  });
+        }),
+    ]);
 
-  if (!recipe) {
-    throw new NotFoundError('Recipe not found');
-  }
-
-  res.json(recipe);
+    // Réponse envoyée au front
+    // Elle contient les statistiques + les dernières recettes en attente
+    res.json({
+        stats: {
+        totalRecipes,
+        approvedRecipes,
+        pendingRecipes,
+        totalUsers,
+        totalCategories,
+        },
+        latestPendingRecipes,
+    });
 }
 
 export async function createRecipe(req: Request, res: Response) {
@@ -312,7 +262,6 @@ export async function createRecipe(req: Request, res: Response) {
     steps,
     recipeIngredients,
     thematics,
-    userId,
     state,
     ...scalarData
   } = createRecipeSchema.parse(req.body);
@@ -331,9 +280,7 @@ export async function createRecipe(req: Request, res: Response) {
     data: {
       ...scalarData,
 
-      // Temporaire : si l'auth admin n'est pas branchée, on utilise userId envoyé par le front ou 1.
-      // Plus tard, on pourra remplacer par req.user.id.
-      userId: userId ?? 1,
+      userId: req.user.id,
 
       // En admin, on peut choisir le statut directement.
       state: state ?? 'APPROVED',

@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import * as adminController from '../controllers/admin.controller.ts';
+import { checkRoles } from '../middlewares/auth.middleware.ts';
 import { upload } from '../middlewares/upload.middleware.ts';
 
 export const router = Router();
 
-// À remettre plus tard quand l'auth admin sera fonctionnelle
-// router.use(checkRoles(['ADMIN']));
+router.use(checkRoles(['ADMIN']));
 
 
 router.get('/admin/dashboard', adminController.getAdminDashboard);

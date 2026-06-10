@@ -76,10 +76,17 @@ function AdminRecipeDetailPage() {
   const apiBaseUrl =
     import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3010/api';
 
+  function getAuthHeaders(): Record<string, string> {
+    const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  }
+
   // Je récupère les informations complètes d'une recette
   async function fetchRecipe() {
     try {
-      const response = await fetch(`${apiBaseUrl}/admin/recipes/${id}`);
+      const response = await fetch(`${apiBaseUrl}/admin/recipes/${id}`, {
+        headers: getAuthHeaders(),
+      });
 
       if (!response.ok) {
         throw new Error('Erreur lors du chargement de la recette');
@@ -299,6 +306,7 @@ function AdminRecipeDetailPage() {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        ...getAuthHeaders(),
       },
       body: JSON.stringify({
         title: recipe.title,
@@ -337,6 +345,7 @@ function AdminRecipeDetailPage() {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
+          ...getAuthHeaders(),
         },
         body: JSON.stringify({
           state: newState,
@@ -383,6 +392,7 @@ function AdminRecipeDetailPage() {
 
     const response = await fetch(`${apiBaseUrl}/admin/recipes/${recipe.id}`, {
       method: 'DELETE',
+      headers: getAuthHeaders(),
     });
 
     if (!response.ok) {

@@ -38,9 +38,16 @@ function AdminDashboardPage() {
 
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3010/api';
 
+  function getAuthHeaders(): Record<string, string> {
+    const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  }
+
   async function fetchDashboard() {
     try {
-      const response = await fetch(`${apiBaseUrl}/admin/dashboard`);
+      const response = await fetch(`${apiBaseUrl}/admin/dashboard`, {
+        headers: getAuthHeaders(),
+      });
 
       if (!response.ok) {
         throw new Error('Erreur lors du chargement du dashboard');
@@ -64,6 +71,7 @@ function AdminDashboardPage() {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        ...getAuthHeaders(),
       },
       body: JSON.stringify({
         state: 'APPROVED',
@@ -82,6 +90,7 @@ function AdminDashboardPage() {
 
     await fetch(`${apiBaseUrl}/admin/recipes/${id}`, {
       method: 'DELETE',
+      headers: getAuthHeaders(),
     });
 
     fetchDashboard();

@@ -14,6 +14,9 @@ interface HeaderProps {
 }
 
 function Header({ logoMain }: HeaderProps) {
+  const raw = localStorage.getItem('User');
+  const userInfo = raw ? JSON.parse(raw) : null;
+  const roleInfo = userInfo?.role
   const { isConnected } = useAuth();
 
   const [showMobileSearch, setShowMobileSearch] = useState(false);
@@ -37,6 +40,7 @@ function Header({ logoMain }: HeaderProps) {
         setShowMobileSearch(false);
       }
     };
+    handleResize()
 
     window.addEventListener('resize', handleResize);
 
@@ -70,13 +74,22 @@ function Header({ logoMain }: HeaderProps) {
           >
             <LuSearch size={20} />
           </button>
-          {isConnected ? (
-            <NavLink to="/profil" className="btn-profil">
-              Mon profil
-            </NavLink>
-          ) : (
-            <NavLink to="/login" className="btn-profil">Se Connecter</NavLink>
-          )}
+          <div className="btn-menu">
+            {isConnected ? (
+            <>
+              <NavLink to="/profil" className="btn-profil">
+                Mon profil
+              </NavLink>
+              {roleInfo === "ADMIN" && (
+                <NavLink to="/admin/dashboard" className="btn-dashboard">
+                  Dashboard
+                </NavLink>
+              )}
+            </>
+            ) : (
+              <NavLink to="/login" className="btn-profil">Se Connecter</NavLink>
+            )}
+          </div>
           
         </div>
       </section>

@@ -65,7 +65,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
      if (localStorage.getItem("accessToken")) {
     fetcher();
   }
-  },[])
+  },[handleSubmit])
 
   return (
     <div className="auth-container">

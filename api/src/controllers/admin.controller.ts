@@ -141,6 +141,8 @@ export async function getRecipeById(req: Request, res: Response) {
     if (!recipe) throw new NotFoundError("Recipe not found");
 
     res.json(recipe);
+}
+
 // Controller du tableau de bord administrateur
 // Il permet de récupérer plusieurs statistiques utiles pour l'espace admin
 export async function getAdminDashboard(req: Request, res: Response) {

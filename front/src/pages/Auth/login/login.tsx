@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom'; 
 import { LuCircleUser } from 'react-icons/lu';
 import '../AuthPages.css';
+import { useAuth } from '../../../../context/AuthContext/AuthContext';
 
 export default function Login() {
+  const {login} = useAuth()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -32,6 +34,9 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     }
 
       localStorage.setItem('accessToken', data.accessToken.token);
+
+      // pour afficher automatiquement le bouttons mon profil sans refresh la page 
+      login();
       
 
 

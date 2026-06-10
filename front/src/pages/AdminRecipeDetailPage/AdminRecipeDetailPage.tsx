@@ -5,7 +5,6 @@ import './AdminRecipeDetailPage.css';
 type RecipeState = 'PENDING' | 'APPROVED' | 'REJECTED';
 type Difficulty = 'EASY' | 'MEDIUM' | 'HARD';
 
-// Je définis le type d'un ingrédient lié à une recette
 type AdminRecipeIngredient = {
   id?: number;
   ingredientId?: number;
@@ -17,14 +16,12 @@ type AdminRecipeIngredient = {
   };
 };
 
-// Je définis le type d'une étape de recette
 type AdminRecipeStep = {
   id?: number;
   order: number;
   content: string;
 };
 
-// Je définis le type complet d'une recette côté admin
 type AdminRecipeDetail = {
   id: number;
   title: string;
@@ -51,21 +48,14 @@ type AdminRecipeDetail = {
 };
 
 function AdminRecipeDetailPage() {
-  // Je récupère l'id présent dans l'URL, par exemple /admin/recipes/3
   const { id } = useParams();
-
-  // Je l'utilise pour rediriger après une suppression
   const navigate = useNavigate();
 
-  // Je stocke ici la recette complète récupérée depuis l'API
   const [recipe, setRecipe] = useState<AdminRecipeDetail | null>(null);
-
-  // États classiques pour gérer le chargement, les erreurs et la pop-up
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [successPopupMessage, setSuccessPopupMessage] = useState('');
 
-  // Je gère ici l'ouverture / fermeture des blocs de la page
   const [openedSections, setOpenedSections] = useState({
     informations: true,
     ingredients: true,
@@ -76,7 +66,6 @@ function AdminRecipeDetailPage() {
   const apiBaseUrl =
     import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3010/api';
 
-  // Je récupère les informations complètes d'une recette
   async function fetchRecipe() {
     try {
       const response = await fetch(`${apiBaseUrl}/admin/recipes/${id}`);
@@ -86,6 +75,7 @@ function AdminRecipeDetailPage() {
       }
 
       const data: AdminRecipeDetail = await response.json();
+
       setRecipe(data);
     } catch (error) {
       setErrorMessage('Impossible de charger cette recette.');
@@ -98,7 +88,6 @@ function AdminRecipeDetailPage() {
     fetchRecipe();
   }, [id]);
 
-  // Je fais disparaître automatiquement la pop-up après quelques secondes
   useEffect(() => {
     if (!successPopupMessage) {
       return;
@@ -113,7 +102,6 @@ function AdminRecipeDetailPage() {
     };
   }, [successPopupMessage]);
 
-  // Cette fonction permet d'ouvrir ou fermer un bloc proprement
   function toggleSection(section: keyof typeof openedSections) {
     setOpenedSections((currentSections) => ({
       ...currentSections,
@@ -121,7 +109,6 @@ function AdminRecipeDetailPage() {
     }));
   }
 
-  // Je mets à jour un champ simple de la recette : titre, description, temps, difficulté...
   function updateRecipeField(
     field: keyof AdminRecipeDetail,
     value: string | number | Difficulty | RecipeState,
@@ -138,7 +125,6 @@ function AdminRecipeDetailPage() {
     });
   }
 
-  // Je modifie un ingrédient dans la liste sans envoyer directement au back
   function updateIngredient(
     index: number,
     field: 'ingredientId' | 'quantity' | 'unit',
@@ -163,7 +149,6 @@ function AdminRecipeDetailPage() {
     });
   }
 
-  // J'ajoute une nouvelle ligne d'ingrédient côté front
   function addIngredient() {
     setRecipe((currentRecipe) => {
       if (!currentRecipe) {
@@ -188,7 +173,6 @@ function AdminRecipeDetailPage() {
     });
   }
 
-  // Je retire un ingrédient de la liste
   function removeIngredient(index: number) {
     setRecipe((currentRecipe) => {
       if (!currentRecipe) {
@@ -206,7 +190,6 @@ function AdminRecipeDetailPage() {
     });
   }
 
-  // Je modifie une étape de la recette
   function updateStep(
     index: number,
     field: 'order' | 'content',
@@ -231,7 +214,6 @@ function AdminRecipeDetailPage() {
     });
   }
 
-  // J'ajoute une nouvelle étape à la suite
   function addStep() {
     setRecipe((currentRecipe) => {
       if (!currentRecipe) {
@@ -253,7 +235,6 @@ function AdminRecipeDetailPage() {
     });
   }
 
-  // Je supprime une étape et je réorganise les numéros automatiquement
   function removeStep(index: number) {
     setRecipe((currentRecipe) => {
       if (!currentRecipe) {
@@ -276,7 +257,6 @@ function AdminRecipeDetailPage() {
     });
   }
 
-  // J'envoie toutes les modifications de la recette au back
   async function handleSaveRecipe() {
     if (!recipe) {
       return;
@@ -318,14 +298,12 @@ function AdminRecipeDetailPage() {
       return;
     }
 
-    // Après modification, je recharge la recette pour avoir les données à jour
     await fetchRecipe();
 
     setErrorMessage('');
     setSuccessPopupMessage('Recette modifiée avec succès.');
   }
 
-  // Je mets à jour uniquement le statut de la recette
   async function handleUpdateState(newState: RecipeState) {
     if (!recipe) {
       return;
@@ -367,7 +345,6 @@ function AdminRecipeDetailPage() {
     setSuccessPopupMessage('Statut mis à jour avec succès.');
   }
 
-  // Je supprime la recette puis je retourne sur la liste admin
   async function handleDeleteRecipe() {
     if (!recipe) {
       return;
@@ -422,10 +399,7 @@ function AdminRecipeDetailPage() {
       )}
 
       <section className="admin-recipe-detail-header">
-        <div>
-          <h1>Gestion de la recette</h1>
-          <p>{recipe.title}</p>
-        </div>
+        <h1>Gestion de la recette</h1>
 
         <Link to="/admin/recipes">Retour à la liste</Link>
       </section>
@@ -466,89 +440,99 @@ function AdminRecipeDetailPage() {
             onClick={() => toggleSection('informations')}
           >
             <span>Modifier les informations</span>
-            <span>{openedSections.informations ? '▲' : '▼'}</span>
+
+            <span
+              className={`admin-collapsible-arrow ${
+                openedSections.informations ? 'is-open' : ''
+              }`}
+            >
+              ▼
+            </span>
           </button>
 
-          {openedSections.informations && (
-            <div className="admin-collapsible-content">
+          <div
+            className={`admin-collapsible-content ${
+              openedSections.informations ? 'is-open' : 'is-closed'
+            }`}
+            aria-hidden={!openedSections.informations}
+          >
+            <label>
+              Titre
+              <input
+                type="text"
+                value={recipe.title}
+                onChange={(event) =>
+                  updateRecipeField('title', event.target.value)
+                }
+              />
+            </label>
+
+            <label>
+              Description
+              <textarea
+                value={recipe.description}
+                onChange={(event) =>
+                  updateRecipeField('description', event.target.value)
+                }
+              />
+            </label>
+
+            <div className="admin-recipe-form-grid">
               <label>
-                Titre
+                Préparation
                 <input
-                  type="text"
-                  value={recipe.title}
+                  type="number"
+                  value={recipe.prepTime}
                   onChange={(event) =>
-                    updateRecipeField('title', event.target.value)
+                    updateRecipeField('prepTime', Number(event.target.value))
                   }
                 />
               </label>
 
               <label>
-                Description
-                <textarea
-                  value={recipe.description}
+                Cuisson
+                <input
+                  type="number"
+                  value={recipe.cookTime}
                   onChange={(event) =>
-                    updateRecipeField('description', event.target.value)
+                    updateRecipeField('cookTime', Number(event.target.value))
                   }
                 />
               </label>
 
-              <div className="admin-recipe-form-grid">
-                <label>
-                  Préparation
-                  <input
-                    type="number"
-                    value={recipe.prepTime}
-                    onChange={(event) =>
-                      updateRecipeField('prepTime', Number(event.target.value))
-                    }
-                  />
-                </label>
-
-                <label>
-                  Cuisson
-                  <input
-                    type="number"
-                    value={recipe.cookTime}
-                    onChange={(event) =>
-                      updateRecipeField('cookTime', Number(event.target.value))
-                    }
-                  />
-                </label>
-
-                <label>
-                  Portions
-                  <input
-                    type="number"
-                    value={recipe.servings}
-                    onChange={(event) =>
-                      updateRecipeField('servings', Number(event.target.value))
-                    }
-                  />
-                </label>
-              </div>
-
               <label>
-                Difficulté
-                <select
-                  value={recipe.difficulty}
+                Portions
+                <input
+                  type="number"
+                  value={recipe.servings}
                   onChange={(event) =>
-                    updateRecipeField(
-                      'difficulty',
-                      event.target.value as Difficulty,
-                    )
+                    updateRecipeField('servings', Number(event.target.value))
                   }
-                >
-                  <option value="EASY">Facile</option>
-                  <option value="MEDIUM">Moyen</option>
-                  <option value="HARD">Difficile</option>
-                </select>
+                />
               </label>
-
-              <button type="button" onClick={handleSaveRecipe}>
-                Enregistrer les modifications
-              </button>
             </div>
-          )}
+
+            <label>
+              Difficulté
+              <select
+                value={recipe.difficulty}
+                onChange={(event) =>
+                  updateRecipeField(
+                    'difficulty',
+                    event.target.value as Difficulty,
+                  )
+                }
+              >
+                <option value="EASY">Facile</option>
+                <option value="MEDIUM">Moyen</option>
+                <option value="HARD">Difficile</option>
+              </select>
+            </label>
+
+            <button type="button" onClick={handleSaveRecipe}>
+              Enregistrer les modifications
+            </button>
+          </div>
         </article>
       </section>
 
@@ -560,88 +544,82 @@ function AdminRecipeDetailPage() {
             onClick={() => toggleSection('ingredients')}
           >
             <span>Ingrédients</span>
-            <span>{openedSections.ingredients ? '▲' : '▼'}</span>
+
+            <span
+              className={`admin-collapsible-arrow ${
+                openedSections.ingredients ? 'is-open' : ''
+              }`}
+            >
+              ▼
+            </span>
           </button>
 
-          {openedSections.ingredients && (
-            <div className="admin-collapsible-content">
-              <button type="button" onClick={addIngredient}>
-                Ajouter un ingrédient
-              </button>
+          <div
+            className={`admin-collapsible-content ${
+              openedSections.ingredients ? 'is-open' : 'is-closed'
+            }`}
+            aria-hidden={!openedSections.ingredients}
+          >
+            <button type="button" onClick={addIngredient}>
+              Ajouter un ingrédient
+            </button>
 
-              {recipe.recipeIngredients &&
-              recipe.recipeIngredients.length > 0 ? (
-                <div className="admin-ingredients-edit-list">
-                  {recipe.recipeIngredients.map((item, index) => (
-                    <div
-                      key={item.id ?? `${item.ingredientId}-${index}`}
-                      className="admin-ingredient-edit-row"
+            {recipe.recipeIngredients && recipe.recipeIngredients.length > 0 ? (
+              <div className="admin-ingredients-edit-list">
+                {recipe.recipeIngredients.map((item, index) => (
+                  <div
+                    key={item.id ?? `${item.ingredientId}-${index}`}
+                    className="admin-ingredient-edit-row"
+                  >
+                    <label>
+                      Ingrédient
+                      <input
+                        type="text"
+                        value={item.ingredient?.name ?? 'Ingrédient'}
+                        disabled
+                      />
+                    </label>
+
+                    <label>
+                      Quantité
+                      <input
+                        type="number"
+                        value={item.quantity}
+                        onChange={(event) =>
+                          updateIngredient(
+                            index,
+                            'quantity',
+                            Number(event.target.value),
+                          )
+                        }
+                      />
+                    </label>
+
+                    <label>
+                      Unité
+                      <input
+                        type="text"
+                        value={item.unit}
+                        onChange={(event) =>
+                          updateIngredient(index, 'unit', event.target.value)
+                        }
+                      />
+                    </label>
+
+                    <button
+                      type="button"
+                      className="danger-button"
+                      onClick={() => removeIngredient(index)}
                     >
-                      <label>
-                        ID ingrédient
-                        <input
-                          type="number"
-                          value={item.ingredientId ?? item.ingredient?.id ?? ''}
-                          onChange={(event) =>
-                            updateIngredient(
-                              index,
-                              'ingredientId',
-                              Number(event.target.value),
-                            )
-                          }
-                        />
-                      </label>
-
-                      <label>
-                        Nom actuel
-                        <input
-                          type="text"
-                          value={item.ingredient?.name ?? 'Ingrédient'}
-                          disabled
-                        />
-                      </label>
-
-                      <label>
-                        Quantité
-                        <input
-                          type="number"
-                          value={item.quantity}
-                          onChange={(event) =>
-                            updateIngredient(
-                              index,
-                              'quantity',
-                              Number(event.target.value),
-                            )
-                          }
-                        />
-                      </label>
-
-                      <label>
-                        Unité
-                        <input
-                          type="text"
-                          value={item.unit}
-                          onChange={(event) =>
-                            updateIngredient(index, 'unit', event.target.value)
-                          }
-                        />
-                      </label>
-
-                      <button
-                        type="button"
-                        className="danger-button"
-                        onClick={() => removeIngredient(index)}
-                      >
-                        Supprimer
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p>Aucun ingrédient renseigné.</p>
-              )}
-            </div>
-          )}
+                      Supprimer
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>Aucun ingrédient renseigné.</p>
+            )}
+          </div>
         </article>
 
         <article className="admin-recipe-extra-card">
@@ -651,62 +629,72 @@ function AdminRecipeDetailPage() {
             onClick={() => toggleSection('steps')}
           >
             <span>Étapes</span>
-            <span>{openedSections.steps ? '▲' : '▼'}</span>
+
+            <span
+              className={`admin-collapsible-arrow ${
+                openedSections.steps ? 'is-open' : ''
+              }`}
+            >
+              ▼
+            </span>
           </button>
 
-          {openedSections.steps && (
-            <div className="admin-collapsible-content">
-              <button type="button" onClick={addStep}>
-                Ajouter une étape
-              </button>
+          <div
+            className={`admin-collapsible-content ${
+              openedSections.steps ? 'is-open' : 'is-closed'
+            }`}
+            aria-hidden={!openedSections.steps}
+          >
+            <button type="button" onClick={addStep}>
+              Ajouter une étape
+            </button>
 
-              {recipe.steps && recipe.steps.length > 0 ? (
-                <div className="admin-steps-edit-list">
-                  {recipe.steps.map((step, index) => (
-                    <div
-                      key={step.id ?? `${step.order}-${index}`}
-                      className="admin-step-edit-row"
+            {recipe.steps && recipe.steps.length > 0 ? (
+              <div className="admin-steps-edit-list">
+                {recipe.steps.map((step, index) => (
+                  <div
+                    key={step.id ?? `${step.order}-${index}`}
+                    className="admin-step-edit-row"
+                  >
+                    <label>
+                      Ordre
+                      <input
+                        type="number"
+                        value={step.order}
+                        onChange={(event) =>
+                          updateStep(
+                            index,
+                            'order',
+                            Number(event.target.value),
+                          )
+                        }
+                      />
+                    </label>
+
+                    <label>
+                      Contenu
+                      <textarea
+                        value={step.content}
+                        onChange={(event) =>
+                          updateStep(index, 'content', event.target.value)
+                        }
+                      />
+                    </label>
+
+                    <button
+                      type="button"
+                      className="danger-button"
+                      onClick={() => removeStep(index)}
                     >
-                      <label>
-                        Ordre
-                        <input
-                          type="number"
-                          value={step.order}
-                          onChange={(event) =>
-                            updateStep(
-                              index,
-                              'order',
-                              Number(event.target.value),
-                            )
-                          }
-                        />
-                      </label>
-
-                      <label>
-                        Contenu
-                        <textarea
-                          value={step.content}
-                          onChange={(event) =>
-                            updateStep(index, 'content', event.target.value)
-                          }
-                        />
-                      </label>
-
-                      <button
-                        type="button"
-                        className="danger-button"
-                        onClick={() => removeStep(index)}
-                      >
-                        Supprimer
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p>Aucune étape renseignée.</p>
-              )}
-            </div>
-          )}
+                      Supprimer
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>Aucune étape renseignée.</p>
+            )}
+          </div>
         </article>
       </section>
 
@@ -717,43 +705,44 @@ function AdminRecipeDetailPage() {
           onClick={() => toggleSection('state')}
         >
           <span>Gestion du statut</span>
-          <span>{openedSections.state ? '▲' : '▼'}</span>
+
+          <span
+            className={`admin-collapsible-arrow ${
+              openedSections.state ? 'is-open' : ''
+            }`}
+          >
+            ▼
+          </span>
         </button>
 
-        {openedSections.state && (
-          <div className="admin-collapsible-content">
-            <div className="admin-recipe-state-actions">
-              <button
-                type="button"
-                onClick={() => handleUpdateState('APPROVED')}
-              >
-                Valider
-              </button>
+        <div
+          className={`admin-collapsible-content ${
+            openedSections.state ? 'is-open' : 'is-closed'
+          }`}
+          aria-hidden={!openedSections.state}
+        >
+          <div className="admin-recipe-state-actions">
+            <button type="button" onClick={() => handleUpdateState('APPROVED')}>
+              Valider
+            </button>
 
-              <button
-                type="button"
-                onClick={() => handleUpdateState('PENDING')}
-              >
-                Remettre en attente
-              </button>
+            <button type="button" onClick={() => handleUpdateState('PENDING')}>
+              Remettre en attente
+            </button>
 
-              <button
-                type="button"
-                onClick={() => handleUpdateState('REJECTED')}
-              >
-                Refuser
-              </button>
+            <button type="button" onClick={() => handleUpdateState('REJECTED')}>
+              Refuser
+            </button>
 
-              <button
-                type="button"
-                className="danger-button"
-                onClick={handleDeleteRecipe}
-              >
-                Supprimer la recette
-              </button>
-            </div>
+            <button
+              type="button"
+              className="danger-button"
+              onClick={handleDeleteRecipe}
+            >
+              Supprimer la recette
+            </button>
           </div>
-        )}
+        </div>
       </section>
     </main>
   );

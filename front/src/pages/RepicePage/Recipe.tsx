@@ -42,7 +42,7 @@ function RecipePage() {
   return (
     <div className="RecipePage">
       <section className="RecipeImage">
-        <img src={recipe.image} alt="" />
+        <img crossOrigin='anonymous' src={recipe.image.includes("upload") ? API_URL+"/"+recipe.image : recipe.image} alt="" />
       </section>
       <section className="Info">
         <h2>{recipe.title}</h2>

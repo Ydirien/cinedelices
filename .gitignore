@@ -144,3 +144,6 @@ vite.config.ts.timestamp-*
 
 .claude
 .env 
+echo node_modules/>> .gitignore
+echo api/node_modules/>> .gitignore
+echo front/node_modules/>> .gitignore

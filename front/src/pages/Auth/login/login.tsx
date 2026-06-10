@@ -32,6 +32,8 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     }
 
       localStorage.setItem('accessToken', data.accessToken.token);
+      
+
 
       console.log('Connexion réussie !');
       
@@ -63,7 +65,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
      if (localStorage.getItem("accessToken")) {
     fetcher();
   }
-  },[])
+  },[handleSubmit])
 
   return (
     <div className="auth-container">

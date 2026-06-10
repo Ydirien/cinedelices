@@ -12,7 +12,7 @@ export default function RecoHomePage({ reco = [] }: RecipesReco) {
       {/* Le conteneur qui gère le scroll au doigt tout seul */}
       <div className="reco-container">
         {reco.map((recipe) => (
-          <div className="Card">
+          <div key={recipe.id} className="Card">
           <NavLink to={`/recettes/${recipe.id}`}>
             <div className="RecipeIMG">
               <img src={recipe.image} alt="image de la recette" className="recetteImage" />

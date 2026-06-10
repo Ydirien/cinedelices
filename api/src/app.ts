@@ -18,7 +18,8 @@ app.use(helmetMiddleware);
 app.use(cors({ origin: config.allowedOrigins }));
 
 // Body parser pour récupérer les body "application/json" dans req.body
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Nettoyer les chaînes du body pour prévenir les injections XSS
 app.use(xssSanitizer);

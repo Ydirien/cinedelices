@@ -1,4 +1,4 @@
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react'; 
 import { NavLink, useNavigate } from 'react-router-dom'; 
 import { LuCircleUser } from 'react-icons/lu';
 import '../AuthPages.css';
@@ -11,7 +11,7 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.SubmitEvent) => {
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -32,7 +32,8 @@ export default function Login() {
     }
 
       localStorage.setItem('accessToken', data.accessToken.token);
-      localStorage.setItem('refreshToken', data.refreshToken.token);
+      
+
 
       console.log('Connexion réussie !');
       
@@ -44,6 +45,27 @@ export default function Login() {
       setLoading(false);
     }
   };
+
+  async function fetcher(){
+     const response = await fetch('http://localhost:3010/api/profile', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+           "Authorization": `Bearer ${localStorage.getItem("accessToken")}` 
+        },
+      });
+
+      if (!response.ok) {
+      throw new Error('Internal error');
+      }
+      const data = await response.json();
+      localStorage.setItem("User",JSON.stringify(data));
+  };
+  useEffect(() => {
+     if (localStorage.getItem("accessToken")) {
+    fetcher();
+  }
+  },[handleSubmit])
 
   return (
     <div className="auth-container">

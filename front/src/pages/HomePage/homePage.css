@@ -207,7 +207,6 @@ h2 {
   .RecipeOfTheDay-container {
     display:flex;
     flex-direction:row-reverse;
-    
     background: rgba(26, 26, 26, 0.603);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -226,8 +225,8 @@ h2 {
     }
 
     .RecipeOfTheDayImg {
-      width: 100%;
-      height: 100%;
+      width:100%;
+      height: 500px;
       object-fit: cover;
       border-radius: 16px;
     }
@@ -303,8 +302,6 @@ h2 {
 
     /* Le bloc d'infos prend la moitié basse */
     .Recipe-Info {
-      position: relative;
-      z-index: 1;
       text-align: start;
       padding: 1rem;
       display: flex;

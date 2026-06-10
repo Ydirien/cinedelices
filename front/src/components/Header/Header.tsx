@@ -1,30 +1,28 @@
-import { NavLink , useLocation} from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
 import { LuMenu } from 'react-icons/lu';
 import { LuSearch } from 'react-icons/lu';
-import { LuFilter } from "react-icons/lu";
+import { LuFilter } from 'react-icons/lu';
 import SearchBar from '../SearchBar/SearchBar';
 import { useState, useEffect } from 'react';
 
 import './Header.css';
+import { useAuth } from '../../../context/AuthContext/AuthContext';
 
 interface HeaderProps {
-  setShowMobileSearch: (show: boolean) => void;
   logoMain: string;
 }
 
-function Header({ setShowMobileSearch, logoMain }: HeaderProps) {
+function Header({ logoMain }: HeaderProps) {
+  const raw = localStorage.getItem('User');
+  const userInfo = raw ? JSON.parse(raw) : null;
+  const { isConnected } = useAuth();
+
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [showLogo, setShowLogo] = useState(true);
   const location = useLocation();
   //   function toggleMobileSearch()
-  function SearchBarMobile() {
-    const SearchBar = document.getElementById('SearchBarMobile');
-    if (SearchBar?.style.display === 'flex') {
-      SearchBar.style.display = 'none';
-    } else {
-      SearchBar.style.display = 'flex';
-    }
-  }
 
   //fermetur automatique de la navbar mobile a chaque changement de page/route
   useEffect(() => {
@@ -35,6 +33,10 @@ function Header({ setShowMobileSearch, logoMain }: HeaderProps) {
     const handleResize = () => {
       if (window.innerWidth > 900) {
         setMobileNavOpen(false);
+        setShowMobileSearch(true);
+        setShowLogo(true);
+      } else {
+        setShowMobileSearch(false);
       }
     };
 
@@ -52,20 +54,32 @@ function Header({ setShowMobileSearch, logoMain }: HeaderProps) {
           <LuMenu size={25} />
         </button>
         <NavLink to="/" className="navbar-brand">
-          <img src={logoMain} alt="CinéDélices Logo" className="logo" />
+          {showLogo && <img src={logoMain} alt="CinéDélices Logo" className="logo" />}
         </NavLink>
         <nav className="navbar-links">
           <NavLink to="/recettes">Recettes</NavLink>
         </nav>
-        <div className="SearchBar-Header">
-          <SearchBar />
-        </div>
+        <div className="SearchBar-Header"></div>
+        {showMobileSearch && <SearchBar />}
         <div className="navbar-actions">
           <button className="btn-create">Créer une recette</button>
-          <button className="buttonMobileSearchBar" onClick={() => setShowMobileSearch((prev) => !prev)}>
+          <button
+            className="buttonMobileSearchBar"
+            onClick={() => {
+              setShowMobileSearch((prev) => !prev);
+              setShowLogo(showMobileSearch);
+            }}
+          >
             <LuSearch size={20} />
           </button>
-          <NavLink to="/profil"><LuCircleUser size={35} /></NavLink>
+          {isConnected ? (
+            <NavLink to="/profil" className="btn-profil">
+              Mon profil : {userInfo?.username}
+            </NavLink>
+          ) : (
+            <NavLink to="/login" className="btn-profil">Se Connecter</NavLink>
+          )}
+          
         </div>
       </section>
       {mobileNavOpen && (

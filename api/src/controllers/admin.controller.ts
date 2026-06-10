@@ -141,4 +141,86 @@ export async function getRecipeById(req: Request, res: Response) {
     if (!recipe) throw new NotFoundError("Recipe not found");
 
     res.json(recipe);
+// Controller du tableau de bord administrateur
+// Il permet de récupérer plusieurs statistiques utiles pour l'espace admin
+export async function getAdminDashboard(req: Request, res: Response) {
+  // Promise.all permet de lancer plusieurs requêtes Prisma en même temps
+  // Cela évite d'attendre chaque requête une par une
+  const [
+    totalRecipes,
+    approvedRecipes,
+    pendingRecipes,
+    totalUsers,
+    totalCategories,
+    latestPendingRecipes,
+  ] = await Promise.all([
+    // Nombre total de recettes en base
+    prisma.recipe.count(),
+
+    // Nombre de recettes validées
+    prisma.recipe.count({
+      where: {
+        state: 'APPROVED',
+      },
+    }),
+
+    // Nombre de recettes en attente de validation
+    prisma.recipe.count({
+      where: {
+        state: 'PENDING',
+      },
+    }),
+
+    // Nombre total d'utilisateurs inscrits
+    prisma.user.count(),
+
+    // Nombre total de catégories disponibles
+    prisma.category.count(),
+
+    // Récupération des 5 dernières recettes en attente de validation
+    prisma.recipe.findMany({
+      where: {
+        state: 'PENDING',
+      },
+
+      // On affiche les plus récentes en premier
+      orderBy: {
+        createdAt: 'desc',
+      },
+
+      // On limite volontairement à 5 recettes pour le dashboard
+      take: 5,
+
+      // On inclut certaines relations utiles pour l'affichage côté front
+      include: {
+        // Utilisateur ayant proposé la recette
+        user: {
+          select: {
+            id: true,
+            email: true,
+          },
+        },
+
+        // Œuvre liée à la recette avec sa catégorie
+        work: {
+          include: {
+            category: true,
+          },
+        },
+      },
+    }),
+  ]);
+
+  // Réponse envoyée au front
+  // Elle contient les statistiques + les dernières recettes en attente
+  res.json({
+    stats: {
+      totalRecipes,
+      approvedRecipes,
+      pendingRecipes,
+      totalUsers,
+      totalCategories,
+    },
+    latestPendingRecipes,
+  });
 }

@@ -106,6 +106,7 @@
 
 /* Ligne étoiles + durée + difficulté */
 .Recipe-Info .Rating {
+  
   margin-top: 5px;
   display: flex;
   flex-direction: row;

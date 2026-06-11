@@ -147,7 +147,7 @@ function AdminDashboardPage() {
       <section className="admin-dashboard-actions">
         <Link to="/admin/recipes/new">Créer une recette</Link>
         <Link to="/admin/recipes">Gérer toutes les recettes</Link>
-        <Link to="/admin/profil">Profil administrateur</Link>
+        <Link to="/profil">Voir mon Profil</Link>
       </section>
 
       <section className="admin-pending-section">

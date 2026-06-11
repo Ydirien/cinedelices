@@ -505,100 +505,81 @@ export async function createRecipe(req: Request, res: Response) {
   res.status(201).json(newRecipe);
 }
 
-// Gestion des utilisateurs admin
 export async function getAllUsers(req: Request, res: Response) {
-  const users = await prisma.user.findMany({
-    orderBy: {
-      createdAt: 'desc',
-    },
-    select: {
-      id: true,
-      username: true,
-      email: true,
-      role: true,
-      createdAt: true,
-    },
-  });
+    const { role, page, limit } = req.query;
 
-  res.json(users);
+    const roleFilter = role
+        ? z.enum(["USER", "ADMIN"]).parse(role)
+        : undefined;
+
+    const take = limit ? Number(limit) : 10;
+    const skip = page ? (Number(page) - 1) * take : 0;
+
+    const where = {
+        ...(roleFilter && { role: roleFilter }),
+    };
+
+    const [users, total] = await Promise.all([
+        prisma.user.findMany({
+            where,
+            omit: { password: true },
+            include: {
+                _count: { select: { recipes: true, likes: true, comments: true } },
+            },
+            orderBy: { createdAt: "desc" },
+            take,
+            skip,
+        }),
+        prisma.user.count({ where }),
+    ]);
+
+    res.json({
+        data: users,
+        total,
+        page: page ? Number(page) : 1,
+        limit: take,
+        totalPages: Math.ceil(total / take),
+    });
 }
 
+const updateUserRoleSchema = z.object({
+    role: z.enum(["USER", "ADMIN"]),
+});
+
 export async function updateUserRole(req: Request, res: Response) {
-  const typedReq = req as AuthenticatedRequest;
-  const userId = Number(req.params.id);
+    const targetId = Number(req.params.id);
+    const { role } = updateUserRoleSchema.parse(req.body);
 
-  if (!Number.isInteger(userId)) {
-    throw new NotFoundError('User not found');
-  }
+    if (targetId === req.user.id) {
+        throw new ConflictError("Cannot change your own role");
+    }
 
-  const { role } = updateUserRoleSchema.parse(req.body);
+    const user = await prisma.user.findUnique({ where: { id: targetId } });
+    if (!user) throw new NotFoundError("User not found");
 
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-
-  if (!user) {
-    throw new NotFoundError('User not found');
-  }
-
-  if (typedReq.user?.id === userId && role === 'USER') {
-    res.status(400).json({
-      message: 'Vous ne pouvez pas retirer votre propre rôle administrateur.',
+    const updatedUser = await prisma.user.update({
+        where: { id: targetId },
+        data: { role },
+        omit: { password: true },
     });
-    return;
-  }
 
-  const updatedUser = await prisma.user.update({
-    where: {
-      id: userId,
-    },
-    data: {
-      role,
-    },
-    select: {
-      id: true,
-      username: true,
-      email: true,
-      role: true,
-      createdAt: true,
-    },
-  });
-
-  res.json(updatedUser);
+    res.json(updatedUser);
 }
 
 export async function deleteUser(req: Request, res: Response) {
-  const typedReq = req as AuthenticatedRequest;
-  const userId = Number(req.params.id);
+    const targetId = Number(req.params.id);
 
-  if (!Number.isInteger(userId)) {
-    throw new NotFoundError('User not found');
-  }
+    if (targetId === req.user.id) {
+        throw new ConflictError("Cannot delete your own account");
+    }
 
-  if (typedReq.user?.id === userId) {
-    res.status(400).json({
-      message: 'Vous ne pouvez pas supprimer votre propre compte administrateur.',
+    const user = await prisma.user.findUnique({ where: { id: targetId } });
+    if (!user) throw new NotFoundError("User not found");
+
+    await prisma.$transaction(async (tx) => {
+        await tx.recipe.deleteMany({ where: { userId: targetId } });
+        await tx.user.delete({ where: { id: targetId } });
     });
-    return;
-  }
 
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-
-  if (!user) {
-    throw new NotFoundError('User not found');
-  }
-
-  await prisma.user.delete({
-    where: {
-      id: userId,
-    },
-  });
-
-  res.status(204).send();
+    res.status(204).send();
 }

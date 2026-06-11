@@ -1,63 +1,31 @@
-import { prisma } from '../models/index.ts';
-import type { Request, Response } from 'express';
-import z from 'zod';
-import {
-  BadRequestError,
-  ConflictError,
-  NotFoundError,
-  UnauthorizedError,
-} from '../lib/errors.ts';
-
-type AuthenticatedRequest = Request & {
-  user?: {
-    id?: number;
-    role?: string;
-  };
-};
+import argon2 from "argon2";
+import { prisma } from "../models/index.ts";
+import type { Request, Response } from "express";
+import z from "zod";
+import { BadRequestError, ConflictError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
 
 const updateUserSchema = z.object({
   username: z.string().min(2).max(100).optional(),
   email: z.string().email().optional(),
 });
 
-const userSelect = {
-  id: true,
-  username: true,
-  email: true,
-  role: true,
-  createdAt: true,
-};
+const changePasswordSchema = z
+    .object({
+        currentPassword: z.string(),
+        newPassword: z
+            .string()
+            .min(12)
+            .max(30)
+            .regex(/[a-z]/, "Password must contain at least one lowercase character")
+            .regex(/[A-Z]/, "Password must contain at least one uppercase character")
+            .regex(/[0-9]/, "Password must contain at least one number"),
+        confirm: z.string(),
+    })
+    .refine((data) => data.newPassword === data.confirm, {
+        message: "Passwords don't match",
+        path: ["confirm"],
+    });
 
-function getAuthenticatedUserId(req: Request) {
-  const userId = (req as AuthenticatedRequest).user?.id;
-
-  if (!userId) {
-    throw new UnauthorizedError('User not authenticated');
-  }
-
-  return userId;
-}
-
-// GET /users/me
-// Récupère le profil de l'utilisateur connecté
-export async function getCurrentUser(req: Request, res: Response) {
-  const userId = getAuthenticatedUserId(req);
-
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-    select: userSelect,
-  });
-
-  if (!user) {
-    throw new UnauthorizedError('User not found');
-  }
-
-  res.json(user);
-}
-
-// Ancien nom conservé si tes routes utilisent déjà getUserProfile
 export async function getUserProfile(req: Request, res: Response) {
   const userId = getAuthenticatedUserId(req);
 

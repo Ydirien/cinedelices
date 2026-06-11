@@ -1,6 +1,7 @@
-import { useState } from 'react'; 
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../AuthPages.css';
+import { API_URL } from '../../../constants';
 
 export default function Passwordlost() {
 
@@ -16,7 +17,7 @@ export default function Passwordlost() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3010/api/forgot-password', {
+      const response = await fetch(`${API_URL}/api/forgot-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

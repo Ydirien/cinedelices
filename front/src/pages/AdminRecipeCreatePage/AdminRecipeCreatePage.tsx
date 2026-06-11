@@ -1,6 +1,7 @@
 import { type FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './AdminRecipeCreatePage.css';
+import { API_URL } from '../../constants';
 
 type RecipeState = 'PENDING' | 'APPROVED' | 'REJECTED';
 type Difficulty = 'EASY' | 'MEDIUM' | 'HARD';
@@ -58,9 +59,6 @@ function AdminRecipeCreatePage() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  const apiBaseUrl =
-    import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3010/api';
-
   useEffect(() => {
     async function fetchCurrentUser() {
       try {
@@ -71,7 +69,7 @@ function AdminRecipeCreatePage() {
           return;
         }
 
-        const response = await fetch(`${apiBaseUrl}/users/me`, {
+        const response = await fetch(`${API_URL}/api/users/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -92,7 +90,7 @@ function AdminRecipeCreatePage() {
     }
 
     fetchCurrentUser();
-  }, [apiBaseUrl]);
+  }, []);
 
   function updateIngredient(
     index: number,
@@ -194,7 +192,7 @@ function AdminRecipeCreatePage() {
       headers.Authorization = `Bearer ${token}`;
     }
 
-    const response = await fetch(`${apiBaseUrl}/admin/recipes`, {
+    const response = await fetch(`${API_URL}/api/admin/recipes`, {
       method: 'POST',
       headers,
       body: JSON.stringify({

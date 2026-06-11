@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './AdminRecipesPage.css';
+import { API_URL } from '../../constants';
 
 // Je définis les différents statuts possibles pour une recette
 type RecipeState = 'PENDING' | 'APPROVED' | 'REJECTED';
@@ -52,9 +53,6 @@ function AdminRecipesPage() {
 
   // Je récupère l'URL de base de l'API depuis le fichier .env
   // Si elle n'existe pas, j'utilise l'URL locale par défaut
-  const apiBaseUrl =
-    import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3010/api';
-
   function getAuthHeaders(): Record<string, string> {
     const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
     return token ? { Authorization: `Bearer ${token}` } : {};
@@ -63,7 +61,7 @@ function AdminRecipesPage() {
   // Fonction qui va chercher toutes les recettes côté admin
   async function fetchRecipes() {
     try {
-      const response = await fetch(`${apiBaseUrl}/admin/recipes`, {
+      const response = await fetch(`${API_URL}/api/admin/recipes`, {
         headers: getAuthHeaders(),
       });
 
@@ -98,7 +96,7 @@ function AdminRecipesPage() {
       return;
     }
 
-    const response = await fetch(`${apiBaseUrl}/admin/recipes/${id}`, {
+    const response = await fetch(`${API_URL}/api/admin/recipes/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
@@ -117,7 +115,7 @@ function AdminRecipesPage() {
 
   // Fonction qui permet de valider une recette depuis la liste admin
   async function handleApproveRecipe(id: number) {
-    const response = await fetch(`${apiBaseUrl}/admin/recipes/${id}/state`, {
+    const response = await fetch(`${API_URL}/api/admin/recipes/${id}/state`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

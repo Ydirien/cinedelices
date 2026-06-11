@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './AdminDashboardPage.css';
+import { API_URL } from '../../constants';
 
 type AdminStats = {
   totalRecipes: number;
@@ -36,8 +37,6 @@ function AdminDashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3010/api';
-
   function getAuthHeaders(): Record<string, string> {
     const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
     return token ? { Authorization: `Bearer ${token}` } : {};
@@ -45,7 +44,7 @@ function AdminDashboardPage() {
 
   async function fetchDashboard() {
     try {
-      const response = await fetch(`${apiBaseUrl}/admin/dashboard`, {
+      const response = await fetch(`${API_URL}/api/admin/dashboard`, {
         headers: getAuthHeaders(),
       });
 
@@ -67,7 +66,7 @@ function AdminDashboardPage() {
   }, []);
 
   async function handleApproveRecipe(id: number) {
-    await fetch(`${apiBaseUrl}/admin/recipes/${id}/state`, {
+    await fetch(`${API_URL}/api/admin/recipes/${id}/state`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -88,7 +87,7 @@ function AdminDashboardPage() {
       return;
     }
 
-    await fetch(`${apiBaseUrl}/admin/recipes/${id}`, {
+    await fetch(`${API_URL}/api/admin/recipes/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });

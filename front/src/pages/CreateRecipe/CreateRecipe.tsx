@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./createRecipe.css";
+import { API_URL } from "../../constants";
 
 export default function CreatRecipe() {
   const [title, setTitle] = useState("");
@@ -64,7 +65,7 @@ const difficulties = [
   );
 
   useEffect(() => {
-    fetch("http://localhost:3010/api/works", {
+    fetch(`${API_URL}/api/works`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
@@ -119,7 +120,7 @@ const difficulties = [
         formData.append("image", image);
       }
 
-      const res = await fetch("http://localhost:3010/api/works", {
+      const res = await fetch(`${API_URL}/api/works`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -209,7 +210,7 @@ const difficulties = [
         formData.append("image", image);
       }
 
-      const response = await fetch("http://localhost:3010/api/recipes", {
+      const response = await fetch(`${API_URL}/api/recipes`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

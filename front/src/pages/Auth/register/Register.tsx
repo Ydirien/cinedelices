@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom'; 
+import { NavLink, useNavigate } from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
 import '../AuthPages.css';
+import { API_URL } from '../../../constants';
 
 export default function Register() {
   // États pour récupérer les valeurs des inputs
@@ -45,7 +46,7 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3010/api/register', {
+      const response = await fetch(`${API_URL}/api/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

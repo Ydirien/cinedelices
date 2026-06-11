@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
 import '../AuthPages.css';
 import { useAuth } from '../../../../context/AuthContext/AuthContext';
+import { API_URL } from '../../../constants';
 
 export default function Login() {
   const { login } = useAuth();
@@ -19,7 +20,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3010/api/login', {
+      const response = await fetch(`${API_URL}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +51,7 @@ export default function Login() {
   };
 
   async function fetcher() {
-    const response = await fetch('http://localhost:3010/api/profile', {
+    const response = await fetch(`${API_URL}/api/profile`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

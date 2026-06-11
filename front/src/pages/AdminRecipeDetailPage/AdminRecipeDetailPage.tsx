@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import './AdminRecipeDetailPage.css';
+import { API_URL } from '../../constants';
 
 type RecipeState = 'PENDING' | 'APPROVED' | 'REJECTED';
 type Difficulty = 'EASY' | 'MEDIUM' | 'HARD';
@@ -63,9 +64,6 @@ function AdminRecipeDetailPage() {
     state: true,
   });
 
-  const apiBaseUrl =
-    import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3010/api';
-
   function getAuthHeaders(): Record<string, string> {
     const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
     return token ? { Authorization: `Bearer ${token}` } : {};
@@ -74,7 +72,7 @@ function AdminRecipeDetailPage() {
   // Je récupère les informations complètes d'une recette
   async function fetchRecipe() {
     try {
-      const response = await fetch(`${apiBaseUrl}/admin/recipes/${id}`, {
+      const response = await fetch(`${API_URL}/api/admin/recipes/${id}`, {
         headers: getAuthHeaders(),
       });
 
@@ -283,7 +281,7 @@ function AdminRecipeDetailPage() {
         content: step.content,
       })) ?? [];
 
-    const response = await fetch(`${apiBaseUrl}/admin/recipes/${recipe.id}`, {
+    const response = await fetch(`${API_URL}/api/admin/recipes/${recipe.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -319,7 +317,7 @@ function AdminRecipeDetailPage() {
     }
 
     const response = await fetch(
-      `${apiBaseUrl}/admin/recipes/${recipe.id}/state`,
+      `${API_URL}/api/admin/recipes/${recipe.id}/state`,
       {
         method: 'PATCH',
         headers: {
@@ -368,7 +366,7 @@ function AdminRecipeDetailPage() {
       return;
     }
 
-    const response = await fetch(`${apiBaseUrl}/admin/recipes/${recipe.id}`, {
+    const response = await fetch(`${API_URL}/api/admin/recipes/${recipe.id}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });

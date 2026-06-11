@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, NavLink } from "react-router-dom";
 import "./SearchPage.css";
+import { API_URL } from "../../constants";
 
 // Je définis le type d'une recette pour que TypeScript sache quelles données j'utilise
 type Recipe = {
@@ -37,7 +38,7 @@ export default function SearchPage() {
 
         // J'appelle ma route API dédiée à la recherche de recettes
         const response = await fetch(
-          `http://localhost:3010/api/recipes/search?q=${encodeURIComponent(query)}`
+          `${API_URL}/api/recipes/search?q=${encodeURIComponent(query)}`
         );
 
         // Si la réponse n'est pas correcte, je déclenche une erreur

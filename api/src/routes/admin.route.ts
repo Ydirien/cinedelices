@@ -5,11 +5,13 @@ import { upload } from '../middlewares/upload.middleware.ts';
 
 export const router = Router();
 
+// Toutes les routes de ce fichier sont réservées aux administrateurs
 router.use(checkRoles(['ADMIN']));
 
-
+// Dashboard admin
 router.get('/admin/dashboard', adminController.getAdminDashboard);
 
+// Gestion des recettes
 router.get('/admin/recipes', adminController.getAllRecipes);
 router.get('/admin/recipes/:id', adminController.getRecipeById);
 

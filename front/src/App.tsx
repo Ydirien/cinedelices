@@ -65,6 +65,9 @@ function App() {
           <Route path="/admin/recipes" element={<AdminRecipesPage />} />
           <Route path="/admin/recipes/new" element={<AdminRecipeCreatePage />} />
           <Route path="/admin/recipes/:id" element={<AdminRecipeDetailPage />} />
+          <Route path="/admin/users" element={<AdminUsersPage />} />
+
+          
         </Routes>
       </main>
       <Footer />

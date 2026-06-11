@@ -19,5 +19,6 @@ router.patch('/admin/recipes/:id/state', adminController.updateRecipeState);
 router.put('/admin/recipes/:id', upload.single('image'), adminController.updateRecipe);
 router.delete('/admin/recipes/:id', adminController.deleteRecipe);
 
+router.get('/admin/users', adminController.getAllUsers);
 router.patch('/admin/users/:id/role', adminController.updateUserRole);
 router.delete('/admin/users/:id', adminController.deleteUser);

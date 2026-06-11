@@ -326,6 +326,43 @@ export async function createRecipe(req: Request, res: Response) {
   res.status(201).json(newRecipe);
 }
 
+export async function getAllUsers(req: Request, res: Response) {
+    const { role, page, limit } = req.query;
+
+    const roleFilter = role
+        ? z.enum(["USER", "ADMIN"]).parse(role)
+        : undefined;
+
+    const take = limit ? Number(limit) : 10;
+    const skip = page ? (Number(page) - 1) * take : 0;
+
+    const where = {
+        ...(roleFilter && { role: roleFilter }),
+    };
+
+    const [users, total] = await Promise.all([
+        prisma.user.findMany({
+            where,
+            omit: { password: true },
+            include: {
+                _count: { select: { recipes: true, likes: true, comments: true } },
+            },
+            orderBy: { createdAt: "desc" },
+            take,
+            skip,
+        }),
+        prisma.user.count({ where }),
+    ]);
+
+    res.json({
+        data: users,
+        total,
+        page: page ? Number(page) : 1,
+        limit: take,
+        totalPages: Math.ceil(total / take),
+    });
+}
+
 const updateUserRoleSchema = z.object({
     role: z.enum(["USER", "ADMIN"]),
 });

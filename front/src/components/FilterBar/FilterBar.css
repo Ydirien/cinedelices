@@ -1,33 +1,29 @@
 /* ============================================================
-   FilterBar — barre de filtres (catégories + types)
-   Mobile-first : boutons enroulables sur mobile,
-   légèrement plus grands sur desktop.
+   FilterBar — mobile-first
    ============================================================ */
 
-/* Conteneur principal de la barre de filtres */
 .filter-bar {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   gap: 1rem;
   width: 100%;
 }
 
 .filter-group {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   gap: 0.5rem;
   width: 100%;
 }
 
-/* Titre du groupe */
 .filter-group h4 {
   margin: 0;
   font-size: 0.85rem;
-  text-transform: uppercase;  
-  letter-spacing: 0.06em;     
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   opacity: 0.8;
+  color: var(--quaternary-color);
 }
-
 
 .buttons-group {
   display: flex;
@@ -35,64 +31,58 @@
   gap: 0.4rem;
 }
 
-/* Style de base des boutons de filtre */
+/* Boutons de filtre */
 .filter-group button {
   background: var(--secondary-color);
-  --color: var(--quinary-color); 
-
-  padding: 0.4rem 0.75rem;
+  --color: var(--quinary-color);
+  padding: 0.45rem 0.8rem;
+  min-height: 36px;
   font-size: 0.82rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  white-space: nowrap; 
+  white-space: nowrap;
   cursor: pointer;
-
   color: var(--color);
   border: 2px solid var(--quinary-color);
   border-radius: 6px;
-  position: relative;  
-  overflow: hidden;    
+  position: relative;
+  overflow: hidden;
   z-index: 0;
-
   transition: color 0.3s ease-in-out;
 }
 
-/* Cercle d'animation qui remonte au hover/active*/
-
+/* Cercle d'animation au hover/active */
 .filter-group button::before {
   content: "";
   position: absolute;
   background: var(--color);
-  z-index: -1;         
-  width: 300%;        
-  aspect-ratio: 1 / 1; 
+  z-index: -1;
+  width: 300%;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
-  top: 100%;            
-  left: 100%;         
+  top: 100%;
+  left: 100%;
   transform: translate(0, 0);
   transition: transform 0.4s ease-in-out;
 }
 
-/* Au survol ou quand le filtre est actif : le texte passe en blanc */
 .filter-group button:hover,
 .filter-group button.active {
   color: white;
 }
 
-/* Le cercle remonte et couvre le bouton */
 .filter-group button:hover::before,
 .filter-group button.active::before {
   transform: translate(-120%, -120%);
 }
 
-/* Le bouton actif garde le fond coloré même sans survol */
 .filter-group button.active {
   background-color: var(--color);
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
-/* ── Desktop 1024px+ : boutons légèrement plus grands ── */
+/* Desktop 1024px+ */
 @media (min-width: 1024px) {
   .filter-group button {
     padding: 0.45rem 0.9rem;

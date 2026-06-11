@@ -14,12 +14,12 @@
   --tertiary-color: #9e9e9e;
   --quaternary-color: #ffffff;
   --quinary-color: #d4a017;
-  
+
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
+  font: 16px/1.5 var(--sans);
   letter-spacing: 0.18px;
   color-scheme: light dark;
   color: var(--text);
@@ -28,10 +28,6 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -59,6 +55,13 @@
   box-sizing: border-box;
 }
 
+/* Anneau de focus accessible — doré, visible clavier uniquement */
+:focus-visible {
+  outline: 2px solid var(--quinary-color);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 body {
   margin: 0;
   position: relative;
@@ -76,7 +79,6 @@ body::before {
   z-index: -2;
 }
 
-/* assombrissment du background */
 body::after {
   content: '';
   position: fixed;
@@ -85,17 +87,36 @@ body::after {
   z-index: -1;
 }
 
+/* Mobile-first : padding progressif selon la taille d'écran */
 main {
   margin-top: 120px;
-  margin-left: 12vw;
-  margin-right: 12vw;
+  padding-inline: 1rem;
   min-width: 0;
   flex: 1;
 }
 
+@media (min-width: 640px) {
+  main {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  main {
+    padding-inline: 6vw;
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1280px) {
+  main {
+    padding-inline: 12vw;
+  }
+}
+
 .Stars {
-    color: gold;
-    font-size: 14px;
+  color: gold;
+  font-size: 14px;
 }
 
 #root {
@@ -118,24 +139,30 @@ h2 {
 }
 
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  letter-spacing: -0.03em;
+  margin: 1.25rem 0;
 }
+
 h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5rem;
 }
+
 p {
-  fontfamily: var(--sans);
+  font-family: var(--sans);
   margin: 0;
+}
+
+/* Respect du préférence de réduction de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

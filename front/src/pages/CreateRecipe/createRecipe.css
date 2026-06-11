@@ -1,444 +1,498 @@
 .CreateRecipe {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-    max-width: 950px; 
-    margin: 0 auto;
-    background-color: rgba(12, 12, 12, 0.5);
-    border-radius: 20px;
-    border : 1px solid var(--quinary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem 1rem;
+  max-width: 950px;
+  margin: 0 auto;
+  background-color: rgba(12, 12, 12, 0.5);
+  border-radius: 20px;
+  border: 1px solid var(--quinary-color);
 }
 
 .CreatRecipe-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .Add-Header {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.75rem;
 }
 
 .Add-Header h2 {
-    text-align: center;
-    color: var(--quaternary-color);
+  text-align: center;
+  color: var(--quaternary-color);
 }
 
 .RecipeImg {
-    align-self: center;
-    width: 100%;
-    height: 250px;
-    border-radius: 10px;
-    background-color: var(--secondary-color);
-    border: 2px solid var(--quinary-color);
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
+  align-self: center;
+  width: 100%;
+  height: 220px;
+  border-radius: 10px;
+  background-color: var(--secondary-color);
+  border: 2px solid var(--quinary-color);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.RecipeImg:hover {
+  border-color: rgba(212, 160, 23, 0.8);
 }
 
 .RecipeImg img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .RecipeImg label {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    color: var(--tertiary-color);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  color: var(--tertiary-color);
 }
 
 .RecipeImg input[type="file"] {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
 }
 
 .AddRecipeInfo {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
-.AddRecipeInfo label, 
+.AddRecipeInfo label,
 .Difficulty-PrepaTime-Thematic label,
-.ingredients-wrapper h2, 
+.ingredients-wrapper h2,
 .steps-wrapper h2 {
-    text-align: left;
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: var(--quaternary-color);
+  text-align: left;
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: var(--quaternary-color);
 }
 
 .Recipe-name-input {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem; 
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 .Recipe-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    flex: 1; 
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
 }
 
 .Recipe-input-group textarea {
-    background: var(--secondary-color);
-    border: 1px solid var(--secondary-color);
-    padding: 0.8rem;
-    color: var(--quaternary-color);
-    font-size: 0.95rem;
-    border-radius: 8px;
-    resize: none;
-    height: 10rem;
-    width: 100%;
-    box-sizing: border-box;
+  background: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  padding: 0.8rem;
+  color: var(--quaternary-color);
+  font-size: 0.95rem;
+  border-radius: 8px;
+  resize: vertical;
+  height: 9rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
 }
 
-.Recipe-input-group input, 
+.Recipe-input-group input,
 select {
-    background: var(--secondary-color);
-    border: 1px solid var(--secondary-color); 
-    padding: 0.8rem;
-    color: var(--quaternary-color);
-    font-size: 0.95rem;
-    border-radius: 8px; 
-    width: 100%;
-    box-sizing: border-box;
-    outline: none;
-    transition: border-color 0.2s ease-in-out; 
-    appearance: none; 
-    -webkit-appearance: none;
-    cursor: pointer;
+  background: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  padding: 0.8rem;
+  color: var(--quaternary-color);
+  font-size: 0.95rem;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  min-height: 44px;
 }
 
 select option {
-    background-color: var(--secondary-color); 
-    color: var(--quaternary-color); 
-    padding: 10px;
+  background-color: var(--secondary-color);
+  color: var(--quaternary-color);
+  padding: 10px;
 }
 
 .dropdown-btn {
-    background: var(--secondary-color);
-    border: 1px solid var(--secondary-color);
-    padding: 0.8rem;
-    color: var(--quaternary-color);
-    font-size: 0.95rem;
-    border-radius: 8px;
-    width: 100%;
-    box-sizing: border-box;
-    cursor: pointer;
-    text-align: left;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  background: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  padding: 0.8rem;
+  color: var(--quaternary-color);
+  font-size: 0.95rem;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+  transition: border-color 0.2s ease;
 }
 
-.dropdown-btn:focus {
-    outline: none;
-    border-color: var(--quinary-color);
+.dropdown-btn:focus-visible {
+  outline: 2px solid var(--quinary-color);
+  outline-offset: 2px;
+  border-color: var(--quinary-color);
 }
 
 .dropdown-btn span {
-    font-size: 0.8rem;
-    color: var(--tertiary-color);
+  font-size: 0.8rem;
+  color: var(--tertiary-color);
 }
 
 .dropdown-container {
-    position: relative;
-}
-
-.dropdown-container::after {
-    content: "▼";
-    font-size: 0.8rem;
-    color: var(--tertiary-color);
-    position: absolute;
-    right: 15px;
-    bottom: 14px; 
-    pointer-events: none; 
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .Recipe-input-group textarea:focus,
 .Recipe-input-group input:focus,
 select:focus {
-    outline: none;
-    border-color: var(--quinary-color) !important;
+  outline: none;
+  border-color: var(--quinary-color) !important;
+}
+
+.Recipe-input-group textarea:focus-visible,
+.Recipe-input-group input:focus-visible {
+  outline: 2px solid var(--quinary-color);
+  outline-offset: 2px;
 }
 
 .ingredients-wrapper .Container input:focus,
 .steps-wrapper .Container input:focus {
-    outline: none;
-    border-color: var(--quinary-color) !important;
+  outline: none;
+  border-color: var(--quinary-color) !important;
 }
 
-.Recipe-input-group input, 
-.Recipe-input-group textarea, 
-select,
-.ingredients-wrapper .Container input,
-.steps-wrapper .Container input {
-    transition: border-color 0.2s ease-in-out;
+.ingredients-wrapper .Container input:focus-visible,
+.steps-wrapper .Container input:focus-visible {
+  outline: 2px solid var(--quinary-color);
+  outline-offset: 2px;
 }
 
 .no-work-found {
-    position: absolute;
-    top: 105%;
-    left: 0;
-    right: 0;
-    background-color: var(--secondary-color);
-    border: 1px solid var(--quinary-color);
-    border-radius: 8px;
-    padding: 0.8rem;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 105%;
+  left: 0;
+  right: 0;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--quinary-color);
+  border-radius: 8px;
+  padding: 0.8rem;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .no-work-found span {
-    color: var(--quaternary-color);
-    font-size: 0.9rem;
+  color: var(--quaternary-color);
+  font-size: 0.9rem;
 }
 
 .no-work-found button {
-    padding: 0.6rem;
-    border-radius: 20px;
-    border: 1px solid var(--quinary-color);
-    background-color: transparent;
-    color: var(--quinary-color);
-    font-weight: 500;
-    cursor: pointer;
-    font-size: 0.85rem;
+  padding: 0.6rem;
+  min-height: 44px;
+  border-radius: 20px;
+  border: 1px solid var(--quinary-color);
+  background-color: transparent;
+  color: var(--quinary-color);
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.no-work-found button:hover {
+  background-color: var(--quinary-color);
+  color: var(--primary-color);
 }
 
 .no-work-found input[type="number"] {
-    background: var(--secondary-color);
-    border: 1px solid var(--secondary-color);
-    padding: 0.6rem 0.8rem;
-    border-radius: 8px;
-    color: var(--quaternary-color);
-    font-size: 0.95rem;
-    width: 100%;
-    box-sizing: border-box;
-    outline: none;
+  background: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  color: var(--quaternary-color);
+  font-size: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  min-height: 44px;
 }
 
 .no-work-found input[type="number"]:focus {
-    border-color: var(--quinary-color);
+  border-color: var(--quinary-color);
 }
 
+/* Mobile : les dropdowns s'enroulent sur 2 colonnes */
 .Difficulty-PrepaTime-Thematic {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-}   
-
-.dropdown-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
-.ingredients-wrapper, .steps-wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
+.Difficulty-PrepaTime-Thematic .dropdown-container,
+.Difficulty-PrepaTime-Thematic .Recipe-input-group {
+  flex: 1 1 calc(50% - 0.375rem);
+  min-width: 120px;
 }
 
-.ingredients-wrapper .Container, .steps-wrapper .Container {
-    border: 1px solid var(--secondary-color);
-    padding: 1.2rem;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+.ingredients-wrapper,
+.steps-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ingredients-wrapper .Container,
+.steps-wrapper .Container {
+  border: 1px solid var(--secondary-color);
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .ingredients-wrapper .Container input,
 .steps-wrapper .Container input {
-    background: var(--secondary-color);
-    border: 1px solid var(--secondary-color);
-    padding: 0.6rem 0.8rem;
-    border-radius: 8px;
-    color: var(--quaternary-color);
+  background: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  color: var(--quaternary-color);
+  min-height: 44px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
 }
 
 .button-AddRemove-Container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
 }
 
 .AddMore-Button {
-    flex: 1; 
-    padding: 0.6rem;
-    border-radius: 20px;
-    border: 1px solid var(--quinary-color);
-    background-color: transparent;
-    color: var(--quinary-color);
-    font-weight: 500;
-    cursor: pointer;
-    font-size: 0.85rem;
+  flex: 1 1 auto;
+  min-height: 44px;
+  padding: 0.6rem 1rem;
+  border-radius: 20px;
+  border: 1px solid var(--quinary-color);
+  background-color: transparent;
+  color: var(--quinary-color);
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+.AddMore-Button:hover {
+  background-color: rgba(212, 160, 23, 0.15);
+}
 
 .Form-Footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
 }
 
 .cgu-checkbox {
-    color: var(--quaternary-color);
-    font-size: 0.95rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  color: var(--quaternary-color);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cgu-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  margin-top: 2px;
+  accent-color: var(--quinary-color);
+  cursor: pointer;
 }
 
 .cgu-checkbox a {
-    color: var(--quaternary-color);
-    text-decoration: underline;
+  color: var(--quinary-color);
+  text-decoration: underline;
 }
 
 .Send-Button {
-    width: 100%;
-    padding: 1rem;
-    background-color: #24251d; 
-    color: var(--quinary-color);
-    border: 1px solid #3b3d2f;
-    border-radius: 4px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
+  width: 100%;
+  padding: 1rem;
+  min-height: 48px;
+  background-color: #24251d;
+  color: var(--quinary-color);
+  border: 1px solid #3b3d2f;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
+.Send-Button:hover {
+  background-color: rgba(212, 160, 23, 0.2);
+  border-color: var(--quinary-color);
+}
 
+/* Suggestions autocomplete */
 .works-suggestions {
-    position: absolute;
-    top: 105%; 
-    left: 0;
-    right: 0;
-    background-color: var(--secondary-color);
-    border: 1px solid var(--quinary-color); 
-    border-radius: 8px; 
-    list-style: none;
-    margin: 0;
-    padding: 0.5rem;
-    z-index: 10;
-    max-height: 200px;
-    overflow-y: auto;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); 
+  position: absolute;
+  top: 105%;
+  left: 0;
+  right: 0;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--quinary-color);
+  border-radius: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem;
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .works-suggestions li {
-    padding: 0.6rem 0.8rem;
-    border-radius: 6px; 
-    color: var(--quaternary-color);
-    cursor: pointer;
-    transition: background 0.2s ease;
+  padding: 0.65rem 0.8rem;
+  border-radius: 6px;
+  color: var(--quaternary-color);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
 }
 
-
 .works-suggestions li:hover {
-    background-color: var(--primary-color); 
-    color: var(--quinary-color); 
+  background-color: var(--primary-color);
+  color: var(--quinary-color);
 }
 
 /* ==========================================
-   RESPONSIVE DESKTOP 
+   RESPONSIVE DESKTOP 900px+
    ========================================== */
 
 @media (min-width: 900px) {
-    .CreatRecipe-form {
-        display: grid;
-        grid-template-columns: 1fr 1fr; 
-        column-gap: 3.5rem;
-        row-gap: 1.5rem;
-    }
+  .CreateRecipe {
+    padding: 1.5rem 2rem;
+  }
 
-    /* --- COLONNE GAUCHE --- */
-    .Add-Header {
-        grid-column: 1;
-        grid-row: 1;
-    }
-    .Add-Header h2 {
-        display: none; 
-    }
-    .RecipeImg {
-        height: 280px; 
-    }
+  .CreatRecipe-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 3rem;
+    row-gap: 1.5rem;
+  }
 
-    /* On gère la ligne des metas pour afficher les 3 éléments côte à côte */
-    .Difficulty-PrepaTime-Thematic {
-        grid-column: 1;
-        grid-row: 2;
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-    }
-    
-    /* On s'assure que le champ thématique soit bien visible sur PC */
-    .thematic-field {
-        display: flex !important; 
-        flex: 1;
-    }
+  .Add-Header {
+    grid-column: 1;
+    grid-row: 1;
+  }
 
-    .ingredients-wrapper {
-        grid-column: 1;
-        grid-row: 3;
-    }
+  .Add-Header h2 {
+    display: none;
+  }
 
+  .RecipeImg {
+    height: 280px;
+  }
 
-    /* --- COLONNE DROITE --- */
-    .AddRecipeInfo {
-        grid-column: 2;
-        grid-row: 1 / span 2; 
-        justify-content: space-between;
-    }
-    .Recipe-name-input {
-        flex-direction: row; 
-    }
-    .Recipe-input-group textarea {
-        height: 175px; 
-    }
+  .Difficulty-PrepaTime-Thematic {
+    grid-column: 1;
+    grid-row: 2;
+    flex-wrap: nowrap;
+  }
 
-    .steps-wrapper {
-        grid-column: 2;
-        grid-row: 3;
-    }
+  .Difficulty-PrepaTime-Thematic .dropdown-container,
+  .Difficulty-PrepaTime-Thematic .Recipe-input-group {
+    flex: 1;
+    min-width: unset;
+  }
 
+  .thematic-field {
+    display: flex !important;
+    flex: 1;
+  }
 
-    /* --- PIED DE PAGE CENTRÉ --- */
-    .Form-Footer {
-        grid-column: 1 / span 2; 
-        grid-row: 4;
-        margin-top: 2rem;
-    }
-    .Send-Button {
-        width: 60%; 
-    }
+  .ingredients-wrapper {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .AddRecipeInfo {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    justify-content: space-between;
+  }
+
+  .Recipe-name-input {
+    flex-direction: row;
+  }
+
+  .Recipe-input-group textarea {
+    height: 175px;
+  }
+
+  .steps-wrapper {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .Form-Footer {
+    grid-column: 1 / span 2;
+    grid-row: 4;
+    margin-top: 1.5rem;
+  }
+
+  .Send-Button {
+    width: 60%;
+  }
 }

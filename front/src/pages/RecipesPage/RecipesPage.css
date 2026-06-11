@@ -1,60 +1,63 @@
 /* ============================================================
-   RecipesPage — mise en page principale
-   Approche mobile-first : on part du plus petit écran
-   et on ajoute des media queries pour les grands écrans.
+   RecipesPage — mobile-first
    ============================================================ */
 
-/* ── Base mobile : filterbar au-dessus, cartes en dessous ── */
+/* Base mobile : filterbar au-dessus, cartes en dessous */
 .recipes-page {
   display: flex;
-  flex-direction: column; /* empilement vertical sur mobile */
+  flex-direction: column;
   gap: 1rem;
-  padding: 1rem;
+  padding: 0.75rem;
   width: 100%;
-  max-width: 1400px; /* limite la largeur sur très grands écrans */
-  margin: 0 auto;    /* centre la page horizontalement */
+  max-width: 1400px;
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
-/* Encadré de la barre de filtres */
+/* Encadré filtres */
 .recipes-sidebar {
-  background: #464646b6;       /* fond semi-transparent sombre */
-  border: 2px solid #d4a017;  /* bordure dorée caractéristique du thème */
+  background: #464646b6;
+  border: 2px solid #d4a017;
   border-radius: 16px;
   padding: 1rem;
-  width: 100%;        /* prend toute la largeur sur mobile */
+  width: 100%;
   box-sizing: border-box;
 }
 
-/* Zone qui contient la grille de cartes */
+/* Zone cartes */
 .recipes-content {
   width: 100%;
-  min-width: 0; /* évite que le contenu dépasse son conteneur flex */
+  min-width: 0;
 }
 
-/* ── Tablet 768px+ : un peu plus d'espace, toujours empilé ── */
+/* Titre de page */
+.title-page {
+  color: var(--quaternary-color);
+  text-align: start;
+  margin-bottom: 0.75rem;
+}
+
+/* 768px+ */
 @media (min-width: 768px) {
   .recipes-page {
-    padding: 1.5rem;
-    gap: 1.5rem;
-    height: 10%;
+    padding: 1.25rem;
+    gap: 1.25rem;
   }
 }
 
-/* ── Desktop 1024px+ : sidebar à gauche, cartes à droite, scroll global ── */
+/* 1024px+ : sidebar à gauche, cartes à droite */
 @media (min-width: 1024px) {
   .recipes-page {
     flex-direction: row;
-    align-items: stretch; /* les deux colonnes s'étirent à la même hauteur */
+    align-items: stretch;
     gap: 2rem;
-    padding: 2rem 0;
+    padding: 1.5rem 0;
   }
 
   .recipes-sidebar {
     width: 260px;
     min-width: 260px;
-    /* align-items: stretch sur le parent gère la hauteur automatiquement —
-       height: 100% ne fonctionne pas ici car le parent n'a pas de hauteur explicite */
+    flex-shrink: 0;
   }
 
   .recipes-content {
@@ -64,6 +67,5 @@
 
   .title-page {
     font-size: 2rem;
-    text-align: start;
   }
 }

@@ -859,7 +859,7 @@ async function seed() {
         { recipeId: recWinnie.id, ingredientId: ing('Amandes effilees'), quantity: 50, unit: 'g' },
       ],
     }),
-    prisma.recipeThematic.create({ data: { recipeId: recWinnie.id, thematicId: themBrevage.id } }),
+    prisma.recipeThematic.create({ data: { recipeId: recWinnie.id, thematicId: themDessert.id } }),
   ]);
 
   // =========================================================

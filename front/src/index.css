@@ -65,7 +65,8 @@ body {
   overflow-x: hidden;
 }
 
-body::before {
+/* fond d'écran affiché uniquement sur certaines pages (voir App.tsx) */
+body.has-background::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -77,7 +78,7 @@ body::before {
 }
 
 /* assombrissment du background */
-body::after {
+body.has-background::after {
   content: '';
   position: fixed;
   inset: 0;

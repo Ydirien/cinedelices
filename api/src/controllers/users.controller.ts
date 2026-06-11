@@ -9,6 +9,24 @@ const updateUserSchema = z.object({
   email: z.string().email().optional(),
 });
 
+const userSelect = {
+  id: true,
+  username: true,
+  email: true,
+  role: true,
+  createdAt: true,
+};
+
+function getAuthenticatedUserId(req: Request) {
+  const userId = req.user?.id;
+
+  if (!userId) {
+    throw new UnauthorizedError('User not authenticated');
+  }
+
+  return userId;
+}
+
 const changePasswordSchema = z
     .object({
         currentPassword: z.string(),
@@ -135,6 +153,91 @@ export async function deleteAccount(req: Request, res: Response) {
   });
 
   res.status(204).send();
+}
+
+// PATCH /users/profile/password
+// Modifie le mot de passe de l'utilisateur connecté
+export async function changePassword(req: Request, res: Response) {
+  const userId = getAuthenticatedUserId(req);
+
+  const { currentPassword, newPassword } = await changePasswordSchema.parseAsync(req.body);
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!user) {
+    throw new UnauthorizedError('User not found');
+  }
+
+  const isMatching = await argon2.verify(user.password, currentPassword);
+
+  if (!isMatching) {
+    throw new UnauthorizedError('Current password is incorrect');
+  }
+
+  const hashedPassword = await argon2.hash(newPassword);
+
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      password: hashedPassword,
+    },
+  });
+
+  res.status(200).json({ message: 'Password updated successfully' });
+}
+
+// GET /users/profile/recipes
+// Récupère les recettes créées par l'utilisateur connecté
+export async function getOwnRecipes(req: Request, res: Response) {
+  const userId = getAuthenticatedUserId(req);
+
+  const page = Math.max(1, parseInt(req.query.page as string) || 1);
+  const limit = Math.min(
+    50,
+    Math.max(1, parseInt(req.query.limit as string) || 10),
+  );
+  const skip = (page - 1) * limit;
+
+  const stateFilter = req.query.state
+    ? z.enum(['PENDING', 'APPROVED', 'REJECTED']).parse(req.query.state)
+    : undefined;
+
+  const where = {
+    userId,
+    ...(stateFilter && { state: stateFilter }),
+  };
+
+  const [recipes, total] = await Promise.all([
+    prisma.recipe.findMany({
+      where,
+      include: {
+        work: { select: { id: true, title: true, image: true } },
+        thematics: { include: { thematic: { select: { id: true, name: true } } } },
+        _count: { select: { likes: true, comments: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+      skip,
+      take: limit,
+    }),
+
+    prisma.recipe.count({ where }),
+  ]);
+
+  res.json({
+    data: recipes,
+    meta: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    },
+  });
 }
 
 // GET /users/me/liked-recipes

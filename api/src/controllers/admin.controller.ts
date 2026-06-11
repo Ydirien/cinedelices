@@ -81,9 +81,6 @@ const createRecipeSchema = z.object({
   thematics: z.array(positiveIntSchema),
 });
 
-const updateUserRoleSchema = z.object({
-  role: z.enum(['USER', 'ADMIN']),
-});
 
 // GET /admin/recipes?state=PENDING&page=1&limit=10
 export async function getAllRecipes(req: Request, res: Response) {

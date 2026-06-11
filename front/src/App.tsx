@@ -5,7 +5,7 @@ import Footer from './components/Footer/Footer';
 import HomePage from './pages/HomePage/HomePage';
 import RecipesPage from './pages/RecipesPage/RecipesPage';
 import RecipePage from './pages/RepicePage/Recipe';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import MentionsLegales from './pages/MentionsPage/MentionsPage';
 import Confidentialite from './pages/ConfidentialPage/ConfidentialPage';
 import logoMain from '../public/Logo/LOGO_pricipal_allonger.png';
@@ -22,8 +22,24 @@ import AdminRecipesPage from './pages/AdminRecipesPage/AdminRecipesPage';
 import AdminRecipeDetailPage from './pages/AdminRecipeDetailPage/AdminRecipeDetailPage';
 import AdminRecipeCreatePage from './pages/AdminRecipeCreatePage/AdminRecipeCreatePage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
+import AdminUsersPage from './pages/AdminUsersPage/AdminUsersPage';
+
+// Pages sur lesquelles le fond d'écran doit être affiché
+const PAGES_WITH_BACKGROUND = ['/', '/login'];
 
 function App() {
+  const location = useLocation();
+  const main = document.getElementsByClassName('main')
+
+  useEffect(() => {
+    document.getElementById("main");
+
+    document.body.classList.toggle(
+      'has-background',
+      PAGES_WITH_BACKGROUND.includes(location.pathname),
+    );
+  }, [location.pathname]);
+
   return (
     <AuthProvider>
       <Header logoMain={logoMain} />

@@ -55,9 +55,7 @@ function HomePage() {
             <p>
               Que vous soyez fan de grands classiques du cinéma, de séries incontournables, d’anime légendaires ou de
               dessins animés cultes, CinéDélices vous invite à découvrir des recettes inspirées de vos œuvres préférées
-              afin d’apporter toute la magie du grand écran directement dans votre assiette. Entre plats iconiques,
-              desserts gourmands et boissons emblématiques, plongez dans un univers où la cuisine rencontre la passion
-              du cinéma et de la pop culture. 🎬✨
+              afin d’apporter toute la magie du grand écran directement dans votre assiette.
             </p>
           </div>
         </div>

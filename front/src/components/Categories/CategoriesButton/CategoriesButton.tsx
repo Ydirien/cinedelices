@@ -11,6 +11,7 @@ import logoPlats from '../../../assets/Logo-types/Boutton_plats.png';
 import logoBoissons from '../../../assets/Logo-types/Boutton_boissons.png';
 import { ICategory, IType } from '../../../../@types/index.d';
 import { API_URL } from '../../../constants';
+import { apiFetch } from '../../../lib/apiClient';
 
 function CategoriesButton() {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -29,8 +30,8 @@ function CategoriesButton() {
   useEffect(() => {
     async function fetchDataCategoriesAndTypes() {
       try {
-        const resCategories = await fetch(`${API_URL}/api/categories`);
-        const resTypes = await fetch(`${API_URL}/api/types`);
+        const resCategories = await apiFetch(`/api/categories`);
+        const resTypes = await apiFetch(`/api/types`);
         const dataCategories = await resCategories.json();
         const dataTypes = await resTypes.json();
         setGetAllCategories(dataCategories);

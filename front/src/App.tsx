@@ -29,21 +29,27 @@ const PAGES_WITH_BACKGROUND = ['/', '/login'];
 
 function App() {
   const location = useLocation();
-  const main = document.getElementsByClassName('main')
 
   useEffect(() => {
-    document.getElementById("main");
+    const main = document.getElementById('main');
 
-    document.body.classList.toggle(
-      'has-background',
-      PAGES_WITH_BACKGROUND.includes(location.pathname),
-    );
+    if (main) {
+      if (PAGES_WITH_BACKGROUND.includes(location.pathname)) {
+        main.style.marginLeft = '12vw';
+        main.style.marginRight = '12vw';
+      } else {
+        main.style.marginLeft = '0';
+        main.style.marginRight = '0';
+      }
+    }
+
+    document.body.classList.toggle('has-background', PAGES_WITH_BACKGROUND.includes(location.pathname));
   }, [location.pathname]);
 
   return (
     <AuthProvider>
       <Header logoMain={logoMain} />
-      <main>
+      <main id='main'>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/recettes" element={<RecipesPage />} />
@@ -82,8 +88,6 @@ function App() {
           <Route path="/admin/recipes/new" element={<AdminRecipeCreatePage />} />
           <Route path="/admin/recipes/:id" element={<AdminRecipeDetailPage />} />
           <Route path="/admin/users" element={<AdminUsersPage />} />
-
-          
         </Routes>
       </main>
       <Footer />

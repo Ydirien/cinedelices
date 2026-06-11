@@ -26,6 +26,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import AdminRecipesPage from './pages/AdminRecipesPage/AdminRecipesPage';
 import AdminRecipeDetailPage from './pages/AdminRecipeDetailPage/AdminRecipeDetailPage';
 import AdminRecipeCreatePage from './pages/AdminRecipeCreatePage/AdminRecipeCreatePage';
+import AdminUsersPage from './pages/AdminUsersPage/AdminUsersPage';
 
 function App() {
 
@@ -50,6 +51,7 @@ function App() {
           <Route path="/admin/recipes" element={<AdminRecipesPage />} />
           <Route path="/admin/recipes/new" element={<AdminRecipeCreatePage />} />
           <Route path="/admin/recipes/:id" element={<AdminRecipeDetailPage />} />
+          <Route path="/admin/users" element={<AdminUsersPage />} />
 
           
         </Routes>

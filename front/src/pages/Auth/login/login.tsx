@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'; 
-import { NavLink, useNavigate } from 'react-router-dom'; 
+import { useState, useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
 import '../AuthPages.css';
 import { useAuth } from '../../../../context/AuthContext/AuthContext';
 
 export default function Login() {
-  const {login} = useAuth()
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -13,7 +13,7 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -29,21 +29,19 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
       const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error(data.message || 'Identifiants incorrects');
-    }
+      if (!response.ok) {
+        throw new Error(data.message || 'Identifiants incorrects');
+      }
 
       localStorage.setItem('accessToken', data.accessToken.token);
+      localStorage.setItem('refreshToken', data.refreshToken.token);
 
-      // pour afficher automatiquement le bouttons mon profil sans refresh la page 
+      // pour afficher automatiquement le bouttons mon profil sans refresh la page
       login();
-      
-
 
       console.log('Connexion réussie !');
-      
-      navigate('/'); 
 
+      navigate('/');
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -51,26 +49,26 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     }
   };
 
-  async function fetcher(){
-     const response = await fetch('http://localhost:3010/api/profile', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-           "Authorization": `Bearer ${localStorage.getItem("accessToken")}` 
-        },
-      });
+  async function fetcher() {
+    const response = await fetch('http://localhost:3010/api/profile', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
 
-      if (!response.ok) {
+    if (!response.ok) {
       throw new Error('Internal error');
-      }
-      const data = await response.json();
-      localStorage.setItem("User",JSON.stringify(data));
-  };
-  useEffect(() => {
-     if (localStorage.getItem("accessToken")) {
-    fetcher();
+    }
+    const data = await response.json();
+    localStorage.setItem('User', JSON.stringify(data));
   }
-  },[handleSubmit])
+  useEffect(() => {
+    if (localStorage.getItem('accessToken')) {
+      fetcher();
+    }
+  }, [handleSubmit]);
 
   return (
     <div className="auth-container">
@@ -78,7 +76,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         <div className="auth-form-wrapper">
           <h2 className="auth-title">Connexion</h2>
           <div className="auth-upload-wrapper">
-            <LuCircleUser size={150}/>
+            <LuCircleUser size={150} />
           </div>
 
           {error && (
@@ -90,9 +88,9 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           <form className="auth-form" onSubmit={handleSubmit}>
             <div className="auth-input-group">
               <label>Email</label>
-              <input 
-                type="email" 
-                placeholder="exemple@exemple.com" 
+              <input
+                type="email"
+                placeholder="exemple@exemple.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -101,9 +99,9 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
             <div className="auth-input-group">
               <label>Mot de passe</label>
-              <input 
-                type="password" 
-                placeholder="Votre mot de passe..." 
+              <input
+                type="password"
+                placeholder="Votre mot de passe..."
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -117,13 +115,12 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
           <div>
             <NavLink to="/passwordlost" className="auth-back-to-login">
-              Mot de passe oublié ? 
+              Mot de passe oublié ?
             </NavLink>
             <NavLink to="/register" className="auth-back-to-login">
-              Pas encore de compte ? 
+              Pas encore de compte ?
             </NavLink>
           </div>
-          
         </div>
       </div>
     </div>

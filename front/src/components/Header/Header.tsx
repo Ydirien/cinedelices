@@ -48,7 +48,7 @@ function Header({ logoMain }: HeaderProps) {
   function handleLogout() {
     logout();
     setShowProfileMenu(false);
-    navigate('/login');
+    navigate('/');
   }
 
   useEffect(() => {

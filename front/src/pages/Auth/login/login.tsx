@@ -38,20 +38,16 @@ export default function Login() {
       localStorage.setItem('refreshToken', data.refreshToken.token);
 
       // Sauvegarde les données du profil pour les composants qui lisent User en localStorage
-      try {
+      
         const profileRes = await fetch(`${API_URL}/api/profile`, {
           headers: { Authorization: `Bearer ${data.accessToken.token}` },
         });
-        if (profileRes.ok) {
-          const userData = await profileRes.json();
-          localStorage.setItem('User', JSON.stringify(userData));
-        }
-      } catch {
-        // Non bloquant : les données de profil sont juste un cache
-      }
+     const userData = await profileRes.json();
 
-      login();
-      navigate('/');
+login(userData); // au lieu de login() puis localStorage.setItem séparément
+navigate('/');
+
+      
     } catch (err: any) {
       setError(err.message);
     } finally {

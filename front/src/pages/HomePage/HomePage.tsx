@@ -48,9 +48,6 @@ function HomePage() {
     <>
       <section className="section-container ">
         <div className="Welcome-div">
-          <div className="Welcome-Image">
-            <img src="../../../public/Logo/LOGO_principal_v2.png" alt="CinéDélices Logo" className="Welcome-img" />
-          </div>
           <div className="welcom-Info">
             <h1 className="welcom-title">Bienvenue sur CinéDélices</h1>
             {!showmore ? 

@@ -14,11 +14,8 @@ interface HeaderProps {
 }
 
 function Header({ logoMain }: HeaderProps) {
-  const raw = localStorage.getItem('User');
-  const userInfo = raw ? JSON.parse(raw) : null;
-  const roleInfo = userInfo?.role
-  const { isConnected, logout } = useAuth();
-
+  const { isConnected,user , logout } = useAuth();
+  const roleInfo = user?.role
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [showLogo, setShowLogo] = useState(true);
@@ -32,6 +29,7 @@ function Header({ logoMain }: HeaderProps) {
   useEffect(() => {
     setMobileNavOpen(false);
   }, [location]);
+
 
   // ferme la fenêtre du profil si on clique en dehors
   useEffect(() => {

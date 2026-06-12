@@ -94,3 +94,4 @@ export interface IRecipe {
     categoryId: number;
   };
 }
+

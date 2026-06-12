@@ -31,7 +31,20 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
+    
     const main = document.getElementById('main');
+
+    if(main){
+      if(PAGES_WITH_BACKGROUND.includes(location.pathname))
+      {
+        main.style.marginLeft = "12vw";
+        main.style.marginRight = "12vw";
+      }
+      else{
+         main.style.marginLeft = "0";
+        main.style.marginRight = "0";
+      }
+    }
 
     if (main) {
       if (PAGES_WITH_BACKGROUND.includes(location.pathname)) {

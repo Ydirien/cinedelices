@@ -88,8 +88,6 @@ body.has-background::after {
 
 main {
   margin-top: 120px;
-  margin-left: 12vw;
-  margin-right: 12vw;
   min-width: 0;
   flex: 1;
 }

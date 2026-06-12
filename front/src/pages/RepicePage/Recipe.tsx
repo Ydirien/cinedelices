@@ -14,7 +14,7 @@ const DIFFICULTY_LABEL: Record<string, string> = {
 
 function imgUrl(path: string) {
   if (!path) return '';
-  return path.includes('upload') ? `${API_URL}/${path}` : path;
+  return path.startsWith('http') ? path : `${API_URL}/${path}`;
 }
 
 function RecipePage() {

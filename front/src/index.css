@@ -63,7 +63,8 @@ body.has-background::before {
   z-index: -2;
 }
 
-body::after {
+/* assombrissment du background */
+body.has-background::after {
   content: '';
   position: fixed;
   inset: 0;

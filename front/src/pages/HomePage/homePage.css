@@ -3,6 +3,12 @@ h2 {
   color: var(--quaternary-color);
 }
 
+.showmore {
+  background: none;
+  border: none;
+  color: var(--quinary-color);
+}
+
 /* container pour toutes les pages  */
 .section-container {
   background: #464646b6;

@@ -1,3 +1,49 @@
+/* ==========================================
+   TRANSITIONS CREATE PAGE
+========================================== */
+
+.Send-Button,
+.AddMore-Button,
+.dropdown-btn,
+.no-work-found button,
+.RecipeImg,
+.ingredients-wrapper .Container,
+.steps-wrapper .Container {
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease,
+        background-color 0.25s ease,
+        color 0.25s ease;
+}
+
+/* Hover */
+
+.Send-Button:hover,
+.AddMore-Button:hover,
+.dropdown-btn:hover,
+.no-work-found button:hover {
+    transform: translateY(-2px);
+}
+
+/* Click */
+
+.Send-Button:active,
+.AddMore-Button:active,
+.dropdown-btn:active,
+.no-work-found button:active {
+    transform: scale(0.97);
+}
+
+/* Containers */
+
+.ingredients-wrapper .Container:hover,
+.steps-wrapper .Container:hover,
+.RecipeImg:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
 .CreateRecipe {
     display: flex;
     flex-direction: column;
@@ -9,6 +55,8 @@
     background-color: rgba(12, 12, 12, 0.5);
     border-radius: 20px;
     border : 1px solid var(--quinary-color);
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 .CreatRecipe-form {

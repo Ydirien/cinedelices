@@ -160,9 +160,7 @@ h2 {
   text-align: center;
   gap: 1rem;
   overflow: hidden;
-  background: rgba(26, 26, 26, 0.603);
   border-radius: 16px;
-  box-shadow: 10px 10px 10px rgba(212, 160, 23, 0.5);
   border: 1.8px solid rgb(46, 46, 46);
 }
 

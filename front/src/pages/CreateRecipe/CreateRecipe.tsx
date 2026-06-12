@@ -240,7 +240,7 @@ const difficulties = [
     <section className="CreateRecipe">
       <form onSubmit={handleSubmit} className="CreatRecipe-form">
         <div className="Add-Header">
-          <h2>Add your Recipe</h2>
+          <h2>Ajoute ta recette</h2>
 
           <div className="RecipeImg">
             {preview ? (

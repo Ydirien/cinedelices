@@ -59,33 +59,12 @@ function AdminRecipeCreatePage() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  const apiBaseUrl =
-    import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3010/api';
-
   useEffect(() => {
     async function fetchCurrentUser() {
       try {
-        const token =
-          localStorage.getItem('accessToken') ?? localStorage.getItem('token');
-
-        if (!token) {
-          return;
-        }
-
-        const response = await apiFetch(`/api/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          return;
-        }
-
+        const response = await apiFetch('/api/profile');
+        if (!response.ok) return;
         const data = await response.json();
-
-        // Compatible avec les deux formats possibles :
-        // { id, email, username } ou { user: { id, email, username } }
         setCurrentUser(data.user ?? data);
       } catch (error) {
         console.error(error);
@@ -93,7 +72,7 @@ function AdminRecipeCreatePage() {
     }
 
     fetchCurrentUser();
-  }, [apiBaseUrl]);
+  }, []);
 
   function updateIngredient(
     index: number,
@@ -184,20 +163,8 @@ function AdminRecipeCreatePage() {
     setErrorMessage('');
     setSuccessMessage('');
 
-    const token =
-      localStorage.getItem('accessToken');
-
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-    };
-
-    if (token) {
-      headers.Authorization = `Bearer ${token}`;
-    }
-
-    const response = await apiFetch(`/api/admin/recipes`, {
+    const response = await apiFetch('/api/admin/recipes', {
       method: 'POST',
-      headers,
       body: JSON.stringify({
         title,
         description,

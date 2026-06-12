@@ -19,31 +19,9 @@ function AdminUsersPage() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  useEffect(() => {
-    if (!successMessage) {
-      return;
-    }
-
-    const timer = window.setTimeout(() => {
-      setSuccessMessage('');
-    }, 10000);
-
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, [successMessage]);
-
-  function getAuthHeaders(): Record<string, string> {
-    const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
-
-    return token ? { Authorization: `Bearer ${token}` } : {};
-  }
-
   async function fetchUsers() {
     try {
-      const response = await apiFetch(`/api/admin/users`, {
-        headers: getAuthHeaders(),
-      });
+      const response = await apiFetch('/api/admin/users');
 
       if (!response.ok) {
         throw new Error('Erreur lors du chargement des utilisateurs');
@@ -69,11 +47,7 @@ function AdminUsersPage() {
 
     const response = await apiFetch(`/api/admin/users/${userId}/role`, {
       method: 'PATCH',
-      headers: getAuthHeaders(),
-
-      body: JSON.stringify({
-        role: newRole,
-      }),
+      body: JSON.stringify({ role: newRole }),
     });
 
     if (!response.ok) {
@@ -100,7 +74,6 @@ function AdminUsersPage() {
 
     const response = await apiFetch(`/api/admin/users/${userId}`, {
       method: 'DELETE',
-      headers: getAuthHeaders(),
     });
 
     if (!response.ok) {

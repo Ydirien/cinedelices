@@ -37,18 +37,9 @@ function AdminDashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
-
-
-  function getAuthHeaders(): Record<string, string> {
-    const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
-    return token ? { Authorization: `Bearer ${token}` } : {};
-  }
-
   async function fetchDashboard() {
     try {
-      const response = await apiFetch(`/api/admin/dashboard`, {
-        headers: getAuthHeaders(),
-      });
+      const response = await apiFetch('/api/admin/dashboard');
 
       if (!response.ok) {
         throw new Error('Erreur lors du chargement du dashboard');
@@ -68,12 +59,9 @@ function AdminDashboardPage() {
   }, []);
 
   async function handleApproveRecipe(id: number) {
-    const response = await apiFetch(`/api/admin/recipes/${id}/state`, {
+    await apiFetch(`/api/admin/recipes/${id}/state`, {
       method: 'PATCH',
-      headers: getAuthHeaders(),
-      body: JSON.stringify({
-        state: 'APPROVED',
-      }),
+      body: JSON.stringify({ state: 'APPROVED' }),
     });
 
     if (!response.ok) {
@@ -91,10 +79,7 @@ function AdminDashboardPage() {
       return;
     }
 
-    const response = await apiFetch(`/api/admin/recipes/${id}`, {
-      method: 'DELETE',
-      headers: getAuthHeaders(),
-    });
+    await apiFetch(`/api/admin/recipes/${id}`, { method: 'DELETE' });
 
     if (!response.ok) {
       setErrorMessage('Impossible de supprimer cette recette.');

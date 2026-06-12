@@ -1,7 +1,11 @@
 import { type FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './AdminRecipeCreatePage.css';
+<<<<<<< HEAD
 import { API_URL } from '../../constants';
+=======
+import { apiFetch } from '../../lib/apiClient';
+>>>>>>> source/main
 
 type RecipeState = 'PENDING' | 'APPROVED' | 'REJECTED';
 type Difficulty = 'EASY' | 'MEDIUM' | 'HARD';
@@ -62,6 +66,7 @@ function AdminRecipeCreatePage() {
   useEffect(() => {
     async function fetchCurrentUser() {
       try {
+<<<<<<< HEAD
         const token =
           localStorage.getItem('accessToken') ?? localStorage.getItem('token');
 
@@ -79,10 +84,11 @@ function AdminRecipeCreatePage() {
           return;
         }
 
+=======
+        const response = await apiFetch('/api/profile');
+        if (!response.ok) return;
+>>>>>>> source/main
         const data = await response.json();
-
-        // Compatible avec les deux formats possibles :
-        // { id, email, username } ou { user: { id, email, username } }
         setCurrentUser(data.user ?? data);
       } catch (error) {
         console.error(error);
@@ -181,6 +187,7 @@ function AdminRecipeCreatePage() {
     setErrorMessage('');
     setSuccessMessage('');
 
+<<<<<<< HEAD
     const token =
       localStorage.getItem('accessToken') ?? localStorage.getItem('token');
 
@@ -193,8 +200,10 @@ function AdminRecipeCreatePage() {
     }
 
     const response = await fetch(`${API_URL}/api/admin/recipes`, {
+=======
+    const response = await apiFetch('/api/admin/recipes', {
+>>>>>>> source/main
       method: 'POST',
-      headers,
       body: JSON.stringify({
         title,
         description,

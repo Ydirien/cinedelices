@@ -31,14 +31,13 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
             /* La clé "key" passe directement sur la carte principale */
             <div className="RecipesPCard" key={recipe.id}>
               <NavLink to={`/recettes/${recipe.id}`}>
+              <h2 className="Content-Type">
+                    {type?.[0]?.thematic?.name || 'Recette'} - {work.category.name}
+                  </h2>
                 <div className="RecipeIMG">
                   <img crossOrigin='anonymous' src={recipe.image.includes("upload") ? API_URL+"/"+recipe.image : recipe.image} alt={recipe.title} className="recetteImage" />
                 </div>
-                <div className="Content-Info">
-                  <h2 className="Content-Type">
-                    {type?.[0]?.thematic?.name || 'Recette'} - {work.category.name}
-                  </h2>
-                  <div className="Recipe-Info">
+                 <div className="Recipe-Info">
                     <h3>{recipe.title}</h3>
                     <h4>{work.title}</h4>
                     <div className="Rating">
@@ -48,7 +47,6 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
                       </p>
                     </div>
                   </div>
-                </div>
               </NavLink>
             </div>
           );

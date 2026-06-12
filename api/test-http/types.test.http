@@ -1,2 +1,13 @@
-### GET All types
-GET GET http://localhost:3010/api/types
+# =============================================================
+# Tests HTTP — Thématiques (types)
+# =============================================================
+
+@baseUrl = http://localhost:3010/api
+
+
+### ────────────────────────────────────────────────────────────
+### THÉMATIQUES
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — liste toutes les thématiques (Français, Italien, Végétarien…)
+GET {{baseUrl}}/types

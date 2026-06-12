@@ -7,10 +7,9 @@ import Pagination from '../../components/Pagination/Pagination';
 import './RecipesPage.css';
 import { IRecipe } from '../../../@types/index.d';
 import { API_URL } from '../../constants';
+import { apiFetch } from '../../lib/apiClient';
 
 const LIMIT = 9; // nombre de recettes par page
-
-
 
 function RecipesPage() {
   const [getAllRecipes, setGetAllrecipes] = useState<IRecipe[]>([]); // recupérer les données de la data recipe en attendants la bdd
@@ -38,7 +37,7 @@ function RecipesPage() {
       params.set('page', String(page));
       params.set('limit', String(LIMIT));
 
-      const response = await fetch(`${API_URL}/api/recipes?${params.toString()}`);
+      const response = await apiFetch(`/api/recipes?${params.toString()}`);
       const data = await response.json();
 
       setFilteredRecipes(data.data);
@@ -84,5 +83,4 @@ function RecipesPage() {
     </section>
   );
 }
-
 export default RecipesPage;

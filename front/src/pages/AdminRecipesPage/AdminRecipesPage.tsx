@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Pagination from '../../components/Pagination/Pagination';
 import './AdminRecipesPage.css';
+<<<<<<< HEAD
 import { API_URL } from '../../constants';
+=======
+import { apiFetch } from '../../lib/apiClient';
+
+const LIMIT = 10;
+>>>>>>> source/main
 
 // Je définis les différents statuts possibles pour une recette
 type RecipeState = 'PENDING' | 'APPROVED' | 'REJECTED';
@@ -51,6 +58,7 @@ function AdminRecipesPage() {
   // Je stocke ici un éventuel message d'erreur
   const [errorMessage, setErrorMessage] = useState('');
 
+<<<<<<< HEAD
   // Je récupère l'URL de base de l'API depuis le fichier .env
   // Si elle n'existe pas, j'utilise l'URL locale par défaut
   function getAuthHeaders(): Record<string, string> {
@@ -64,6 +72,19 @@ function AdminRecipesPage() {
       const response = await fetch(`${API_URL}/api/admin/recipes`, {
         headers: getAuthHeaders(),
       });
+=======
+  // Pagination : page courante et nombre total de pages renvoyé par l'API
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  async function fetchRecipes(page: number) {
+    try {
+      setIsLoading(true);
+
+      const response = await apiFetch(
+        `/api/admin/recipes?page=${page}&limit=${LIMIT}`,
+      );
+>>>>>>> source/main
 
       // Si la réponse n'est pas correcte, je déclenche une erreur
       if (!response.ok) {
@@ -72,8 +93,9 @@ function AdminRecipesPage() {
 
       const data: AdminRecipesResponse = await response.json();
 
-      // Je mets à jour le state avec les recettes reçues
+      // Je mets à jour le state avec les recettes reçues et les infos de pagination
       setRecipes(data.data);
+      setTotalPages(data.totalPages);
     } catch (error) {
       setErrorMessage('Impossible de charger les recettes.');
     } finally {
@@ -82,10 +104,15 @@ function AdminRecipesPage() {
     }
   }
 
-  // Au chargement de la page, je récupère automatiquement les recettes
+  // Au chargement de la page (et à chaque changement de page), je récupère les recettes
   useEffect(() => {
-    fetchRecipes();
-  }, []);
+    fetchRecipes(currentPage);
+  }, [currentPage]);
+
+  // Change de page et remonte en haut du tableau
+  function handlePageChange(page: number) {
+    setCurrentPage(page);
+  }
 
   // Fonction qui permet de supprimer une recette
   async function handleDeleteRecipe(id: number) {
@@ -96,9 +123,12 @@ function AdminRecipesPage() {
       return;
     }
 
+<<<<<<< HEAD
     const response = await fetch(`${API_URL}/api/admin/recipes/${id}`, {
+=======
+    const response = await apiFetch(`/api/admin/recipes/${id}`, {
+>>>>>>> source/main
       method: 'DELETE',
-      headers: getAuthHeaders(),
     });
 
     if (!response.ok) {
@@ -106,24 +136,20 @@ function AdminRecipesPage() {
       return;
     }
 
-    // Je retire directement la recette supprimée de l'affichage
-    // Cela évite de devoir recharger toute la page
-    setRecipes((currentRecipes) =>
-      currentRecipes.filter((recipe) => recipe.id !== id),
-    );
+    // Je recharge la page courante pour garder la pagination cohérente
+    // (ex: dernier élément d'une page supprimé -> totalPages change)
+    fetchRecipes(currentPage);
   }
 
   // Fonction qui permet de valider une recette depuis la liste admin
   async function handleApproveRecipe(id: number) {
+<<<<<<< HEAD
     const response = await fetch(`${API_URL}/api/admin/recipes/${id}/state`, {
+=======
+    const response = await apiFetch(`/api/admin/recipes/${id}/state`, {
+>>>>>>> source/main
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        ...getAuthHeaders(),
-      },
-      body: JSON.stringify({
-        state: 'APPROVED',
-      }),
+      body: JSON.stringify({ state: 'APPROVED' }),
     });
 
     if (!response.ok) {
@@ -244,6 +270,12 @@ function AdminRecipesPage() {
           </tbody>
         </table>
       </section>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </main>
   );
 }

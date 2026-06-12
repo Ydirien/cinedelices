@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .CreateRecipe {
   display: flex;
   flex-direction: column;
@@ -326,11 +327,17 @@ select:focus {
   font-size: 0.875rem;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
+=======
+/* ==========================================
+   FONT IMPORT
+========================================== */
+>>>>>>> source/main
 
 .AddMore-Button:hover {
   background-color: rgba(212, 160, 23, 0.15);
 }
 
+<<<<<<< HEAD
 .Form-Footer {
   display: flex;
   flex-direction: column;
@@ -419,8 +426,708 @@ select:focus {
 /* ==========================================
    RESPONSIVE DESKTOP 900px+
    ========================================== */
+=======
+/* ==========================================
+   DESIGN TOKENS
+========================================== */
+:root {
+  --cr-bg:           #0d0d0d;
+  --cr-surface:      #1a1a1a;
+  --cr-input:        #222222;
+  --cr-border:       #2e2e2e;
+  --cr-border-focus: #c9a84c;
+  --cr-text:         #e8e0cc;
+  --cr-text-muted:   #8a8070;
+  --cr-accent:       #c9a84c;
+  --cr-accent-dim:   rgba(201, 168, 76, 0.12);
+  --cr-error:        #e05c5c;
+  --cr-radius-sm:    6px;
+  --cr-radius-md:    10px;
+  --cr-radius-lg:    16px;
+  --cr-transition:   0.2s ease;
 
+}
+
+/* ==========================================
+   FOCUS — ACCESSIBILITÉ
+========================================== */
+:focus-visible {
+  outline: 2px solid var(--cr-border-focus);
+  outline-offset: 2px;
+  border-radius: var(--cr-radius-sm);
+}
+>>>>>>> source/main
+
+/* ==========================================
+   SECTION WRAPPER
+========================================== */
+.CreateRecipe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  max-width: 100%;
+  margin: 1rem;
+  background-color: var(--cr-surface);
+  border-radius: var(--cr-radius-lg);
+  border: 1px solid var(--cr-border);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================
+   FORM LAYOUT
+========================================== */
+.CreatRecipe-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/* ==========================================
+   SECTION HEADERS — STYLE "CHAPITRE"
+========================================== */
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-heading__number {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--cr-accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 1px solid var(--cr-accent);
+  border-radius: 3px;
+  padding: 2px 6px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.section-heading__title {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cr-text);
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+/* Remplacement des h2 bruts */
+.ingredients-wrapper h2,
+.steps-wrapper h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cr-text);
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ingredients-wrapper h2::before {
+  content: "02";
+  font-size: 0.65rem;
+  color: var(--cr-accent);
+  border: 1px solid var(--cr-accent);
+  border-radius: 3px;
+  padding: 1px 5px;
+  letter-spacing: 0.1em;
+}
+
+.steps-wrapper h2::before {
+  content: "03";
+  font-size: 0.65rem;
+  color: var(--cr-accent);
+  border: 1px solid var(--cr-accent);
+  border-radius: 3px;
+  padding: 1px 5px;
+  letter-spacing: 0.1em;
+}
+
+/* ==========================================
+   HEADER (IMAGE + TITRE)
+========================================== */
+.Add-Header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+.Add-Header h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--cr-text);
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.Add-Header h2::before {
+  content: "01";
+  font-size: 0.65rem;
+  color: var(--cr-accent);
+  border: 1px solid var(--cr-accent);
+  border-radius: 3px;
+  padding: 1px 5px;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+/* ==========================================
+   IMAGE UPLOAD
+========================================== */
+.RecipeImg {
+  align-self: center;
+  width: 100%;
+  height: 220px;
+  border-radius: var(--cr-radius-md);
+  background-color: var(--cr-input);
+  border: 2px dashed var(--cr-border);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color var(--cr-transition), transform var(--cr-transition);
+}
+
+.RecipeImg:hover,
+.RecipeImg:focus-within {
+  border-color: var(--cr-border-focus);
+  border-style: solid;
+  transform: translateY(-2px);
+}
+
+.RecipeImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--cr-radius-md);
+}
+
+.RecipeImg label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  color: var(--cr-text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.RecipeImg label::before {
+  content: "＋";
+  font-size: 1.8rem;
+  color: var(--cr-accent);
+  font-weight: 300;
+}
+
+.RecipeImg input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+/* ==========================================
+   INFOS PRINCIPALES
+========================================== */
+.AddRecipeInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.Recipe-name-input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* ==========================================
+   LABELS & INPUT GROUPS
+========================================== */
+.AddRecipeInfo label,
+.Difficulty-PrepaTime-Thematic label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--cr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.Recipe-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+/* ==========================================
+   INPUTS & TEXTAREA
+========================================== */
+.Recipe-input-group input,
+.Recipe-input-group textarea,
+.ingredients-wrapper .Container input,
+.steps-wrapper .Container input,
+select {
+  background: var(--cr-input);
+  border: 1px solid var(--cr-border);
+  padding: 0.75rem 1rem;
+  color: var(--cr-text);
+  font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  border-radius: var(--cr-radius-sm);
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color var(--cr-transition), background var(--cr-transition);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.Recipe-input-group input::placeholder,
+.Recipe-input-group textarea::placeholder,
+.ingredients-wrapper .Container input::placeholder,
+.steps-wrapper .Container input::placeholder {
+  color: var(--cr-text-muted);
+  font-style: italic;
+}
+
+.Recipe-input-group input:focus,
+.Recipe-input-group textarea:focus,
+.ingredients-wrapper .Container input:focus,
+.steps-wrapper .Container input:focus,
+select:focus {
+  border-color: var(--cr-border-focus);
+  background: #272727;
+}
+
+.Recipe-input-group textarea {
+  resize: vertical;
+  min-height: 8rem;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   DROPDOWN BUTTON
+========================================== */
+.dropdown-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.dropdown-btn {
+  background: var(--cr-input);
+  border: 1px solid var(--cr-border);
+  padding: 0.75rem 1rem;
+  color: var(--cr-text);
+  font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  border-radius: var(--cr-radius-sm);
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: border-color var(--cr-transition), background var(--cr-transition), transform var(--cr-transition);
+}
+
+.dropdown-btn:hover {
+  border-color: var(--cr-border-focus);
+  background: #272727;
+  transform: translateY(-1px);
+}
+
+.dropdown-btn:focus-visible {
+  border-color: var(--cr-border-focus);
+  outline: 2px solid var(--cr-border-focus);
+  outline-offset: 2px;
+}
+
+.dropdown-btn .chevron {
+  font-size: 0.7rem;
+  color: var(--cr-text-muted);
+  transition: transform var(--cr-transition);
+}
+
+.dropdown-btn[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+/* ==========================================
+   SUGGESTIONS / DROPDOWN LISTS
+========================================== */
+.works-suggestions {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background-color: #1e1e1e;
+  border: 1px solid var(--cr-border-focus);
+  border-radius: var(--cr-radius-sm);
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem;
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.works-suggestions li {
+  padding: 0.55rem 0.8rem;
+  border-radius: 4px;
+  color: var(--cr-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background var(--cr-transition), color var(--cr-transition);
+}
+
+.works-suggestions li:hover {
+  background-color: var(--cr-accent-dim);
+  color: var(--cr-accent);
+}
+
+.works-suggestions::-webkit-scrollbar {
+  width: 4px;
+}
+.works-suggestions::-webkit-scrollbar-track {
+  background: transparent;
+}
+.works-suggestions::-webkit-scrollbar-thumb {
+  background: var(--cr-border);
+  border-radius: 4px;
+}
+
+/* ==========================================
+   "NO RESULT" PANEL
+========================================== */
+.no-work-found {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background-color: #1e1e1e;
+  border: 1px solid var(--cr-border-focus);
+  border-radius: var(--cr-radius-sm);
+  padding: 0.8rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.no-work-found span {
+  color: var(--cr-text-muted);
+  font-size: 0.85rem;
+}
+
+.no-work-found button {
+  padding: 0.55rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid var(--cr-accent);
+  background-color: transparent;
+  color: var(--cr-accent);
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: 'Inter', sans-serif;
+  transition: background var(--cr-transition), transform var(--cr-transition);
+}
+
+.no-work-found button:hover {
+  background: var(--cr-accent-dim);
+  transform: translateY(-1px);
+}
+
+.no-work-found button:focus-visible {
+  outline: 2px solid var(--cr-accent);
+  outline-offset: 2px;
+}
+
+/* ==========================================
+   META ROW (DIFFICULTÉ, TEMPS, ETC.)
+========================================== */
+.Difficulty-PrepaTime-Thematic {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.Difficulty-PrepaTime-Thematic .dropdown-container,
+.Difficulty-PrepaTime-Thematic .Recipe-input-group {
+  flex: 1 1 calc(50% - 0.5rem);
+  min-width: 120px;
+}
+
+/* ==========================================
+   CONTAINERS (INGRÉDIENTS & ÉTAPES)
+========================================== */
+.ingredients-wrapper,
+.steps-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.ingredients-wrapper .Container,
+.steps-wrapper .Container {
+  background: var(--cr-bg);
+  border: 1px solid var(--cr-border);
+  padding: 1.2rem;
+  border-radius: var(--cr-radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: border-color var(--cr-transition), box-shadow var(--cr-transition);
+}
+
+.ingredients-wrapper .Container:focus-within,
+.steps-wrapper .Container:focus-within {
+  border-color: rgba(201, 168, 76, 0.35);
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.06);
+}
+
+/* ==========================================
+   INGREDIENT ROW
+========================================== */
+.ingredient-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.ingredient-row .AddMore-Input {
+  flex: 2 1 140px;
+}
+
+.ingredient-row .quantity-input {
+  width: 80px;
+  flex-shrink: 0;
+  background: var(--cr-input);
+  border: 1px solid var(--cr-border);
+  padding: 0.75rem 0.8rem;
+  border-radius: var(--cr-radius-sm);
+  color: var(--cr-text);
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color var(--cr-transition);
+}
+
+.ingredient-row .quantity-input:focus {
+  border-color: var(--cr-border-focus);
+}
+
+.ingredient-row .dropdown-container {
+  flex: 0 0 120px;
+  gap: 0;
+}
+
+.ingredient-row .dropdown-container::after {
+  display: none;
+}
+
+.ingredient-row .dropdown-btn {
+  padding: 0.65rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+/* ==========================================
+   ADD / REMOVE BUTTONS
+========================================== */
+.button-AddRemove-Container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.AddMore-Button {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border-radius: 20px;
+  border: 1px solid var(--cr-border);
+  background-color: transparent;
+  color: var(--cr-text-muted);
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-family: 'Inter', sans-serif;
+  transition: border-color var(--cr-transition), color var(--cr-transition), transform var(--cr-transition);
+}
+
+.AddMore-Button:hover {
+  border-color: var(--cr-accent);
+  color: var(--cr-accent);
+  transform: translateY(-1px);
+}
+
+.AddMore-Button:focus-visible {
+  outline: 2px solid var(--cr-accent);
+  outline-offset: 2px;
+}
+
+/* Bouton "Enlever" avec couleur distinctive */
+.AddMore-Button:last-child {
+  border-color: var(--cr-border);
+  color: var(--cr-text-muted);
+}
+
+.AddMore-Button:last-child:hover {
+  border-color: var(--cr-error);
+  color: var(--cr-error);
+}
+
+/* ==========================================
+   FORM FOOTER
+========================================== */
+.Form-Footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  padding-top: 1rem;
+  border-top: 1px solid var(--cr-border);
+}
+
+.cgu-checkbox {
+  color: var(--cr-text-muted);
+  font-size: 0.88rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.cgu-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  accent-color: var(--cr-accent);
+  cursor: pointer;
+}
+
+.cgu-checkbox a {
+  color: var(--cr-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cgu-checkbox a:hover {
+  color: var(--cr-text);
+}
+
+/* ==========================================
+   SUBMIT BUTTON
+========================================== */
+.Send-Button {
+  width: 100%;
+  padding: 1rem 2rem;
+  background-color: transparent;
+  color: var(--cr-accent);
+  border: 1px solid var(--cr-accent);
+  border-radius: var(--cr-radius-sm);
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--cr-transition), color var(--cr-transition), transform var(--cr-transition), box-shadow var(--cr-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.Send-Button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--cr-accent);
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+.Send-Button:hover::before {
+  transform: translateY(0);
+}
+
+.Send-Button:hover {
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.3);
+}
+
+.Send-Button span,
+.Send-Button {
+  position: relative;
+  z-index: 1;
+}
+
+.Send-Button:focus-visible {
+  outline: 2px solid var(--cr-accent);
+  outline-offset: 3px;
+}
+
+.Send-Button:active {
+  transform: scale(0.98);
+  color: white;
+}
+
+/* ==========================================
+   REDUCED MOTION
+========================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE DESKTOP (≥ 900px)
+========================================== */
 @media (min-width: 900px) {
+<<<<<<< HEAD
   .CreateRecipe {
     padding: 1.5rem 2rem;
   }
@@ -473,12 +1180,59 @@ select:focus {
     justify-content: space-between;
   }
 
+=======
+  .CreatRecipe-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 3rem;
+    row-gap: 2rem;
+  }
+
+  .Add-Header {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .Add-Header h2 {
+    display: none;
+  }
+
+  .RecipeImg {
+    height: 34vh;
+  }
+
+  .Difficulty-PrepaTime-Thematic {
+    grid-column: 1 / 3;
+    grid-row: 2;
+  }
+
+  .thematic-field {
+    display: flex !important;
+    flex: 1;
+  }
+
+  .ingredients-wrapper {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .AddRecipeInfo {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    justify-content: space-between;
+  }
+
+>>>>>>> source/main
   .Recipe-name-input {
     flex-direction: row;
   }
 
   .Recipe-input-group textarea {
+<<<<<<< HEAD
     height: 175px;
+=======
+    height: 165px;
+>>>>>>> source/main
   }
 
   .steps-wrapper {
@@ -489,6 +1243,7 @@ select:focus {
   .Form-Footer {
     grid-column: 1 / span 2;
     grid-row: 4;
+<<<<<<< HEAD
     margin-top: 1.5rem;
   }
 
@@ -496,3 +1251,12 @@ select:focus {
     width: 60%;
   }
 }
+=======
+    margin-top: 1rem;
+  }
+
+  .Send-Button {
+    width: 55%;
+  }
+}
+>>>>>>> source/main

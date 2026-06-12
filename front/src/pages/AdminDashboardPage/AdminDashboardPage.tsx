@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './AdminDashboardPage.css';
+<<<<<<< HEAD
 import { API_URL } from '../../constants';
+=======
+import { apiFetch } from '../../lib/apiClient';
+>>>>>>> source/main
 
 type AdminStats = {
   totalRecipes: number;
@@ -37,6 +41,7 @@ function AdminDashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
+<<<<<<< HEAD
   function getAuthHeaders(): Record<string, string> {
     const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
     return token ? { Authorization: `Bearer ${token}` } : {};
@@ -47,6 +52,11 @@ function AdminDashboardPage() {
       const response = await fetch(`${API_URL}/api/admin/dashboard`, {
         headers: getAuthHeaders(),
       });
+=======
+  async function fetchDashboard() {
+    try {
+      const response = await apiFetch('/api/admin/dashboard');
+>>>>>>> source/main
 
       if (!response.ok) {
         throw new Error('Erreur lors du chargement du dashboard');
@@ -66,16 +76,19 @@ function AdminDashboardPage() {
   }, []);
 
   async function handleApproveRecipe(id: number) {
+<<<<<<< HEAD
     await fetch(`${API_URL}/api/admin/recipes/${id}/state`, {
+=======
+    const response = await apiFetch(`/api/admin/recipes/${id}/state`, {
+>>>>>>> source/main
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        ...getAuthHeaders(),
-      },
-      body: JSON.stringify({
-        state: 'APPROVED',
-      }),
+      body: JSON.stringify({ state: 'APPROVED' }),
     });
+
+    if (!response.ok) {
+      setErrorMessage("Impossible d'approuver cette recette.");
+      return;
+    }
 
     fetchDashboard();
   }
@@ -87,10 +100,19 @@ function AdminDashboardPage() {
       return;
     }
 
+<<<<<<< HEAD
     await fetch(`${API_URL}/api/admin/recipes/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
+=======
+      const response = await apiFetch(`/api/admin/recipes/${id}`, { method: 'DELETE' });
+
+    if (!response.ok) {
+      setErrorMessage('Impossible de supprimer cette recette.');
+      return;
+    }
+>>>>>>> source/main
 
     fetchDashboard();
   }
@@ -144,9 +166,10 @@ function AdminDashboardPage() {
       </section>
 
       <section className="admin-dashboard-actions">
-        <Link to="/admin/recipes/new">Créer une recette</Link>
+        <Link to="/create">Créer une recette</Link>
         <Link to="/admin/recipes">Gérer toutes les recettes</Link>
-        <Link to="/profil">Voir mon Profil</Link>
+        <Link to="/admin/users">Gérer les utilisateurs</Link>
+        <Link to="/profil">Voir mon profil</Link>
       </section>
 
       <section className="admin-pending-section">

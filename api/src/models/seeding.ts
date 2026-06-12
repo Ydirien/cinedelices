@@ -329,7 +329,7 @@ async function seed() {
         { recipeId: recBourguignon.id, ingredientId: ing('Pomme de terre'), quantity: 800, unit: 'g' },
       ],
     }),
-    prisma.recipeThematic.create({ data: { recipeId: recBourguignon.id, thematicId: themAppetizer.id } }),
+    prisma.recipeThematic.create({ data: { recipeId: recBourguignon.id, thematicId: themMainDish.id } }),
   ]);
 
   // =========================================================
@@ -402,8 +402,8 @@ async function seed() {
     }),
     prisma.recipeThematic.createMany({
       data: [
-        { recipeId: recCubano.id, thematicId: themDessert.id },
-        
+        { recipeId: recCubano.id, thematicId: themMainDish.id },
+
       ],
     }),
   ]);
@@ -475,11 +475,8 @@ async function seed() {
         { recipeId: recChocolat.id, ingredientId: ing('Piment chipotle'), quantity: 1, unit: 'pincée' },
       ],
     }),
-    prisma.recipeThematic.createMany({
-      data: [
-        { recipeId: recChocolat.id, thematicId: themBrevage.id },
-        { recipeId: recChocolat.id, thematicId: themAppetizer.id },
-      ],
+    prisma.recipeThematic.create({
+      data: { recipeId: recChocolat.id, thematicId: themDessert.id },
     }),
   ]);
 
@@ -623,7 +620,7 @@ async function seed() {
     }),
     prisma.recipeThematic.createMany({
       data: [
-        { recipeId: recMoistMaker.id, thematicId: themDessert.id },
+        { recipeId: recMoistMaker.id, thematicId: themMainDish.id },
       ],
     }),
   ]);
@@ -859,7 +856,7 @@ async function seed() {
         { recipeId: recWinnie.id, ingredientId: ing('Amandes effilees'), quantity: 50, unit: 'g' },
       ],
     }),
-    prisma.recipeThematic.create({ data: { recipeId: recWinnie.id, thematicId: themBrevage.id } }),
+    prisma.recipeThematic.create({ data: { recipeId: recWinnie.id, thematicId: themDessert.id } }),
   ]);
 
   // =========================================================

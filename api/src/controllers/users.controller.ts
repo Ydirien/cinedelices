@@ -5,9 +5,27 @@ import z from "zod";
 import { BadRequestError, ConflictError, NotFoundError, UnauthorizedError } from "../lib/errors.ts";
 
 const updateUserSchema = z.object({
-    username: z.string().min(2).max(100).optional(),
-    email: z.email().optional(),
+  username: z.string().min(2).max(100).optional(),
+  email: z.string().email().optional(),
 });
+
+const userSelect = {
+  id: true,
+  username: true,
+  email: true,
+  role: true,
+  createdAt: true,
+};
+
+function getAuthenticatedUserId(req: Request) {
+  const userId = req.user?.id;
+
+  if (!userId) {
+    throw new UnauthorizedError('User not authenticated');
+  }
+
+  return userId;
+}
 
 const changePasswordSchema = z
     .object({
@@ -27,143 +45,274 @@ const changePasswordSchema = z
     });
 
 export async function getUserProfile(req: Request, res: Response) {
-    const user = await prisma.user.findUnique({
-        where: { id: req.user.id },
-        omit: { password: true },
-    });
+  const userId = getAuthenticatedUserId(req);
 
-    if (!user) throw new UnauthorizedError("User not found");
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: userSelect,
+  });
 
-    res.json(user);
+  if (!user) {
+    throw new UnauthorizedError('User not found');
+  }
+
+  res.json(user);
 }
 
+// GET /users/:id
+// Récupère un utilisateur par son id
+export async function getUserById(req: Request, res: Response) {
+  const userId = Number(req.params.id);
+
+  if (!Number.isInteger(userId)) {
+    throw new NotFoundError('User not found');
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: userSelect,
+  });
+
+  if (!user) {
+    throw new NotFoundError('User not found');
+  }
+
+  res.json(user);
+}
+
+// PATCH /users/me
+// Modifie le profil de l'utilisateur connecté
 export async function updateUserProfile(req: Request, res: Response) {
-    const data = await updateUserSchema.parseAsync(req.body);
+  const userId = getAuthenticatedUserId(req);
 
-    if (Object.keys(data).length === 0) {
-        throw new BadRequestError("No data provided for update");
-    }
+  const data = await updateUserSchema.parseAsync(req.body);
 
-    if (data.email) {
-        const emailTaken = await prisma.user.findFirst({
-            where: { email: data.email, NOT: { id: req.user.id } },
-        });
+  if (Object.keys(data).length === 0) {
+    throw new BadRequestError('No data provided for update');
+  }
 
-        if (emailTaken) throw new ConflictError("Email already used");
-    }
-
-    const updatedUser = await prisma.user.update({
-        where: { id: req.user.id },
-        data,
-        omit: { password: true },
+  if (data.email) {
+    const emailTaken = await prisma.user.findFirst({
+      where: {
+        email: data.email,
+        NOT: {
+          id: userId,
+        },
+      },
     });
 
-    res.json(updatedUser);
+    if (emailTaken) {
+      throw new ConflictError('Email already used');
+    }
+  }
+
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data,
+    select: userSelect,
+  });
+
+  res.json(updatedUser);
 }
 
+// DELETE /users/me
+// Supprime le compte de l'utilisateur connecté
 export async function deleteAccount(req: Request, res: Response) {
-    const user = await prisma.user.findUnique({ where: { id: req.user.id } });
-    if (!user) throw new NotFoundError("User not found");
+  const userId = getAuthenticatedUserId(req);
 
-    await prisma.$transaction(async (tx) => {
-        // La relation Recipe->User n'a pas de onDelete Cascade, on supprime d'abord les recettes
-        await tx.recipe.deleteMany({ where: { userId: req.user.id } });
-        await tx.user.delete({ where: { id: req.user.id } });
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (!user) {
+    throw new NotFoundError('User not found');
+  }
+
+  await prisma.$transaction(async (tx) => {
+    // On supprime d'abord les recettes de l'utilisateur
+    // car la relation Recipe -> User n'a pas forcément de cascade.
+    await tx.recipe.deleteMany({
+      where: {
+        userId,
+      },
     });
 
-    res.status(204).send();
+    await tx.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+  });
+
+  res.status(204).send();
 }
 
+// PATCH /users/profile/password
+// Modifie le mot de passe de l'utilisateur connecté
 export async function changePassword(req: Request, res: Response) {
-    const { currentPassword, newPassword } = await changePasswordSchema.parseAsync(req.body);
+  const userId = getAuthenticatedUserId(req);
 
-    const user = await prisma.user.findUnique({ where: { id: req.user.id } });
-    if (!user) throw new UnauthorizedError("User not found");
+  const { currentPassword, newPassword } = await changePasswordSchema.parseAsync(req.body);
 
-    const isMatching = await argon2.verify(user.password, currentPassword);
-    if (!isMatching) throw new UnauthorizedError("Current password is incorrect");
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
 
-    const hashedPassword = await argon2.hash(newPassword);
-    await prisma.user.update({
-        where: { id: req.user.id },
-        data: { password: hashedPassword },
-    });
+  if (!user) {
+    throw new UnauthorizedError('User not found');
+  }
 
-    res.status(200).json({ message: "Password updated successfully" });
+  const isMatching = await argon2.verify(user.password, currentPassword);
+
+  if (!isMatching) {
+    throw new UnauthorizedError('Current password is incorrect');
+  }
+
+  const hashedPassword = await argon2.hash(newPassword);
+
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      password: hashedPassword,
+    },
+  });
+
+  res.status(200).json({ message: 'Password updated successfully' });
 }
 
+// GET /users/profile/recipes
+// Récupère les recettes créées par l'utilisateur connecté
 export async function getOwnRecipes(req: Request, res: Response) {
-    const page = Math.max(1, parseInt(req.query.page as string) || 1);
-    const limit = Math.min(50, Math.max(1, parseInt(req.query.limit as string) || 10));
-    const skip = (page - 1) * limit;
+  const userId = getAuthenticatedUserId(req);
 
-    const stateFilter = req.query.state
-        ? z.enum(["PENDING", "APPROVED", "REJECTED"]).parse(req.query.state)
-        : undefined;
+  const page = Math.max(1, parseInt(req.query.page as string) || 1);
+  const limit = Math.min(
+    50,
+    Math.max(1, parseInt(req.query.limit as string) || 10),
+  );
+  const skip = (page - 1) * limit;
 
-    const where = {
-        userId: req.user.id,
-        ...(stateFilter && { state: stateFilter }),
-    };
+  const stateFilter = req.query.state
+    ? z.enum(['PENDING', 'APPROVED', 'REJECTED']).parse(req.query.state)
+    : undefined;
 
-    const [recipes, total] = await Promise.all([
-        prisma.recipe.findMany({
-            where,
-            include: {
-                work: { select: { id: true, title: true, image: true } },
-                thematics: { include: { thematic: { select: { id: true, name: true } } } },
-                _count: { select: { likes: true, comments: true } },
-            },
-            orderBy: { createdAt: "desc" },
-            skip,
-            take: limit,
-        }),
-        prisma.recipe.count({ where }),
-    ]);
+  const where = {
+    userId,
+    ...(stateFilter && { state: stateFilter }),
+  };
 
-    res.json({
-        data: recipes,
-        meta: {
-            total,
-            page,
-            limit,
-            totalPages: Math.ceil(total / limit),
-        },
-    });
+  const [recipes, total] = await Promise.all([
+    prisma.recipe.findMany({
+      where,
+      include: {
+        work: { select: { id: true, title: true, image: true } },
+        thematics: { include: { thematic: { select: { id: true, name: true } } } },
+        _count: { select: { likes: true, comments: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+      skip,
+      take: limit,
+    }),
+
+    prisma.recipe.count({ where }),
+  ]);
+
+  res.json({
+    data: recipes,
+    meta: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    },
+  });
 }
 
+// GET /users/me/liked-recipes
+// Récupère les recettes likées par l'utilisateur connecté
 export async function getLikedRecipes(req: Request, res: Response) {
-    const page = Math.max(1, parseInt(req.query.page as string) || 1);
-    const limit = Math.min(50, Math.max(1, parseInt(req.query.limit as string) || 10));
-    const skip = (page - 1) * limit;
+  const userId = getAuthenticatedUserId(req);
 
-    const [likes, total] = await Promise.all([
-        prisma.like.findMany({
-            where: { userId: req.user.id },
-            include: {
-                recipe: {
-                    include: {
-                        work: { select: { id: true, title: true, image: true } },
-                        user: { select: { id: true, username: true } },
-                        thematics: { include: { thematic: { select: { id: true, name: true } } } },
-                        _count: { select: { likes: true, comments: true } },
-                    },
-                },
+  const page = Math.max(1, parseInt(req.query.page as string) || 1);
+  const limit = Math.min(
+    50,
+    Math.max(1, parseInt(req.query.limit as string) || 10),
+  );
+  const skip = (page - 1) * limit;
+
+  const [likes, total] = await Promise.all([
+    prisma.like.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        recipe: {
+          include: {
+            work: {
+              select: {
+                id: true,
+                title: true,
+                image: true,
+              },
             },
-            orderBy: { createdAt: "desc" },
-            skip,
-            take: limit,
-        }),
-        prisma.like.count({ where: { userId: req.user.id } }),
-    ]);
-
-    res.json({
-        data: likes.map((l) => l.recipe),
-        meta: {
-            total,
-            page,
-            limit,
-            totalPages: Math.ceil(total / limit),
+            user: {
+              select: {
+                id: true,
+                username: true,
+              },
+            },
+            thematics: {
+              include: {
+                thematic: {
+                  select: {
+                    id: true,
+                    name: true,
+                  },
+                },
+              },
+            },
+            _count: {
+              select: {
+                likes: true,
+                comments: true,
+              },
+            },
+          },
         },
-    });
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      skip,
+      take: limit,
+    }),
+
+    prisma.like.count({
+      where: {
+        userId,
+      },
+    }),
+  ]);
+
+  res.json({
+    data: likes.map((like) => like.recipe),
+    meta: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    },
+  });
 }

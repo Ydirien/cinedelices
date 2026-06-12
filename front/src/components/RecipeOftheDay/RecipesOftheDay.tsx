@@ -13,17 +13,15 @@ function recipesOftheDay({ recipe }: RecipesOftheDayProps) {
             <img src={recipe.image} alt="CinéDélices Logo" className="RecipeOfTheDayImg" />
           </div>
           <div className="Recipe-Info">
-            <h2>{recipe.title}</h2>
-            <h4>{recipe.work.title}</h4>
-            <p>{recipe.work.synopsis}</p>
+            <h2 className='Recipe-Info-title' >{recipe.title}</h2>
+            <h4 className='Recipe-Info-work'>{recipe.work.title}</h4>
+            <p className='Recipe-Info-text'>{recipe.work.synopsis}</p>
           </div>
 
-          <div className="Recipe-img"></div>
         </NavLink>
       </div>
     </section>
   );
 }
-<img src="../../../public/recipes-picture/Tourte_médieval.png" alt="" />
 
 export default recipesOftheDay;

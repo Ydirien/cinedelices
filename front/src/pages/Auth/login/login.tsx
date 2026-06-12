@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
 import '../AuthPages.css';
@@ -37,12 +37,17 @@ export default function Login() {
       localStorage.setItem('accessToken', data.accessToken.token);
       localStorage.setItem('refreshToken', data.refreshToken.token);
 
-      // pour afficher automatiquement le bouttons mon profil sans refresh la page
-      login();
+      // Sauvegarde les données du profil pour les composants qui lisent User en localStorage
+      
+        const profileRes = await fetch(`${API_URL}/api/profile`, {
+          headers: { Authorization: `Bearer ${data.accessToken.token}` },
+        });
+     const userData = await profileRes.json();
 
-      console.log('Connexion réussie !');
+login(userData); // au lieu de login() puis localStorage.setItem séparément
+navigate('/');
 
-      navigate('/');
+      
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -50,6 +55,7 @@ export default function Login() {
     }
   };
 
+<<<<<<< HEAD
   async function fetcher() {
     const response = await fetch(`${API_URL}/api/profile`, {
       method: 'GET',
@@ -71,6 +77,8 @@ export default function Login() {
     }
   }, [handleSubmit]);
 
+=======
+>>>>>>> source/main
   return (
     <div className="auth-container">
       <div className="auth-card">

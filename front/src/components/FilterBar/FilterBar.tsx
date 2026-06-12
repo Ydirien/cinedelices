@@ -1,31 +1,39 @@
 import { useSearchParams } from 'react-router-dom';
 import './FilterBar.css';
+import { apiFetch } from '../../lib/apiClient';
+import { ICategory, IType } from '../../../@types/index.d';
+import { useEffect, useState } from 'react';
 
-const categories = [
-  { name: 'Film' },
-  { name: 'Série' },
-  { name: 'Manga / Anime' },
-  { name: 'Dessin animé' },
-];
-
-const thematics = [
-  { name: 'Entrée' },
-  { name: 'Plat' },
-  { name: 'Dessert' },
-  { name: 'Boisson' },
-];
 
 // FilterBar met à jour les searchParams de l'URL.
 // RecipesPage écoute ces params via useEffect([searchParams])
 // et relance fetchFilter — ce qui met aussi à jour totalPages pour la pagination.
 function FilterBar() {
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [getAllCategories, setGetAllCategories] = useState<ICategory[]>([]);
+  const [getAllTypes, setGetAllTypes] = useState<IType[]>([]);
   const activeCategory = searchParams.get('category');
   const activeThematic = searchParams.get('thematic');
 
+  async function fetchButton(c: string, t: string) {
+    try {
+      const resCategories = await apiFetch(`/api/${c}`);
+      const resTypes = await apiFetch(`/api/${t}`);
+      const dataCategories = await resCategories.json();
+      const dataTypes = await resTypes.json();
+      setGetAllCategories(dataCategories);
+      setGetAllTypes(dataTypes);
+    } catch (error) {
+      console.error('Erreur lors du chargement des bouttons :', error);
+    }
+  }
+
+  useEffect(() => {
+    fetchButton('categories', 'types');
+  }, []);
+
   function setParam(key: string, value: string | null) {
-    setSearchParams(prev => {
+    setSearchParams((prev) => {
       const p = new URLSearchParams(prev);
       if (value) p.set(key, value);
       else p.delete(key);
@@ -52,7 +60,7 @@ function FilterBar() {
           >
             All
           </button>
-          {categories.map((category) => (
+          {getAllCategories.map((category) => (
             <button
               key={category.name}
               className={activeCategory === category.name ? 'active' : ''}
@@ -74,7 +82,7 @@ function FilterBar() {
           >
             All
           </button>
-          {thematics.map((thematic) => (
+          {getAllTypes.map((thematic) => (
             <button
               key={thematic.name}
               className={activeThematic === thematic.name ? 'active' : ''}
@@ -89,5 +97,4 @@ function FilterBar() {
     </div>
   );
 }
-
 export default FilterBar;

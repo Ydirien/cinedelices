@@ -1,5 +1,11 @@
 import { API_URL } from '../constants';
 
+// Promise partagée pour sérialiser les refreshes concurrents.
+// Si plusieurs requêtes obtiennent un 401 simultanément, elles attendent
+// toutes la même promise au lieu de lancer chacune un refresh → évite
+// que le 2e refresh invalide le token que le 1er vient de créer en base.
+let pendingRefresh: Promise<string | null> | null = null;
+
 async function refreshAccesstoken(): Promise<string | null> {
   const refreshToken = localStorage.getItem('refreshToken');
   if (!refreshToken) return null;
@@ -36,9 +42,16 @@ export async function apiFetch(path: string, options: RequestInit = {}) {
 
   let res = await doFetch(accessToken);
 
-  // Token expiré → on tente un refresh puis on rejoue la requête une seule fois
+  // Token expiré → on tente un refresh puis on rejoue la requête une seule fois.
+  // On réutilise pendingRefresh si un refresh est déjà en cours.
   if (res.status === 401) {
-    const newToken = await refreshAccesstoken();
+    if (!pendingRefresh) {
+      pendingRefresh = refreshAccesstoken().finally(() => {
+        pendingRefresh = null;
+      });
+    }
+
+    const newToken = await pendingRefresh;
 
     if (!newToken) {
       localStorage.removeItem('accessToken');

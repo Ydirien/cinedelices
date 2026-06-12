@@ -79,7 +79,7 @@ function AdminDashboardPage() {
       return;
     }
 
-    await apiFetch(`/api/admin/recipes/${id}`, { method: 'DELETE' });
+      const response = await apiFetch(`/api/admin/recipes/${id}`, { method: 'DELETE' });
 
     if (!response.ok) {
       setErrorMessage('Impossible de supprimer cette recette.');

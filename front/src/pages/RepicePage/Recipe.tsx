@@ -14,6 +14,88 @@ function RecipePage() {
   const { recette } = useParams();
   const [recipe, setRecipe] = useState<IRecipeDetail | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [comments,setComments] = useState<string|null>(null);
+  const [newComment, setNewComment] = useState('');
+  const [score, setScore] = useState(5);
+  const [errorPopupMessage, setErrorPopupMessage] = useState('');
+
+  useEffect(() => {
+  if (!errorPopupMessage) {
+    return;
+  }
+
+  const timer = window.setTimeout(() => {
+    setErrorPopupMessage('');
+  }, 3000);
+
+  return () => {
+    window.clearTimeout(timer);
+  };
+}, [errorPopupMessage]);
+
+ useEffect(() => {
+  async function getComments() {
+    try {
+      const response = await fetch(
+        `${API_URL}/api/recipes/${recette}/comments`
+      );
+
+      const data = await response.json();
+
+      setComments(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  getComments();
+}, [recette]);
+
+ async function postComment(e: React.FormEvent) {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        `${API_URL}/api/recipes/${recette}/comments`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+          body: JSON.stringify({
+            content: newComment,
+            score: score,
+          }),
+        }
+      );
+
+     const data = await response.json();
+
+    if (!response.ok) {
+
+      if (response.status === 409) {
+        setErrorPopupMessage(
+          'Vous êtes limité à un commentaire par recette.'
+        );
+      } else {
+        setErrorPopupMessage(
+          data.message || 'Erreur lors de l’envoi du commentaire.'
+        );
+      }
+
+      return;
+    }
+
+      setComments((prev) => [data, ...prev]);
+
+      setNewComment('');
+      setScore(5);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
   
   useEffect(() => {
     async function getRecipeById() {
@@ -41,6 +123,12 @@ function RecipePage() {
 
   return (
     <div className="RecipePage">
+      {errorPopupMessage && (
+  <div className="error-popup">
+    <span className="error-popup-icon">✕</span>
+    <p>{errorPopupMessage}</p>
+  </div>
+)}
       <section className="RecipeImage">
         <img crossOrigin='anonymous' src={recipe.image.includes("upload") ? API_URL+"/"+recipe.image : recipe.image} alt="" />
       </section>
@@ -147,30 +235,42 @@ function RecipePage() {
                 Hoff... les chocolatine c'est qu'une dockerisation du pain au chocolat, de toute façon je suis legitime!
               </p>
             </article>
-            <article className="Comment">
+            {comments.map((comment) => (
+            <article className="Comment" key={comment.id}>
               <div className="CommentHeader">
-                <h4>NIB</h4>
-                <div className="Stars">★★★★☆</div>
+                <h4>{comment.user.username}</h4>
+
+                <div className="Stars">
+                  {'★'.repeat(comment.score)}
+                  {'☆'.repeat(5 - comment.score)}
+                </div>
               </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+              <p>{comment.content}</p>
             </article>
-            <article className="Comment">
-              <div className="CommentHeader">
-                <h4>NIB</h4>
-                <div className="Stars">★★★★☆</div>
-              </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </article>
-            <article className="Comment">
-              <div className="CommentHeader">
-                <h4>NIB</h4>
-                <div className="Stars">★★★★☆</div>
-              </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </article>
+          ))}
           </div>
-          <form className="CommentForm">
-            <input type="text" placeholder="Laissez un commentaire..." className="CommentInput" />
+          <form className="CommentForm" onSubmit={postComment}>
+            <input
+              type="text"
+              placeholder="Laissez un commentaire..."
+              className="CommentInput"
+              required
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+            />
+
+            <select
+              value={score}
+              onChange={(e) => setScore(Number(e.target.value))}
+            >
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+            </select>
+
             <button type="submit" className="CommentButton">
               Envoyer
             </button>

@@ -41,7 +41,7 @@ function App() {
         main.style.marginRight = "12vw";
       }
       else{
-         main.style.marginLeft = "0";
+        main.style.marginLeft = "0";
         main.style.marginRight = "0";
       }
     }

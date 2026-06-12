@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './AdminUsersPage.css';
+import { apiFetch } from '../../lib/apiClient';
 
 type UserRole = 'USER' | 'ADMIN';
 
@@ -18,19 +19,15 @@ function AdminUsersPage() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  const apiBaseUrl =
-    import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3010/api';
-
   function getAuthHeaders(): Record<string, string> {
-    const token =
-      localStorage.getItem('accessToken') ?? localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
 
     return token ? { Authorization: `Bearer ${token}` } : {};
   }
 
   async function fetchUsers() {
     try {
-      const response = await fetch(`${apiBaseUrl}/admin/users`, {
+      const response = await apiFetch(`/api/admin/users`, {
         headers: getAuthHeaders(),
       });
 
@@ -38,9 +35,9 @@ function AdminUsersPage() {
         throw new Error('Erreur lors du chargement des utilisateurs');
       }
 
-      const data: AdminUser[] = await response.json();
+      const data: { data: AdminUser[] } = await response.json();
 
-      setUsers(data);
+      setUsers(data.data);
     } catch (error) {
       setErrorMessage('Impossible de charger les utilisateurs.');
     } finally {
@@ -56,12 +53,10 @@ function AdminUsersPage() {
     setErrorMessage('');
     setSuccessMessage('');
 
-    const response = await fetch(`${apiBaseUrl}/admin/users/${userId}/role`, {
+    const response = await apiFetch(`/api/admin/users/${userId}/role`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        ...getAuthHeaders(),
-      },
+      headers: getAuthHeaders(),
+
       body: JSON.stringify({
         role: newRole,
       }),
@@ -74,19 +69,13 @@ function AdminUsersPage() {
 
     const updatedUser: AdminUser = await response.json();
 
-    setUsers((currentUsers) =>
-      currentUsers.map((user) =>
-        user.id === updatedUser.id ? updatedUser : user,
-      ),
-    );
+    setUsers((currentUsers) => currentUsers.map((user) => (user.id === updatedUser.id ? updatedUser : user)));
 
     setSuccessMessage('Le rôle de l’utilisateur a bien été modifié.');
   }
 
   async function handleDeleteUser(userId: number) {
-    const confirmDelete = window.confirm(
-      'Supprimer définitivement cet utilisateur ?',
-    );
+    const confirmDelete = window.confirm('Supprimer définitivement cet utilisateur ?');
 
     if (!confirmDelete) {
       return;
@@ -95,21 +84,17 @@ function AdminUsersPage() {
     setErrorMessage('');
     setSuccessMessage('');
 
-    const response = await fetch(`${apiBaseUrl}/admin/users/${userId}`, {
+    const response = await apiFetch(`/api/admin/users/${userId}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
 
     if (!response.ok) {
-      setErrorMessage(
-        'Impossible de supprimer cet utilisateur. Il est peut-être lié à des recettes.',
-      );
+      setErrorMessage('Impossible de supprimer cet utilisateur. Il est peut-être lié à des recettes.');
       return;
     }
 
-    setUsers((currentUsers) =>
-      currentUsers.filter((user) => user.id !== userId),
-    );
+    setUsers((currentUsers) => currentUsers.filter((user) => user.id !== userId));
 
     setSuccessMessage('Utilisateur supprimé avec succès.');
   }
@@ -123,7 +108,7 @@ function AdminUsersPage() {
   }
 
   return (
-    <main className="admin-users-page">
+    <>
       <section className="admin-users-header">
         <h1>Gestion des utilisateurs</h1>
 
@@ -132,13 +117,9 @@ function AdminUsersPage() {
         </div>
       </section>
 
-      {successMessage && (
-        <p className="admin-users-success-message">{successMessage}</p>
-      )}
+      {successMessage && <p className="admin-users-success-message">{successMessage}</p>}
 
-      {errorMessage && (
-        <p className="admin-users-error-message">{errorMessage}</p>
-      )}
+      {errorMessage && <p className="admin-users-error-message">{errorMessage}</p>}
 
       <section className="admin-users-table-container">
         <table className="admin-users-table">
@@ -173,11 +154,7 @@ function AdminUsersPage() {
                     </span>
                   </td>
 
-                  <td>
-                    {user.createdAt
-                      ? new Date(user.createdAt).toLocaleDateString('fr-FR')
-                      : 'Non renseigné'}
-                  </td>
+                  <td>{user.createdAt ? new Date(user.createdAt).toLocaleDateString('fr-FR') : 'Non renseigné'}</td>
 
                   <td className="admin-users-actions">
                     {user.role === 'USER' ? (
@@ -189,20 +166,12 @@ function AdminUsersPage() {
                         Passer admin
                       </button>
                     ) : (
-                      <button
-                        type="button"
-                        className="demote-button"
-                        onClick={() => handleUpdateRole(user.id, 'USER')}
-                      >
+                      <button type="button" className="demote-button" onClick={() => handleUpdateRole(user.id, 'USER')}>
                         Repasser user
                       </button>
                     )}
 
-                    <button
-                      type="button"
-                      className="danger-button"
-                      onClick={() => handleDeleteUser(user.id)}
-                    >
+                    <button type="button" className="danger-button" onClick={() => handleDeleteUser(user.id)}>
                       Supprimer
                     </button>
                   </td>
@@ -212,7 +181,7 @@ function AdminUsersPage() {
           </tbody>
         </table>
       </section>
-    </main>
+    </>
   );
 }
 

@@ -1,6 +1,7 @@
 import { type FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './AdminRecipeCreatePage.css';
+import { apiFetch } from '../../lib/apiClient';
 
 type RecipeState = 'PENDING' | 'APPROVED' | 'REJECTED';
 type Difficulty = 'EASY' | 'MEDIUM' | 'HARD';
@@ -71,7 +72,7 @@ function AdminRecipeCreatePage() {
           return;
         }
 
-        const response = await fetch(`${apiBaseUrl}/users/me`, {
+        const response = await apiFetch(`/api/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -184,7 +185,7 @@ function AdminRecipeCreatePage() {
     setSuccessMessage('');
 
     const token =
-      localStorage.getItem('accessToken') ?? localStorage.getItem('token');
+      localStorage.getItem('accessToken');
 
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
@@ -194,7 +195,7 @@ function AdminRecipeCreatePage() {
       headers.Authorization = `Bearer ${token}`;
     }
 
-    const response = await fetch(`${apiBaseUrl}/admin/recipes`, {
+    const response = await apiFetch(`/api/admin/recipes`, {
       method: 'POST',
       headers,
       body: JSON.stringify({

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './AdminDashboardPage.css';
+import { apiFetch } from '../../lib/apiClient';
 
 type AdminStats = {
   totalRecipes: number;
@@ -36,7 +37,7 @@ function AdminDashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3010/api';
+
 
   function getAuthHeaders(): Record<string, string> {
     const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
@@ -45,7 +46,7 @@ function AdminDashboardPage() {
 
   async function fetchDashboard() {
     try {
-      const response = await fetch(`${apiBaseUrl}/admin/dashboard`, {
+      const response = await apiFetch(`/api/admin/dashboard`, {
         headers: getAuthHeaders(),
       });
 
@@ -67,16 +68,18 @@ function AdminDashboardPage() {
   }, []);
 
   async function handleApproveRecipe(id: number) {
-    await fetch(`${apiBaseUrl}/admin/recipes/${id}/state`, {
+    const response = await apiFetch(`/api/admin/recipes/${id}/state`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        ...getAuthHeaders(),
-      },
+      headers: getAuthHeaders(),
       body: JSON.stringify({
         state: 'APPROVED',
       }),
     });
+
+    if (!response.ok) {
+      setErrorMessage("Impossible d'approuver cette recette.");
+      return;
+    }
 
     fetchDashboard();
   }
@@ -88,10 +91,15 @@ function AdminDashboardPage() {
       return;
     }
 
-    await fetch(`${apiBaseUrl}/admin/recipes/${id}`, {
+    const response = await apiFetch(`/api/admin/recipes/${id}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
     });
+
+    if (!response.ok) {
+      setErrorMessage('Impossible de supprimer cette recette.');
+      return;
+    }
 
     fetchDashboard();
   }

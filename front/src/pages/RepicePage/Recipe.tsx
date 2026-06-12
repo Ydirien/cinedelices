@@ -97,7 +97,6 @@ function RecipePage() {
         {/* ── HERO ── */}
         <section className="recipe-hero">
           <img
-            crossOrigin="anonymous"
             src={imgUrl(recipe.image)}
             alt={recipe.title}
             className="recipe-hero-img"

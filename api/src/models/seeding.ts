@@ -193,7 +193,7 @@ async function seed() {
       title: 'Ratatouille confite de Rémy',
       description:
         'La célèbre ratatouille confite qui a fait chavirer le cœur du critique Anton Ego. Fines tranches de légumes en rosace sur un coulis de tomate parfumé au thym.',
-      image: '../../../public/recipes-picture/ratatouille de rémy.jpg',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Ratatouille_NIH.jpg',
       prepTime: 45,
       cookTime: 90,
       servings: 4,
@@ -499,7 +499,7 @@ async function seed() {
       title: 'Tourte médiévale aux champignons et chèvre',
       description:
         'Inspirée des fastueux banquets de Port-Réal. Pâte dorée et croustillante, garnie de champignons sauvages, fromage de chèvre fondant et crème fraîche.',
-      image: '../../../public/recipes-picture/Tourte_médieval.png',
+      image: 'https://placehold.co/600x400?text=Tourte+Médiévale',
       prepTime: 30,
       cookTime: 45,
       servings: 6,
@@ -572,7 +572,7 @@ async function seed() {
       title: 'Le "Moist Maker" de Ross Geller',
       description:
         'Le sandwich de Thanksgiving le plus célèbre de la télévision. La tranche centrale imbibée de jus de dinde — le fameux Moist Maker — fait toute la différence. On ne rigole pas avec le sandwich de Ross.',
-      image: '../../../public/recipes-picture/Le Moist Maker de Ross Geller.png',
+      image: 'https://placehold.co/600x400?text=Moist+Maker+Ross+Geller',
       prepTime: 10,
       cookTime: 0,
       servings: 1,
@@ -933,7 +933,7 @@ async function seed() {
       title: 'Crème brûlée d\'Amélie',
       description:
         "Le plaisir simple préféré d'Amélie : craquer la fine croûte de caramel à la petite cuillère pour révéler une crème vanillée d'une douceur infinie.",
-      image: '../../../public/recipes-picture/Crème brûlée d\'Amélie.png',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/c/c9/Br%C3%BBl%C3%A9e.jpg',
       prepTime: 20,
       cookTime: 50,
       servings: 4,

@@ -119,11 +119,68 @@
 }
 
 .CommentForm {
+    margin-left: 1rem;
+    margin-right: 1rem;
     display: flex;
     gap: 10px;
     margin-top: 20px;
+
+    select{
+        width: auto;
+    }
 }
 
+.error-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+
+  background: #ff4d4f;
+  color: white;
+
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  z-index: 9999;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+  animation: popupIn 0.4s ease forwards,
+             popupOut 0.4s ease forwards 2.6s;
+}
+
+.error-popup-icon {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+@keyframes popupIn {
+  from {
+    opacity: 0;
+    transform: translateX(120px) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes popupOut {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(120px) scale(0.9);
+  }
+}
 .CommentInput {
     flex: 1;
     background: #1e1e1e;

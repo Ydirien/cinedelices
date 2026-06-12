@@ -81,10 +81,11 @@ function Header({ logoMain }: HeaderProps) {
         </NavLink>
         <nav className="navbar-links">
           <NavLink to="/recettes">Recettes</NavLink>
+          {isConnected ? (<NavLink to={'/create'}>Créer une recette</NavLink>): ""}
         </nav>
         {showMobileSearch && <SearchBar />}
         <div className="navbar-actions">
-          <button className="btn-create">Créer une recette</button>
+          
           <button
             className="buttonMobileSearchBar"
             onClick={() => {

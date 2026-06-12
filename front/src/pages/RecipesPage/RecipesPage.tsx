@@ -11,8 +11,6 @@ import { apiFetch } from '../../lib/apiClient';
 
 const LIMIT = 9; // nombre de recettes par page
 
-
-
 function RecipesPage() {
   const [getAllRecipes, setGetAllrecipes] = useState<IRecipe[]>([]); // recupérer les données de la data recipe en attendants la bdd
   const [filteredRecipes, setFilteredRecipes] = useState<IRecipe[] | null>(null);
@@ -85,5 +83,4 @@ function RecipesPage() {
     </section>
   );
 }
-
 export default RecipesPage;

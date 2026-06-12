@@ -59,7 +59,7 @@ function AdminDashboardPage() {
   }, []);
 
   async function handleApproveRecipe(id: number) {
-    await apiFetch(`/api/admin/recipes/${id}/state`, {
+    const response = await apiFetch(`/api/admin/recipes/${id}/state`, {
       method: 'PATCH',
       body: JSON.stringify({ state: 'APPROVED' }),
     });

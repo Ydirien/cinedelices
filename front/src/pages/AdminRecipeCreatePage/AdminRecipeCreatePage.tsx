@@ -1,11 +1,7 @@
 import { type FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './AdminRecipeCreatePage.css';
-<<<<<<< HEAD
-import { API_URL } from '../../constants';
-=======
 import { apiFetch } from '../../lib/apiClient';
->>>>>>> source/main
 
 type RecipeState = 'PENDING' | 'APPROVED' | 'REJECTED';
 type Difficulty = 'EASY' | 'MEDIUM' | 'HARD';
@@ -66,28 +62,8 @@ function AdminRecipeCreatePage() {
   useEffect(() => {
     async function fetchCurrentUser() {
       try {
-<<<<<<< HEAD
-        const token =
-          localStorage.getItem('accessToken') ?? localStorage.getItem('token');
-
-        if (!token) {
-          return;
-        }
-
-        const response = await fetch(`${API_URL}/api/users/me`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          return;
-        }
-
-=======
         const response = await apiFetch('/api/profile');
         if (!response.ok) return;
->>>>>>> source/main
         const data = await response.json();
         setCurrentUser(data.user ?? data);
       } catch (error) {
@@ -187,22 +163,7 @@ function AdminRecipeCreatePage() {
     setErrorMessage('');
     setSuccessMessage('');
 
-<<<<<<< HEAD
-    const token =
-      localStorage.getItem('accessToken') ?? localStorage.getItem('token');
-
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-    };
-
-    if (token) {
-      headers.Authorization = `Bearer ${token}`;
-    }
-
-    const response = await fetch(`${API_URL}/api/admin/recipes`, {
-=======
     const response = await apiFetch('/api/admin/recipes', {
->>>>>>> source/main
       method: 'POST',
       body: JSON.stringify({
         title,

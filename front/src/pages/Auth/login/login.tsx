@@ -55,30 +55,6 @@ navigate('/');
     }
   };
 
-<<<<<<< HEAD
-  async function fetcher() {
-    const response = await fetch(`${API_URL}/api/profile`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Internal error');
-    }
-    const data = await response.json();
-    localStorage.setItem('User', JSON.stringify(data));
-  }
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      fetcher();
-    }
-  }, [handleSubmit]);
-
-=======
->>>>>>> source/main
   return (
     <div className="auth-container">
       <div className="auth-card">

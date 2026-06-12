@@ -63,12 +63,7 @@ body.has-background::before {
   z-index: -2;
 }
 
-<<<<<<< HEAD
 body::after {
-=======
-/* assombrissment du background */
-body.has-background::after {
->>>>>>> source/main
   content: '';
   position: fixed;
   inset: 0;
@@ -79,10 +74,7 @@ body.has-background::after {
 /* Mobile-first : padding progressif selon la taille d'écran */
 main {
   margin-top: 120px;
-<<<<<<< HEAD
   padding-inline: 1rem;
-=======
->>>>>>> source/main
   min-width: 0;
   flex: 1;
 }
@@ -143,10 +135,7 @@ h2 {
 }
 
 p {
-<<<<<<< HEAD
   font-family: var(--sans);
-=======
->>>>>>> source/main
   margin: 0;
 }
 

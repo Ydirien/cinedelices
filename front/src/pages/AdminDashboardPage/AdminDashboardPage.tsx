@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './AdminDashboardPage.css';
-<<<<<<< HEAD
-import { API_URL } from '../../constants';
-=======
 import { apiFetch } from '../../lib/apiClient';
->>>>>>> source/main
 
 type AdminStats = {
   totalRecipes: number;
@@ -41,22 +37,9 @@ function AdminDashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
-<<<<<<< HEAD
-  function getAuthHeaders(): Record<string, string> {
-    const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
-    return token ? { Authorization: `Bearer ${token}` } : {};
-  }
-
-  async function fetchDashboard() {
-    try {
-      const response = await fetch(`${API_URL}/api/admin/dashboard`, {
-        headers: getAuthHeaders(),
-      });
-=======
   async function fetchDashboard() {
     try {
       const response = await apiFetch('/api/admin/dashboard');
->>>>>>> source/main
 
       if (!response.ok) {
         throw new Error('Erreur lors du chargement du dashboard');
@@ -76,11 +59,7 @@ function AdminDashboardPage() {
   }, []);
 
   async function handleApproveRecipe(id: number) {
-<<<<<<< HEAD
-    await fetch(`${API_URL}/api/admin/recipes/${id}/state`, {
-=======
     const response = await apiFetch(`/api/admin/recipes/${id}/state`, {
->>>>>>> source/main
       method: 'PATCH',
       body: JSON.stringify({ state: 'APPROVED' }),
     });
@@ -100,19 +79,12 @@ function AdminDashboardPage() {
       return;
     }
 
-<<<<<<< HEAD
-    await fetch(`${API_URL}/api/admin/recipes/${id}`, {
-      method: 'DELETE',
-      headers: getAuthHeaders(),
-    });
-=======
-      const response = await apiFetch(`/api/admin/recipes/${id}`, { method: 'DELETE' });
+    const response = await apiFetch(`/api/admin/recipes/${id}`, { method: 'DELETE' });
 
     if (!response.ok) {
       setErrorMessage('Impossible de supprimer cette recette.');
       return;
     }
->>>>>>> source/main
 
     fetchDashboard();
   }

@@ -2,13 +2,9 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Pagination from '../../components/Pagination/Pagination';
 import './AdminRecipesPage.css';
-<<<<<<< HEAD
-import { API_URL } from '../../constants';
-=======
 import { apiFetch } from '../../lib/apiClient';
 
 const LIMIT = 10;
->>>>>>> source/main
 
 // Je définis les différents statuts possibles pour une recette
 type RecipeState = 'PENDING' | 'APPROVED' | 'REJECTED';
@@ -58,21 +54,6 @@ function AdminRecipesPage() {
   // Je stocke ici un éventuel message d'erreur
   const [errorMessage, setErrorMessage] = useState('');
 
-<<<<<<< HEAD
-  // Je récupère l'URL de base de l'API depuis le fichier .env
-  // Si elle n'existe pas, j'utilise l'URL locale par défaut
-  function getAuthHeaders(): Record<string, string> {
-    const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
-    return token ? { Authorization: `Bearer ${token}` } : {};
-  }
-
-  // Fonction qui va chercher toutes les recettes côté admin
-  async function fetchRecipes() {
-    try {
-      const response = await fetch(`${API_URL}/api/admin/recipes`, {
-        headers: getAuthHeaders(),
-      });
-=======
   // Pagination : page courante et nombre total de pages renvoyé par l'API
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -84,7 +65,6 @@ function AdminRecipesPage() {
       const response = await apiFetch(
         `/api/admin/recipes?page=${page}&limit=${LIMIT}`,
       );
->>>>>>> source/main
 
       // Si la réponse n'est pas correcte, je déclenche une erreur
       if (!response.ok) {
@@ -123,11 +103,7 @@ function AdminRecipesPage() {
       return;
     }
 
-<<<<<<< HEAD
-    const response = await fetch(`${API_URL}/api/admin/recipes/${id}`, {
-=======
     const response = await apiFetch(`/api/admin/recipes/${id}`, {
->>>>>>> source/main
       method: 'DELETE',
     });
 
@@ -143,11 +119,7 @@ function AdminRecipesPage() {
 
   // Fonction qui permet de valider une recette depuis la liste admin
   async function handleApproveRecipe(id: number) {
-<<<<<<< HEAD
-    const response = await fetch(`${API_URL}/api/admin/recipes/${id}/state`, {
-=======
     const response = await apiFetch(`/api/admin/recipes/${id}/state`, {
->>>>>>> source/main
       method: 'PATCH',
       body: JSON.stringify({ state: 'APPROVED' }),
     });

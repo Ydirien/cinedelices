@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import './AdminRecipeDetailPage.css';
-<<<<<<< HEAD
-import { API_URL } from '../../constants';
-=======
 import { apiFetch } from '../../lib/apiClient';
->>>>>>> source/main
 
 type RecipeState = 'PENDING' | 'APPROVED' | 'REJECTED';
 type Difficulty = 'EASY' | 'MEDIUM' | 'HARD';
@@ -68,23 +64,9 @@ function AdminRecipeDetailPage() {
     state: true,
   });
 
-<<<<<<< HEAD
-  function getAuthHeaders(): Record<string, string> {
-    const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
-    return token ? { Authorization: `Bearer ${token}` } : {};
-  }
-
-  // Je récupère les informations complètes d'une recette
-  async function fetchRecipe() {
-    try {
-      const response = await fetch(`${API_URL}/api/admin/recipes/${id}`, {
-        headers: getAuthHeaders(),
-      });
-=======
   async function fetchRecipe() {
     try {
       const response = await apiFetch(`/api/admin/recipes/${id}`);
->>>>>>> source/main
 
       if (!response.ok) {
         throw new Error('Erreur lors du chargement de la recette');
@@ -291,11 +273,7 @@ function AdminRecipeDetailPage() {
         content: step.content,
       })) ?? [];
 
-<<<<<<< HEAD
-    const response = await fetch(`${API_URL}/api/admin/recipes/${recipe.id}`, {
-=======
     const response = await apiFetch(`/api/admin/recipes/${recipe.id}`, {
->>>>>>> source/main
       method: 'PUT',
       body: JSON.stringify({
         title: recipe.title,
@@ -326,26 +304,10 @@ function AdminRecipeDetailPage() {
       return;
     }
 
-<<<<<<< HEAD
-    const response = await fetch(
-      `${API_URL}/api/admin/recipes/${recipe.id}/state`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          ...getAuthHeaders(),
-        },
-        body: JSON.stringify({
-          state: newState,
-        }),
-      },
-    );
-=======
     const response = await apiFetch(`/api/admin/recipes/${recipe.id}/state`, {
       method: 'PATCH',
       body: JSON.stringify({ state: newState }),
     });
->>>>>>> source/main
 
     if (!response.ok) {
       setSuccessPopupMessage('');
@@ -383,11 +345,7 @@ function AdminRecipeDetailPage() {
       return;
     }
 
-<<<<<<< HEAD
-    const response = await fetch(`${API_URL}/api/admin/recipes/${recipe.id}`, {
-=======
     const response = await apiFetch(`/api/admin/recipes/${recipe.id}`, {
->>>>>>> source/main
       method: 'DELETE',
     });
 

@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./createRecipe.css";
-<<<<<<< HEAD
-import { API_URL } from "../../constants";
-=======
 import { apiFetch } from "../../lib/apiClient";
->>>>>>> source/main
 
 export default function CreateRecipe() {
   const [title, setTitle] = useState("");
@@ -64,15 +60,7 @@ export default function CreateRecipe() {
   );
 
   useEffect(() => {
-<<<<<<< HEAD
-    fetch(`${API_URL}/api/works`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-=======
     apiFetch("/api/works")
->>>>>>> source/main
       .then((r) => r.json())
       .then((data) => setWorks(data));
   }, []);
@@ -202,17 +190,7 @@ export default function CreateRecipe() {
       formData.append("thematics", JSON.stringify([selectedThematicId]));
       if (image) formData.append("image", image);
 
-<<<<<<< HEAD
-      const res = await fetch(`${API_URL}/api/works`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-        body: formData,
-      });
-=======
       const res = await apiFetch("/api/works", { method: "POST", body: formData });
->>>>>>> source/main
 
       if (!res.ok) {
         const err = await res.json();
@@ -289,37 +267,7 @@ export default function CreateRecipe() {
       formData.append("thematics", JSON.stringify([selectedThematicId]));
       if (image) formData.append("image", image);
 
-<<<<<<< HEAD
-      formData.append(
-        "recipeIngredients",
-        JSON.stringify(
-          ingredients.map(() => ({
-            ingredientId: 1,
-            quantity: 1,
-            unit: "pièce(s)",
-          }))
-        )
-      );
-
-      formData.append(
-        "thematics",
-        JSON.stringify([selectedThematicId])
-      );
-
-      if (image) {
-        formData.append("image", image);
-      }
-
-      const response = await fetch(`${API_URL}/api/recipes`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-        body: formData,
-      });
-=======
       const response = await apiFetch("/api/recipes", { method: "POST", body: formData });
->>>>>>> source/main
 
       if (!response.ok) {
         const err = await response.json();

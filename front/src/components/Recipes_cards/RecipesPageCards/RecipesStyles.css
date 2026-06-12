@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-/* ============================================================
-   RecipesStyles — cartes recettes, mobile-first
-   ============================================================ */
-
-/* Grille — 1 colonne sur mobile */
-=======
 
 /* ============================================================
    RECIPES STYLES
@@ -15,7 +8,7 @@
    GRID
 ========================= */
 
->>>>>>> source/main
+
 .RecipesGrid {
   display: grid;
   grid-template-columns: 1fr;
@@ -28,60 +21,12 @@
    CARD
 ========================= */
 
-<<<<<<< HEAD
-/* 480px+ : auto-fill avec min 260px */
-@media (min-width: 480px) {
-  .RecipesGrid {
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.25rem;
-    padding: 0.75rem;
-  }
-}
-
-/* 1024px+ */
-@media (min-width: 1024px) {
-  .RecipesGrid {
-    gap: 1.5rem;
-    padding: 1rem;
-  }
-}
-
-/* Conteneur image */
-.RecipeIMG {
-  width: 100%;
-  height: 200px;
-  flex-shrink: 0;
-  overflow: hidden;
-}
-
-/* Carte */
-=======
->>>>>>> source/main
 .RecipesPCard {
   display: flex;
   flex-direction: column;
 
   height: fit-content;
   overflow: hidden;
-<<<<<<< HEAD
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.RecipesPCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 40px rgba(48, 80, 46, 0.5);
-  border-color: #d4a017;
-  border-width: 2px;
-}
-
-.RecipesPCard:hover h3,
-.RecipesPCard:hover h2,
-.RecipesPCard:hover h4 {
-  color: #d4a017;
-}
-
-/* Lien organisateur */
-=======
 
   background: rgba(26, 26, 26, 0.92);
 
@@ -111,7 +56,7 @@
    LINK
 ========================= */
 
->>>>>>> source/main
+
 .RecipesPCard a {
   display: flex;
   flex: 1;
@@ -137,25 +82,11 @@
   overflow: hidden;
 }
 
-<<<<<<< HEAD
-/* Image */
-=======
->>>>>>> source/main
 .recetteImage {
   width: 100%;
   height: 100%;
 
   object-fit: cover;
-<<<<<<< HEAD
-  transition: transform 0.3s ease;
-}
-
-.RecipesPCard:hover .recetteImage {
-  transform: scale(1.03);
-}
-
-/* Zone texte */
-=======
 
   transition: transform 0.35s ease;
 }
@@ -168,7 +99,6 @@
 /* =========================
    CONTENT
 ========================= */
->>>>>>> source/main
 .Content-Info {
   display: flex;
   flex: 1;
@@ -191,23 +121,6 @@
   justify-content: space-between;
 
   min-width: 0;
-<<<<<<< HEAD
-  flex: 1;
-  padding: 0.875rem;
-}
-
-/* Bloc titre + œuvre + note */
-.Recipe-Info {
-  line-height: normal;
-  display: flex;
-  flex-direction: column;
-  margin-top: auto;
-  gap: 2px;
-}
-
-/* Titre */
-.Recipe-Info h3 {
-=======
   padding: 1rem;
   text-align: start;
 }
@@ -219,13 +132,9 @@
 .Recipe-Info h3,
 .Recipe-Info h4,
 .RecipesPCard p {
->>>>>>> source/main
   margin: 0;
 
   color: var(--quaternary-color);
-<<<<<<< HEAD
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
-=======
 
   transition: color 0.25s ease;
 }
@@ -250,27 +159,16 @@
   font-size: clamp(1.05rem, 2vw, 1.35rem);
   font-weight: 500;
 
->>>>>>> source/main
   line-height: 1.2;
   transition: color 0.2s ease;
 }
 
-<<<<<<< HEAD
-/* Nom de l'œuvre */
-.Recipe-Info h4 {
-  color: var(--quaternary-color);
-  margin: 0;
-  font-size: clamp(0.8rem, 2vw, 0.95rem);
-  opacity: 0.8;
-  transition: color 0.2s ease;
-=======
 /* Sous-titre */
 .Recipe-Info h4 {
   font-size: clamp(0.85rem, 1.5vw, 1rem);
 
   opacity: 0.8;
   font-weight: 300;
->>>>>>> source/main
 }
 
 /* =========================
@@ -278,21 +176,6 @@
 ========================= */
 
 .Recipe-Info .Rating {
-<<<<<<< HEAD
-  margin-top: 6px;
-  display: flex;
-  flex-direction: row;
-  gap: 6px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-/* Texte générique */
-.RecipesPCard p {
-  color: var(--quaternary-color);
-  margin: 0;
-  font-size: 0.85rem;
-=======
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -305,7 +188,6 @@
 .RecipesPCard p {
   font-size: 0.95rem;
   line-height: 1.4;
->>>>>>> source/main
 }
 
 /* Tablette / Desktop */

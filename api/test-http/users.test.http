@@ -1,0 +1,224 @@
+# =============================================================
+# Tests HTTP — Profil utilisateur
+# =============================================================
+# ⚠️  Connectez-vous via auth.test.http (POST /login) puis
+#     copiez l'accessToken dans la variable ci-dessous.
+# =============================================================
+
+@baseUrl      = http://localhost:3010/api
+@accessToken  = REMPLACER_PAR_LE_ACCESS_TOKEN
+
+
+### ────────────────────────────────────────────────────────────
+### PROFIL
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — retourne les données du profil (sans le mot de passe)
+GET {{baseUrl}}/profile
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ❌ 401 — pas de token
+GET {{baseUrl}}/profile
+
+
+### ────────────────────────────────────────────────────────────
+### MISE À JOUR DU PROFIL
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — modifier le username
+PUT {{baseUrl}}/profile
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "username": "nouveau_username"
+}
+
+###
+
+# ✅ 200 — modifier l'email
+PUT {{baseUrl}}/profile
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "email": "nouvel.email@example.com"
+}
+
+###
+
+# ✅ 200 — modifier username et email en même temps
+PUT {{baseUrl}}/profile
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "username": "nouveau_username",
+  "email": "nouvel.email@example.com"
+}
+
+###
+
+# ❌ 400 — body vide (aucun champ fourni)
+PUT {{baseUrl}}/profile
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{}
+
+###
+
+# ❌ 409 — email déjà utilisé par un autre compte
+PUT {{baseUrl}}/profile
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "email": "email.deja.utilise@example.com"
+}
+
+###
+
+# ❌ 401 — pas de token
+PUT {{baseUrl}}/profile
+Content-Type: application/json
+
+{
+  "username": "quelquechose"
+}
+
+
+### ────────────────────────────────────────────────────────────
+### CHANGEMENT DE MOT DE PASSE
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — changement réussi
+PATCH {{baseUrl}}/profile/password
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "currentPassword": "TestPassword123",
+  "newPassword": "NouveauMotDePasse123",
+  "confirm": "NouveauMotDePasse123"
+}
+
+###
+
+# ❌ 401 — mauvais mot de passe actuel
+PATCH {{baseUrl}}/profile/password
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "currentPassword": "MauvaisMotDePasse000",
+  "newPassword": "NouveauMotDePasse123",
+  "confirm": "NouveauMotDePasse123"
+}
+
+###
+
+# ❌ 400 — nouveau mot de passe trop faible (pas de majuscule, pas de chiffre)
+PATCH {{baseUrl}}/profile/password
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "currentPassword": "TestPassword123",
+  "newPassword": "faible",
+  "confirm": "faible"
+}
+
+###
+
+# ❌ 400 — les nouveaux mots de passe ne correspondent pas
+PATCH {{baseUrl}}/profile/password
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "currentPassword": "TestPassword123",
+  "newPassword": "NouveauMotDePasse123",
+  "confirm": "AutreMotDePasse456"
+}
+
+###
+
+# ❌ 401 — pas de token
+PATCH {{baseUrl}}/profile/password
+Content-Type: application/json
+
+{
+  "currentPassword": "TestPassword123",
+  "newPassword": "NouveauMotDePasse123",
+  "confirm": "NouveauMotDePasse123"
+}
+
+
+### ────────────────────────────────────────────────────────────
+### RECETTES DE L'UTILISATEUR CONNECTÉ
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — toutes les recettes (PENDING, APPROVED, REJECTED)
+GET {{baseUrl}}/profile/recipes
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ✅ 200 — filtrer par état PENDING
+GET {{baseUrl}}/profile/recipes?state=PENDING
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ✅ 200 — filtrer par état APPROVED avec pagination
+GET {{baseUrl}}/profile/recipes?state=APPROVED&page=1&limit=5
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ✅ 200 — filtrer par état REJECTED
+GET {{baseUrl}}/profile/recipes?state=REJECTED
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ❌ 401 — pas de token
+GET {{baseUrl}}/profile/recipes
+
+
+### ────────────────────────────────────────────────────────────
+### RECETTES LIKÉES
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — liste des recettes likées par l'utilisateur
+GET {{baseUrl}}/profile/likes
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ✅ 200 — avec pagination
+GET {{baseUrl}}/profile/likes?page=1&limit=5
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ❌ 401 — pas de token
+GET {{baseUrl}}/profile/likes
+
+
+### ────────────────────────────────────────────────────────────
+### SUPPRESSION DU COMPTE
+### ────────────────────────────────────────────────────────────
+
+# ⚠️  ATTENTION : supprime définitivement le compte et toutes ses recettes
+# ✅ 204 — compte supprimé
+DELETE {{baseUrl}}/profile
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ❌ 401 — pas de token
+DELETE {{baseUrl}}/profile

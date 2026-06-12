@@ -1,5 +1,89 @@
-### GET All works
-GET http://localhost:3010/api/works
+# =============================================================
+# Tests HTTP — Œuvres (films, séries, animes…)
+# =============================================================
 
-### GET One work by ID
-GET http://localhost:3010/api/works/3
+@baseUrl = http://localhost:3010/api
+@workId  = 1
+
+
+### ────────────────────────────────────────────────────────────
+### LISTE DES ŒUVRES
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — toutes les œuvres
+GET {{baseUrl}}/works
+
+###
+
+# ✅ 200 — filtrer par catégorie (nom de la catégorie en query string)
+GET {{baseUrl}}/works?category=Anime
+
+###
+
+# ✅ 200 — autre filtre de catégorie
+GET {{baseUrl}}/works?category=Film
+
+
+### ────────────────────────────────────────────────────────────
+### DÉTAIL D'UNE ŒUVRE
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — détail d'une œuvre par ID
+GET {{baseUrl}}/works/{{workId}}
+
+###
+
+# ❌ 404 — id inexistant
+GET {{baseUrl}}/works/99999
+
+
+### ────────────────────────────────────────────────────────────
+### CRÉER UNE ŒUVRE (multipart/form-data)
+### ────────────────────────────────────────────────────────────
+# Note : categoryId peut être un entier ou un tableau d'entiers.
+
+# ✅ 201 — œuvre créée
+POST {{baseUrl}}/works
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="title"
+
+Le Voyage de Chihiro
+------WebKitFormBoundary
+Content-Disposition: form-data; name="releaseYear"
+
+2001
+------WebKitFormBoundary
+Content-Disposition: form-data; name="synopsis"
+
+Chihiro, une fillette de 10 ans, se retrouve dans un monde fantastique peuplé de dieux et d'esprits. Pour sauver ses parents transformés en cochons, elle doit travailler dans des thermes magiques.
+------WebKitFormBoundary
+Content-Disposition: form-data; name="categoryId"
+
+1
+------WebKitFormBoundary--
+
+###
+
+# ✅ 201 — autre exemple d'œuvre
+POST {{baseUrl}}/works
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="title"
+
+Ratatouille
+------WebKitFormBoundary
+Content-Disposition: form-data; name="releaseYear"
+
+2007
+------WebKitFormBoundary
+Content-Disposition: form-data; name="synopsis"
+
+Rémy, un rat au palais raffiné, rêve de devenir chef cuisinier dans un grand restaurant parisien. Il noue une improbable alliance avec Linguini, un jeune apprenti maladroit.
+------WebKitFormBoundary
+Content-Disposition: form-data; name="categoryId"
+
+1
+------WebKitFormBoundary--

@@ -82,7 +82,6 @@ function Header({ logoMain }: HeaderProps) {
         <nav className="navbar-links">
           <NavLink to="/recettes">Recettes</NavLink>
         </nav>
-        <div className="SearchBar-Header"></div>
         {showMobileSearch && <SearchBar />}
         <div className="navbar-actions">
           <button className="btn-create">Créer une recette</button>

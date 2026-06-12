@@ -9,6 +9,13 @@ h2 {
   }
 }
 
+.showmore
+{
+  background: none;
+  border: none;
+  color: var(--quinary-color);
+}
+
 /* --- MOBILE --- */
 
 .RecipeOfTheDay-container {

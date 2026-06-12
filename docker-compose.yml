@@ -46,7 +46,7 @@ services:
   front:
     build:
       context: ./front
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: cine_delices_front
     restart: always
     ports:

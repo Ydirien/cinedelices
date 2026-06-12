@@ -3,6 +3,12 @@ h2 {
   color: var(--quaternary-color);
 }
 
+.reco-container{
+  a{
+    text-decoration: none;
+  }
+}
+
 /* --- MOBILE --- */
 
 .RecipeOfTheDay-container {

@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Pagination from '../../components/Pagination/Pagination';
 import './AdminRecipesPage.css';
+
+const LIMIT = 10;
 
 // Je définis les différents statuts possibles pour une recette
 type RecipeState = 'PENDING' | 'APPROVED' | 'REJECTED';
@@ -50,6 +53,10 @@ function AdminRecipesPage() {
   // Je stocke ici un éventuel message d'erreur
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Pagination : page courante et nombre total de pages renvoyé par l'API
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   // Je récupère l'URL de base de l'API depuis le fichier .env
   // Si elle n'existe pas, j'utilise l'URL locale par défaut
   const apiBaseUrl =
@@ -60,12 +67,15 @@ function AdminRecipesPage() {
     return token ? { Authorization: `Bearer ${token}` } : {};
   }
 
-  // Fonction qui va chercher toutes les recettes côté admin
-  async function fetchRecipes() {
+  // Fonction qui va chercher les recettes côté admin pour une page donnée
+  async function fetchRecipes(page: number) {
     try {
-      const response = await fetch(`${apiBaseUrl}/admin/recipes`, {
-        headers: getAuthHeaders(),
-      });
+      setIsLoading(true);
+
+      const response = await fetch(
+        `${apiBaseUrl}/admin/recipes?page=${page}&limit=${LIMIT}`,
+        { headers: getAuthHeaders() },
+      );
 
       // Si la réponse n'est pas correcte, je déclenche une erreur
       if (!response.ok) {
@@ -74,8 +84,9 @@ function AdminRecipesPage() {
 
       const data: AdminRecipesResponse = await response.json();
 
-      // Je mets à jour le state avec les recettes reçues
+      // Je mets à jour le state avec les recettes reçues et les infos de pagination
       setRecipes(data.data);
+      setTotalPages(data.totalPages);
     } catch (error) {
       setErrorMessage('Impossible de charger les recettes.');
     } finally {
@@ -84,10 +95,15 @@ function AdminRecipesPage() {
     }
   }
 
-  // Au chargement de la page, je récupère automatiquement les recettes
+  // Au chargement de la page (et à chaque changement de page), je récupère les recettes
   useEffect(() => {
-    fetchRecipes();
-  }, []);
+    fetchRecipes(currentPage);
+  }, [currentPage]);
+
+  // Change de page et remonte en haut du tableau
+  function handlePageChange(page: number) {
+    setCurrentPage(page);
+  }
 
   // Fonction qui permet de supprimer une recette
   async function handleDeleteRecipe(id: number) {
@@ -108,11 +124,9 @@ function AdminRecipesPage() {
       return;
     }
 
-    // Je retire directement la recette supprimée de l'affichage
-    // Cela évite de devoir recharger toute la page
-    setRecipes((currentRecipes) =>
-      currentRecipes.filter((recipe) => recipe.id !== id),
-    );
+    // Je recharge la page courante pour garder la pagination cohérente
+    // (ex: dernier élément d'une page supprimé -> totalPages change)
+    fetchRecipes(currentPage);
   }
 
   // Fonction qui permet de valider une recette depuis la liste admin
@@ -246,6 +260,12 @@ function AdminRecipesPage() {
           </tbody>
         </table>
       </section>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </main>
   );
 }

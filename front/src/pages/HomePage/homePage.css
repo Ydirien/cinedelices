@@ -6,13 +6,14 @@ h2 {
 /* --- MOBILE --- */
 
 .RecipeOfTheDay-container {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 
   background: rgba(26, 26, 26, 0.603);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   border: 1.8px solid rgb(46, 46, 46);
-  
 
   /* MODIFICATION ICI : On donne une vraie hauteur fixe/mini en mobile */
   min-height: 250px;
@@ -38,7 +39,6 @@ h2 {
     width: 100%;
     height: 100%;
     object-fit: cover; /* Remplit et recadre le conteneur sans déformer l'image */
-    
   }
 
   p {
@@ -203,8 +203,9 @@ h2 {
   }
 
   .RecipeOfTheDay-container {
-    display:flex;
-    flex-direction:row-reverse;
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
     background: rgba(26, 26, 26, 0.603);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -223,7 +224,7 @@ h2 {
     }
 
     .RecipeOfTheDayImg {
-      width:100%;
+      width: 100%;
       height: 500px;
       object-fit: cover;
       border-radius: 16px;
@@ -236,17 +237,15 @@ h2 {
     }
 
     .Recipe-Info {
-      
       text-align: start;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       height: calc(100% - 40px);
+      width: 55%;
     }
 
-    p {
-      color: var(--quaternary-color);
-    }
+    
   }
 
   .reco-container {

@@ -1,13 +1,13 @@
 # =============================================================
-# Tests HTTP — Thématiques (types)
+# Tests HTTP — Catégories
 # =============================================================
 
 @baseUrl = http://localhost:3010/api
 
 
 ### ────────────────────────────────────────────────────────────
-### THÉMATIQUES
+### CATÉGORIES
 ### ────────────────────────────────────────────────────────────
 
-# ✅ 200 — liste toutes les thématiques (Français, Italien, Végétarien…)
-GET {{baseUrl}}/types
+# ✅ 200 — liste toutes les catégories (Anime, Film, Série…)
+GET {{baseUrl}}/categories

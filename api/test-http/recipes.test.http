@@ -1,8 +1,299 @@
-### GET all recipes
-GET http://localhost:3010/api/recipes
+# =============================================================
+# Tests HTTP — Recettes
+# =============================================================
+# ⚠️  Pour les routes authentifiées, connectez-vous via
+#     auth.test.http et copiez l'accessToken ci-dessous.
+#
+# Adaptez @recipeId et @commentId selon les IDs réels en base.
+# =============================================================
 
-### GET a single recipe by ID
-GET http://localhost:3010/api/recipes/2
+@baseUrl      = http://localhost:3010/api
+@accessToken  = REMPLACER_PAR_LE_ACCESS_TOKEN
+@recipeId     = 1
+@commentId    = 1
 
-### GET a search for recipes by name
-GET http://localhost:3010/api/recipes/search?q=miel
+
+### ────────────────────────────────────────────────────────────
+### LISTE DES RECETTES (publique, APPROVED uniquement)
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — liste paginée (page 1, limit 10 par défaut)
+GET {{baseUrl}}/recipes
+
+###
+
+# ✅ 200 — avec pagination explicite
+GET {{baseUrl}}/recipes?page=1&limit=5
+
+###
+
+# ✅ 200 — filtrer par difficulté
+GET {{baseUrl}}/recipes?difficulty=EASY
+
+###
+
+# ✅ 200 — filtrer par catégorie (categoryId)
+GET {{baseUrl}}/recipes?category=1
+
+###
+
+# ✅ 200 — filtrer par œuvre (workId)
+GET {{baseUrl}}/recipes?workId=1
+
+###
+
+# ✅ 200 — filtrer par thématique
+GET {{baseUrl}}/recipes?thematic=1
+
+###
+
+# ✅ 200 — combinaison de filtres
+GET {{baseUrl}}/recipes?difficulty=MEDIUM&page=1&limit=5
+
+
+### ────────────────────────────────────────────────────────────
+### RECHERCHE DE RECETTES
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — recherche par mot-clé (titre, description, nom de l'œuvre)
+GET {{baseUrl}}/recipes/search?q=carbonara
+
+###
+
+# ✅ 200 — terme avec espace (encodé automatiquement par le client)
+GET {{baseUrl}}/recipes/search?q=voyage chihiro
+
+###
+
+# ❌ 400 — paramètre q absent
+GET {{baseUrl}}/recipes/search
+
+
+### ────────────────────────────────────────────────────────────
+### DÉTAIL D'UNE RECETTE
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — recette approuvée (sans token, isLiked absent)
+GET {{baseUrl}}/recipes/{{recipeId}}
+
+###
+
+# ✅ 200 — avec token : isLiked est inclus dans la réponse
+GET {{baseUrl}}/recipes/{{recipeId}}
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ❌ 404 — id inexistant
+GET {{baseUrl}}/recipes/99999
+
+
+### ────────────────────────────────────────────────────────────
+### CRÉER UNE RECETTE (multipart/form-data — état PENDING)
+### ────────────────────────────────────────────────────────────
+# Les champs steps, recipeIngredients et thematics sont des JSON stringifiés.
+# Le champ image est optionnel (peut être une URL ou un fichier uploadé).
+
+# ✅ 201 — recette créée (état PENDING, en attente de modération)
+POST {{baseUrl}}/recipes
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="title"
+
+Carbonara de Chihiro
+------WebKitFormBoundary
+Content-Disposition: form-data; name="description"
+
+Les pâtes à la carbonara telles que Chihiro les aurait cuisinées aux thermes.
+------WebKitFormBoundary
+Content-Disposition: form-data; name="prepTime"
+
+20
+------WebKitFormBoundary
+Content-Disposition: form-data; name="cookTime"
+
+15
+------WebKitFormBoundary
+Content-Disposition: form-data; name="servings"
+
+4
+------WebKitFormBoundary
+Content-Disposition: form-data; name="difficulty"
+
+MEDIUM
+------WebKitFormBoundary
+Content-Disposition: form-data; name="workId"
+
+1
+------WebKitFormBoundary
+Content-Disposition: form-data; name="steps"
+
+[{"order":1,"content":"Faire bouillir une grande quantité d'eau salée."},{"order":2,"content":"Faire revenir les lardons à feu vif jusqu'à dorure."},{"order":3,"content":"Dans un bol, mélanger les œufs avec le parmesan râpé."},{"order":4,"content":"Égoutter les pâtes, mélanger hors du feu avec la préparation œufs-fromage."}]
+------WebKitFormBoundary
+Content-Disposition: form-data; name="recipeIngredients"
+
+[{"ingredientId":1,"quantity":200,"unit":"g"},{"ingredientId":2,"quantity":4,"unit":"unités"},{"ingredientId":3,"quantity":100,"unit":"g"}]
+------WebKitFormBoundary
+Content-Disposition: form-data; name="thematics"
+
+[1]
+------WebKitFormBoundary--
+
+###
+
+# ❌ 401 — pas d'authentification
+POST {{baseUrl}}/recipes
+Content-Type: application/json
+
+{
+  "title": "Recette sans auth"
+}
+
+###
+
+# ❌ 409 — titre déjà existant (relancer après un 201 réussi)
+POST {{baseUrl}}/recipes
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="title"
+
+Carbonara de Chihiro
+------WebKitFormBoundary
+Content-Disposition: form-data; name="description"
+
+Doublon du titre.
+------WebKitFormBoundary
+Content-Disposition: form-data; name="prepTime"
+
+10
+------WebKitFormBoundary
+Content-Disposition: form-data; name="cookTime"
+
+10
+------WebKitFormBoundary
+Content-Disposition: form-data; name="servings"
+
+2
+------WebKitFormBoundary
+Content-Disposition: form-data; name="difficulty"
+
+EASY
+------WebKitFormBoundary
+Content-Disposition: form-data; name="workId"
+
+1
+------WebKitFormBoundary
+Content-Disposition: form-data; name="steps"
+
+[{"order":1,"content":"Étape unique."}]
+------WebKitFormBoundary
+Content-Disposition: form-data; name="recipeIngredients"
+
+[{"ingredientId":1,"quantity":50,"unit":"g"}]
+------WebKitFormBoundary
+Content-Disposition: form-data; name="thematics"
+
+[1]
+------WebKitFormBoundary--
+
+
+### ────────────────────────────────────────────────────────────
+### LIKES
+### ────────────────────────────────────────────────────────────
+
+# ✅ 201 — liker une recette
+POST {{baseUrl}}/recipes/{{recipeId}}/like
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ❌ 409 — recette déjà likée
+POST {{baseUrl}}/recipes/{{recipeId}}/like
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ✅ 200 — retirer le like
+DELETE {{baseUrl}}/recipes/{{recipeId}}/like
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ❌ 404 — like inexistant (déjà retiré)
+DELETE {{baseUrl}}/recipes/{{recipeId}}/like
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ❌ 401 — liker sans token
+POST {{baseUrl}}/recipes/{{recipeId}}/like
+
+
+### ────────────────────────────────────────────────────────────
+### COMMENTAIRES
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — lister les commentaires d'une recette (public)
+GET {{baseUrl}}/recipes/{{recipeId}}/comments
+
+###
+
+# ✅ 201 — ajouter un commentaire (1 seul par utilisateur par recette)
+POST {{baseUrl}}/recipes/{{recipeId}}/comments
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "content": "Délicieux ! Recette facile à reproduire chez soi.",
+  "score": 5
+}
+
+###
+
+# ❌ 409 — commentaire déjà posté par cet utilisateur sur cette recette
+POST {{baseUrl}}/recipes/{{recipeId}}/comments
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "content": "Deuxième tentative de commentaire.",
+  "score": 4
+}
+
+###
+
+# ❌ 400 — score hors de [1-5]
+POST {{baseUrl}}/recipes/{{recipeId}}/comments
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "content": "Score invalide.",
+  "score": 6
+}
+
+###
+
+# ❌ 401 — poster un commentaire sans token
+POST {{baseUrl}}/recipes/{{recipeId}}/comments
+Content-Type: application/json
+
+{
+  "content": "Sans authentification.",
+  "score": 3
+}
+
+###
+
+# ✅ 200 — supprimer son propre commentaire (ou admin)
+DELETE {{baseUrl}}/comments/{{commentId}}
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ❌ 401 — supprimer sans token
+DELETE {{baseUrl}}/comments/{{commentId}}

@@ -1,0 +1,406 @@
+# =============================================================
+# Tests HTTP — Administration (rôle ADMIN requis)
+# =============================================================
+# ⚠️  Toutes les routes /admin nécessitent un compte avec le
+#     rôle ADMIN. Connectez-vous via auth.test.http et copiez
+#     le token d'un compte admin dans @adminToken.
+#
+# Adaptez @recipeId et @userId selon les IDs réels en base.
+# =============================================================
+
+@baseUrl    = http://localhost:3010/api
+@adminToken = REMPLACER_PAR_LE_TOKEN_ADMIN
+@recipeId   = 1
+@userId     = 2
+
+
+### ────────────────────────────────────────────────────────────
+### TABLEAU DE BORD
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — statistiques : totaux recettes/users/catégories + 5 dernières PENDING
+GET {{baseUrl}}/admin/dashboard
+Authorization: Bearer {{adminToken}}
+
+###
+
+# ❌ 403 — compte non-admin (remplacez par un token USER)
+GET {{baseUrl}}/admin/dashboard
+Authorization: Bearer REMPLACER_PAR_UN_TOKEN_USER
+
+###
+
+# ❌ 401 — pas de token
+GET {{baseUrl}}/admin/dashboard
+
+
+### ────────────────────────────────────────────────────────────
+### GESTION DES RECETTES — LISTE
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — toutes les recettes (PENDING, APPROVED, REJECTED)
+GET {{baseUrl}}/admin/recipes
+Authorization: Bearer {{adminToken}}
+
+###
+
+# ✅ 200 — filtrer par état PENDING
+GET {{baseUrl}}/admin/recipes?state=PENDING
+Authorization: Bearer {{adminToken}}
+
+###
+
+# ✅ 200 — filtrer par état APPROVED avec pagination
+GET {{baseUrl}}/admin/recipes?state=APPROVED&page=1&limit=5
+Authorization: Bearer {{adminToken}}
+
+###
+
+# ✅ 200 — filtrer par état REJECTED
+GET {{baseUrl}}/admin/recipes?state=REJECTED&page=1&limit=10
+Authorization: Bearer {{adminToken}}
+
+
+### ────────────────────────────────────────────────────────────
+### GESTION DES RECETTES — DÉTAIL
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — détail complet, quel que soit l'état de la recette
+GET {{baseUrl}}/admin/recipes/{{recipeId}}
+Authorization: Bearer {{adminToken}}
+
+###
+
+# ❌ 404 — id inexistant
+GET {{baseUrl}}/admin/recipes/99999
+Authorization: Bearer {{adminToken}}
+
+
+### ────────────────────────────────────────────────────────────
+### GESTION DES RECETTES — CRÉATION (JSON, image = URL)
+### ────────────────────────────────────────────────────────────
+# Contrairement à la route utilisateur, la création admin accepte
+# du JSON. L'image est une URL (champ obligatoire, pas d'upload).
+# L'état par défaut est APPROVED si non spécifié.
+
+# ✅ 201 — recette créée en APPROVED (état par défaut)
+POST {{baseUrl}}/admin/recipes
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "title": "Ratatouille de Rémy",
+  "description": "La ratatouille légendaire du petit chef de Pixar.",
+  "image": "https://upload.wikimedia.org/wikipedia/en/5/5f/Ratatouille_%28film%29.jpg",
+  "prepTime": 30,
+  "cookTime": 45,
+  "servings": 6,
+  "difficulty": "HARD",
+  "workId": 1,
+  "steps": [
+    { "order": 1, "content": "Préchauffer le four à 180°C." },
+    { "order": 2, "content": "Trancher finement tous les légumes en rondelles." },
+    { "order": 3, "content": "Disposer les tranches en colimaçon dans un plat." },
+    { "order": 4, "content": "Enfourner 45 minutes à couvert, puis 15 min à découvert." }
+  ],
+  "recipeIngredients": [
+    { "ingredientId": 1, "quantity": 2, "unit": "pièces" },
+    { "ingredientId": 2, "quantity": 3, "unit": "pièces" }
+  ],
+  "thematics": [1]
+}
+
+###
+
+# ✅ 201 — recette créée en PENDING (pour passer par le circuit de modération)
+POST {{baseUrl}}/admin/recipes
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "title": "Soupe de Totoro",
+  "description": "Une soupe chaude et réconfortante inspirée de Mon Voisin Totoro.",
+  "image": "https://example.com/totoro-soupe.jpg",
+  "prepTime": 15,
+  "cookTime": 25,
+  "servings": 4,
+  "difficulty": "EASY",
+  "state": "PENDING",
+  "workId": 1,
+  "steps": [
+    { "order": 1, "content": "Éplucher et couper les légumes." },
+    { "order": 2, "content": "Faire revenir les oignons." },
+    { "order": 3, "content": "Ajouter le bouillon et laisser mijoter 20 minutes." }
+  ],
+  "recipeIngredients": [
+    { "ingredientId": 1, "quantity": 200, "unit": "g" }
+  ],
+  "thematics": [1]
+}
+
+###
+
+# ❌ 409 — titre déjà existant
+POST {{baseUrl}}/admin/recipes
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "title": "Ratatouille de Rémy",
+  "description": "Doublon.",
+  "image": "https://example.com/doublon.jpg",
+  "prepTime": 10,
+  "cookTime": 10,
+  "servings": 2,
+  "difficulty": "EASY",
+  "workId": 1,
+  "steps": [{ "order": 1, "content": "Étape unique." }],
+  "recipeIngredients": [{ "ingredientId": 1, "quantity": 50, "unit": "g" }],
+  "thematics": [1]
+}
+
+###
+
+# ❌ 403 — utilisateur non-admin
+POST {{baseUrl}}/admin/recipes
+Authorization: Bearer REMPLACER_PAR_UN_TOKEN_USER
+Content-Type: application/json
+
+{
+  "title": "Tentative non autorisée"
+}
+
+
+### ────────────────────────────────────────────────────────────
+### GESTION DES RECETTES — MODIFIER L'ÉTAT
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — approuver une recette PENDING
+PATCH {{baseUrl}}/admin/recipes/{{recipeId}}/state
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "state": "APPROVED"
+}
+
+###
+
+# ✅ 200 — rejeter une recette
+PATCH {{baseUrl}}/admin/recipes/{{recipeId}}/state
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "state": "REJECTED"
+}
+
+###
+
+# ✅ 200 — remettre en attente
+PATCH {{baseUrl}}/admin/recipes/{{recipeId}}/state
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "state": "PENDING"
+}
+
+###
+
+# ❌ 400 — état invalide
+PATCH {{baseUrl}}/admin/recipes/{{recipeId}}/state
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "state": "INVALIDE"
+}
+
+###
+
+# ❌ 404 — recette inexistante
+PATCH {{baseUrl}}/admin/recipes/99999/state
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "state": "APPROVED"
+}
+
+###
+
+# ❌ 403 — non-admin
+PATCH {{baseUrl}}/admin/recipes/{{recipeId}}/state
+Authorization: Bearer REMPLACER_PAR_UN_TOKEN_USER
+Content-Type: application/json
+
+{
+  "state": "APPROVED"
+}
+
+
+### ────────────────────────────────────────────────────────────
+### GESTION DES RECETTES — MODIFICATION (multipart/form-data)
+### ────────────────────────────────────────────────────────────
+# Tous les champs sont optionnels (modification partielle).
+
+# ✅ 200 — modifier uniquement le titre
+PUT {{baseUrl}}/admin/recipes/{{recipeId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="title"
+
+Titre Mis À Jour Par L'Admin
+------WebKitFormBoundary--
+
+###
+
+# ✅ 200 — modifier la description et la difficulté
+PUT {{baseUrl}}/admin/recipes/{{recipeId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="description"
+
+Description mise à jour par l'administrateur.
+------WebKitFormBoundary
+Content-Disposition: form-data; name="difficulty"
+
+EASY
+------WebKitFormBoundary--
+
+###
+
+# ✅ 200 — modifier les étapes
+PUT {{baseUrl}}/admin/recipes/{{recipeId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="steps"
+
+[{"order":1,"content":"Première étape révisée."},{"order":2,"content":"Deuxième étape ajoutée."}]
+------WebKitFormBoundary--
+
+
+### ────────────────────────────────────────────────────────────
+### GESTION DES RECETTES — SUPPRESSION
+### ────────────────────────────────────────────────────────────
+
+# ⚠️  ATTENTION : suppression définitive
+# ✅ 204 — recette supprimée
+DELETE {{baseUrl}}/admin/recipes/{{recipeId}}
+Authorization: Bearer {{adminToken}}
+
+###
+
+# ❌ 404 — recette inexistante
+DELETE {{baseUrl}}/admin/recipes/99999
+Authorization: Bearer {{adminToken}}
+
+
+### ────────────────────────────────────────────────────────────
+### GESTION DES UTILISATEURS — LISTE
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — tous les utilisateurs (sans mot de passe, paginés)
+GET {{baseUrl}}/admin/users
+Authorization: Bearer {{adminToken}}
+
+###
+
+# ✅ 200 — filtrer par rôle USER
+GET {{baseUrl}}/admin/users?role=USER
+Authorization: Bearer {{adminToken}}
+
+###
+
+# ✅ 200 — filtrer par rôle ADMIN avec pagination
+GET {{baseUrl}}/admin/users?role=ADMIN&page=1&limit=5
+Authorization: Bearer {{adminToken}}
+
+
+### ────────────────────────────────────────────────────────────
+### GESTION DES UTILISATEURS — MODIFIER LE RÔLE
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — promouvoir en ADMIN
+PATCH {{baseUrl}}/admin/users/{{userId}}/role
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "role": "ADMIN"
+}
+
+###
+
+# ✅ 200 — rétrograder en USER
+PATCH {{baseUrl}}/admin/users/{{userId}}/role
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "role": "USER"
+}
+
+###
+
+# ❌ 400 — rôle invalide
+PATCH {{baseUrl}}/admin/users/{{userId}}/role
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "role": "SUPERADMIN"
+}
+
+###
+
+# ❌ 409 — impossible de modifier son propre rôle
+# (remplacez {{userId}} par l'ID de l'admin connecté)
+PATCH {{baseUrl}}/admin/users/MON_PROPRE_ID/role
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "role": "USER"
+}
+
+###
+
+# ❌ 404 — utilisateur inexistant
+PATCH {{baseUrl}}/admin/users/99999/role
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "role": "ADMIN"
+}
+
+
+### ────────────────────────────────────────────────────────────
+### GESTION DES UTILISATEURS — SUPPRESSION
+### ────────────────────────────────────────────────────────────
+
+# ⚠️  ATTENTION : supprime l'utilisateur et toutes ses recettes (cascade)
+# ✅ 204 — utilisateur supprimé
+DELETE {{baseUrl}}/admin/users/{{userId}}
+Authorization: Bearer {{adminToken}}
+
+###
+
+# ❌ 409 — impossible de supprimer son propre compte
+# (remplacez par l'ID de l'admin connecté)
+DELETE {{baseUrl}}/admin/users/MON_PROPRE_ID
+Authorization: Bearer {{adminToken}}
+
+###
+
+# ❌ 404 — utilisateur inexistant
+DELETE {{baseUrl}}/admin/users/99999
+Authorization: Bearer {{adminToken}}

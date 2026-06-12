@@ -1,16 +1,257 @@
-### Register a profile
-POST http://localhost:3000/api/register
+# =============================================================
+# Tests HTTP — Authentification
+# =============================================================
+# Serveur local : http://localhost:3000  (npm run dev)
+# Serveur Docker : http://localhost:3010 (docker compose)
+#
+# ⚠️  Workflow recommandé :
+#   1. Lancez POST /login ci-dessous
+#   2. Copiez l'accessToken et le refreshToken dans les variables
+# =============================================================
+
+@baseUrl = http://localhost:3010/api
+@email    = test@cinedelices.com
+@password = TestPassword123
+@accessToken  = REMPLACER_PAR_LE_ACCESS_TOKEN
+@refreshToken = REMPLACER_PAR_LE_REFRESH_TOKEN
+
+
+### ────────────────────────────────────────────────────────────
+### REGISTER
+### ────────────────────────────────────────────────────────────
+
+# ✅ 201 — inscription réussie
+POST {{baseUrl}}/register
 Content-Type: application/json
+
 {
-  "name": "John Doe",
-  "email": "john@example.com",
-  "password": "Secret123!"
+  "username": "testuser",
+  "email": "{{email}}",
+  "password": "{{password}}",
+  "confirm": "{{password}}"
 }
 
-### Connect to a profile
-POST http://localhost:3000/api/login
+###
+
+# ❌ 400 — mot de passe trop court (min 12 caractères)
+POST {{baseUrl}}/register
 Content-Type: application/json
+
 {
-  "email": "john@example.com",
-  "password": "Secret123!"
+  "username": "testuser",
+  "email": "court@example.com",
+  "password": "Court1",
+  "confirm": "Court1"
+}
+
+###
+
+# ❌ 400 — aucune majuscule dans le mot de passe
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "nouppercase@example.com",
+  "password": "motdepasse123456",
+  "confirm": "motdepasse123456"
+}
+
+###
+
+# ❌ 400 — mots de passe différents
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "mismatch@example.com",
+  "password": "TestPassword123",
+  "confirm": "AutrePassword456"
+}
+
+###
+
+# ❌ 400 — body vide
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{}
+
+###
+
+# ❌ 409 — email déjà utilisé
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "username": "doublon",
+  "email": "{{email}}",
+  "password": "{{password}}",
+  "confirm": "{{password}}"
+}
+
+
+### ────────────────────────────────────────────────────────────
+### LOGIN
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — connexion réussie → copiez accessToken et refreshToken dans les variables
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
+
+# ❌ 401 — email inconnu
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "inconnu@example.com",
+  "password": "{{password}}"
+}
+
+###
+
+# ❌ 401 — mauvais mot de passe
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "MauvaisMotDePasse000"
+}
+
+###
+
+# ❌ 400 — email malformé
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "pas-un-email",
+  "password": "{{password}}"
+}
+
+
+### ────────────────────────────────────────────────────────────
+### LOGOUT
+### ────────────────────────────────────────────────────────────
+
+# ✅ 204 — déconnexion (supprime le refresh token en base)
+POST {{baseUrl}}/logout
+Authorization: Bearer {{accessToken}}
+
+###
+
+# ❌ 401 — pas de token
+POST {{baseUrl}}/logout
+
+
+### ────────────────────────────────────────────────────────────
+### REFRESH TOKEN
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — retourne de nouveaux accessToken et refreshToken
+POST {{baseUrl}}/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}
+
+###
+
+# ❌ 401 — refresh token absent du body
+POST {{baseUrl}}/refresh
+Content-Type: application/json
+
+{}
+
+###
+
+# ❌ 401 — refresh token invalide (non présent en base)
+POST {{baseUrl}}/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "token-completement-invalide-00000000"
+}
+
+
+### ────────────────────────────────────────────────────────────
+### MOT DE PASSE OUBLIÉ
+### ────────────────────────────────────────────────────────────
+
+# ✅ 200 — envoi du lien de reset (toujours 200, même si email inconnu)
+POST {{baseUrl}}/forgot-password
+Content-Type: application/json
+
+{
+  "email": "{{email}}"
+}
+
+###
+
+# ✅ 200 — email inconnu : réponse identique pour éviter l'énumération
+POST {{baseUrl}}/forgot-password
+Content-Type: application/json
+
+{
+  "email": "inconnu@example.com"
+}
+
+###
+
+# ❌ 400 — email malformé
+POST {{baseUrl}}/forgot-password
+Content-Type: application/json
+
+{
+  "email": "pas-un-email"
+}
+
+
+### ────────────────────────────────────────────────────────────
+### RÉINITIALISATION DU MOT DE PASSE
+### ────────────────────────────────────────────────────────────
+# Remplacez RESET_TOKEN par le token reçu dans l'email de reset.
+
+# ✅ 200 — réinitialisation réussie
+POST {{baseUrl}}/reset-password
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "resetToken": "REMPLACER_PAR_LE_TOKEN_RECU_PAR_EMAIL",
+  "newPassword": "NouveauMotDePasse123"
+}
+
+###
+
+# ❌ 401 — token invalide
+POST {{baseUrl}}/reset-password
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "resetToken": "token-invalide",
+  "newPassword": "NouveauMotDePasse123"
+}
+
+###
+
+# ❌ 400 — nouveau mot de passe trop faible
+POST {{baseUrl}}/reset-password
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "resetToken": "REMPLACER_PAR_LE_TOKEN_RECU_PAR_EMAIL",
+  "newPassword": "faible"
 }

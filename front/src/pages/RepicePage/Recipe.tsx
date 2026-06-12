@@ -140,7 +140,10 @@ function RecipePage() {
         <ul className="Recipe-Info">
           <li>
             <IoTimer size={22} />
-            <span>{recipe.prepTime} min</span>
+            <span>Temps de Preparation : {recipe.prepTime} min</span>
+          </li><li>
+            <IoTimer size={22} />
+            <span>Temps de cuisson : {recipe.cookTime} min</span>
           </li>
           <li>
             <GiCook size={22} />

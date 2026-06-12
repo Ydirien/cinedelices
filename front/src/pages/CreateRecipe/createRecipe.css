@@ -358,6 +358,17 @@ select,
     font-size: 0.85rem;
 }
 
+.remove-Button {
+    flex: 1; 
+    padding: 0.6rem;
+    border-radius: 20px;
+    border: 1px solid red;
+    background-color: transparent;
+    color: red;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
 
 .Form-Footer {
     display: flex;

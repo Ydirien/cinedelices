@@ -6,6 +6,7 @@ import { router as recipesRouter } from './recipes.route.ts';
 import { router as adminRouter } from './admin.route.ts';
 import { router as categoriesRouter } from './categories.route.ts';
 import { router as typesRouter } from './types.route.ts';
+import { router as ingredientsRouter } from './ingredients.route.ts';
 
 
 export const router = Router();
@@ -19,4 +20,5 @@ router.use(recipesRouter);
 router.use(categoriesRouter);
 router.use(typesRouter);
 router.use(adminRouter);
+router.use(ingredientsRouter);
 

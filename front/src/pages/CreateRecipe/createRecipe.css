@@ -159,6 +159,12 @@
     box-sizing: border-box;
 }
 
+.Difficulty-PrepaTime-Thematic .dropdown-container,
+.Difficulty-PrepaTime-Thematic .Recipe-input-group {
+    flex: 1 1 calc(50% - 0.5rem); 
+    min-width: 120px;
+}
+
 .Recipe-input-group input, 
 select {
     background: var(--secondary-color);
@@ -294,6 +300,8 @@ select,
 .Difficulty-PrepaTime-Thematic {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 calc(50% - 0.5rem); 
     flex-direction: row;
     gap: 1rem;
 }   
@@ -417,6 +425,58 @@ select,
 }
 
 /* ==========================================
+   INGREDIENT ROW
+========================================== */
+
+.ingredient-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.ingredient-row .AddMore-Input {
+     flex: 1 1 100%;
+    flex: 1; 
+}
+
+.ingredient-row .quantity-input {
+    width: 70px;
+    flex-shrink: 0;
+    background: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    color: var(--quaternary-color);
+    font-size: 0.95rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.ingredient-row .quantity-input:focus {
+    border-color: var(--quinary-color);
+}
+
+/* Dropdown unité dans une ingredient-row */
+.ingredient-row .dropdown-container {
+    flex: 0 0 110px; /* largeur fixe */
+    gap: 0;
+}
+
+.ingredient-row .dropdown-container::after {
+    display: none; /* retire la flèche CSS dupliquée */
+}
+
+.ingredient-row .dropdown-btn {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+    height: 100%;
+}
+
+/* ==========================================
    RESPONSIVE DESKTOP 
    ========================================== */
 
@@ -437,14 +497,15 @@ select,
         display: none; 
     }
     .RecipeImg {
-        height: 280px; 
+        height: 36vh; 
     }
 
     /* On gère la ligne des metas pour afficher les 3 éléments côte à côte */
     .Difficulty-PrepaTime-Thematic {
-        grid-column: 1;
+        grid-column: 1/3;
         grid-row: 2;
         display: flex;
+         flex-wrap: wrap; 
         flex-direction: row;
         gap: 1rem;
     }

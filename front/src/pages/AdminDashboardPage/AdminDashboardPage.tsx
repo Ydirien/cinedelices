@@ -64,6 +64,11 @@ function AdminDashboardPage() {
       body: JSON.stringify({ state: 'APPROVED' }),
     });
 
+    if (!response.ok) {
+      setErrorMessage("Impossible d'approuver cette recette.");
+      return;
+    }
+
     fetchDashboard();
   }
 
@@ -75,6 +80,11 @@ function AdminDashboardPage() {
     }
 
     await apiFetch(`/api/admin/recipes/${id}`, { method: 'DELETE' });
+
+    if (!response.ok) {
+      setErrorMessage('Impossible de supprimer cette recette.');
+      return;
+    }
 
     fetchDashboard();
   }
@@ -131,7 +141,7 @@ function AdminDashboardPage() {
         <Link to="/admin/recipes/new">Créer une recette</Link>
         <Link to="/admin/recipes">Gérer toutes les recettes</Link>
         <Link to="/admin/users">Gérer les utilisateurs</Link>
-        <Link to="/admin/profil">Profil administrateur</Link>
+        <Link to="/profil">Voir mon profil</Link>
       </section>
 
       <section className="admin-pending-section">

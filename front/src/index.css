@@ -135,6 +135,6 @@ h2 {
   }
 }
 p {
-  fontfamily: var(--sans);
+  font-family: var(--sans);
   margin: 0;
 }

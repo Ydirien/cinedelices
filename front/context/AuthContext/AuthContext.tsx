@@ -11,6 +11,7 @@ export function AuthProvider({ children }) {
 
   function logout() {
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     localStorage.removeItem('User');
     setIsConnected(false);
   }

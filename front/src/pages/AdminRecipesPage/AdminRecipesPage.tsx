@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Pagination from '../../components/Pagination/Pagination';
 import './AdminRecipesPage.css';
+import { apiFetch } from '../../lib/apiClient';
 
 const LIMIT = 10;
 
@@ -57,24 +58,12 @@ function AdminRecipesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  // Je récupère l'URL de base de l'API depuis le fichier .env
-  // Si elle n'existe pas, j'utilise l'URL locale par défaut
-  const apiBaseUrl =
-    import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3010/api';
-
-  function getAuthHeaders(): Record<string, string> {
-    const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
-    return token ? { Authorization: `Bearer ${token}` } : {};
-  }
-
-  // Fonction qui va chercher les recettes côté admin pour une page donnée
   async function fetchRecipes(page: number) {
     try {
       setIsLoading(true);
 
-      const response = await fetch(
-        `${apiBaseUrl}/admin/recipes?page=${page}&limit=${LIMIT}`,
-        { headers: getAuthHeaders() },
+      const response = await apiFetch(
+        `/api/admin/recipes?page=${page}&limit=${LIMIT}`,
       );
 
       // Si la réponse n'est pas correcte, je déclenche une erreur
@@ -114,9 +103,8 @@ function AdminRecipesPage() {
       return;
     }
 
-    const response = await fetch(`${apiBaseUrl}/admin/recipes/${id}`, {
+    const response = await apiFetch(`/api/admin/recipes/${id}`, {
       method: 'DELETE',
-      headers: getAuthHeaders(),
     });
 
     if (!response.ok) {
@@ -131,15 +119,9 @@ function AdminRecipesPage() {
 
   // Fonction qui permet de valider une recette depuis la liste admin
   async function handleApproveRecipe(id: number) {
-    const response = await fetch(`${apiBaseUrl}/admin/recipes/${id}/state`, {
+    const response = await apiFetch(`/api/admin/recipes/${id}/state`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        ...getAuthHeaders(),
-      },
-      body: JSON.stringify({
-        state: 'APPROVED',
-      }),
+      body: JSON.stringify({ state: 'APPROVED' }),
     });
 
     if (!response.ok) {

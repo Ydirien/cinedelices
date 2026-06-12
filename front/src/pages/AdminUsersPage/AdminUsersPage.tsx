@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './AdminUsersPage.css';
+import { apiFetch } from '../../lib/apiClient';
 
 type UserRole = 'USER' | 'ADMIN';
 
@@ -18,21 +19,9 @@ function AdminUsersPage() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  const apiBaseUrl =
-    import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3010/api';
-
-  function getAuthHeaders(): Record<string, string> {
-    const token =
-      localStorage.getItem('accessToken') ?? localStorage.getItem('token');
-
-    return token ? { Authorization: `Bearer ${token}` } : {};
-  }
-
   async function fetchUsers() {
     try {
-      const response = await fetch(`${apiBaseUrl}/admin/users`, {
-        headers: getAuthHeaders(),
-      });
+      const response = await apiFetch('/api/admin/users');
 
       if (!response.ok) {
         throw new Error('Erreur lors du chargement des utilisateurs');
@@ -56,15 +45,9 @@ function AdminUsersPage() {
     setErrorMessage('');
     setSuccessMessage('');
 
-    const response = await fetch(`${apiBaseUrl}/admin/users/${userId}/role`, {
+    const response = await apiFetch(`/api/admin/users/${userId}/role`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        ...getAuthHeaders(),
-      },
-      body: JSON.stringify({
-        role: newRole,
-      }),
+      body: JSON.stringify({ role: newRole }),
     });
 
     if (!response.ok) {
@@ -95,9 +78,8 @@ function AdminUsersPage() {
     setErrorMessage('');
     setSuccessMessage('');
 
-    const response = await fetch(`${apiBaseUrl}/admin/users/${userId}`, {
+    const response = await apiFetch(`/api/admin/users/${userId}`, {
       method: 'DELETE',
-      headers: getAuthHeaders(),
     });
 
     if (!response.ok) {

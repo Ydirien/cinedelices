@@ -1,25 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { API_URL } from '../../constants/index';
 import './AdminProfilePage.css';
+import { apiFetch } from '../../lib/apiClient';
 
 function ProfilePage() {
   const [admin, setAdmin] = useState<any>(null);
 
   useEffect(() => {
     async function fetchDataProfile() {
-      const token = localStorage.getItem('accessToken');
-      const res = await fetch(`${API_URL}/api/profile`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!res.ok) {
-        throw new Error('Internal error');
-      }
+      const res = await apiFetch('/api/profile');
+      if (!res.ok) return;
       const data = await res.json();
       setAdmin(data);
     }

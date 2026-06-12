@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
 import '../AuthPages.css';
@@ -37,11 +37,20 @@ export default function Login() {
       localStorage.setItem('accessToken', data.accessToken.token);
       localStorage.setItem('refreshToken', data.refreshToken.token);
 
-      // pour afficher automatiquement le bouttons mon profil sans refresh la page
+      // Sauvegarde les données du profil pour les composants qui lisent User en localStorage
+      try {
+        const profileRes = await fetch(`${API_URL}/api/profile`, {
+          headers: { Authorization: `Bearer ${data.accessToken.token}` },
+        });
+        if (profileRes.ok) {
+          const userData = await profileRes.json();
+          localStorage.setItem('User', JSON.stringify(userData));
+        }
+      } catch {
+        // Non bloquant : les données de profil sont juste un cache
+      }
+
       login();
-
-      console.log('Connexion réussie !');
-
       navigate('/');
     } catch (err: any) {
       setError(err.message);
@@ -49,27 +58,6 @@ export default function Login() {
       setLoading(false);
     }
   };
-
-  async function fetcher() {
-    const response = await fetch('http://localhost:3010/api/profile', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Internal error');
-    }
-    const data = await response.json();
-    localStorage.setItem('User', JSON.stringify(data));
-  }
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      fetcher();
-    }
-  }, [handleSubmit]);
 
   return (
     <div className="auth-container">

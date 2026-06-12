@@ -58,20 +58,12 @@ function AdminRecipesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  
-  function getAuthHeaders(): Record<string, string> {
-    const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
-    return token ? { Authorization: `Bearer ${token}` } : {};
-  }
-
-  // Fonction qui va chercher les recettes côté admin pour une page donnée
   async function fetchRecipes(page: number) {
     try {
       setIsLoading(true);
 
       const response = await apiFetch(
         `/api/admin/recipes?page=${page}&limit=${LIMIT}`,
-        {headers: getAuthHeaders()},
       );
 
       // Si la réponse n'est pas correcte, je déclenche une erreur
@@ -113,7 +105,6 @@ function AdminRecipesPage() {
 
     const response = await apiFetch(`/api/admin/recipes/${id}`, {
       method: 'DELETE',
-      headers: getAuthHeaders(),
     });
 
     if (!response.ok) {
@@ -130,10 +121,7 @@ function AdminRecipesPage() {
   async function handleApproveRecipe(id: number) {
     const response = await apiFetch(`/api/admin/recipes/${id}/state`, {
       method: 'PATCH',
-      headers: getAuthHeaders(),
-      body: JSON.stringify({
-        state: 'APPROVED',
-      }),
+      body: JSON.stringify({ state: 'APPROVED' }),
     });
 
     if (!response.ok) {

@@ -64,19 +64,9 @@ function AdminRecipeDetailPage() {
     state: true,
   });
 
-  
-
-  function getAuthHeaders(): Record<string, string> {
-    const token = localStorage.getItem('accessToken') ?? localStorage.getItem('token');
-    return token ? { Authorization: `Bearer ${token}` } : {};
-  }
-
-  // Je récupère les informations complètes d'une recette
   async function fetchRecipe() {
     try {
-      const response = await apiFetch(`/api/admin/recipes/${id}`, {
-        headers: getAuthHeaders(),
-      });
+      const response = await apiFetch(`/api/admin/recipes/${id}`);
 
       if (!response.ok) {
         throw new Error('Erreur lors du chargement de la recette');
@@ -285,9 +275,6 @@ function AdminRecipeDetailPage() {
 
     const response = await apiFetch(`/api/admin/recipes/${recipe.id}`, {
       method: 'PUT',
-      headers: {
-        ...getAuthHeaders(),
-      },
       body: JSON.stringify({
         title: recipe.title,
         description: recipe.description,
@@ -319,12 +306,7 @@ function AdminRecipeDetailPage() {
 
     const response = await apiFetch(`/api/admin/recipes/${recipe.id}/state`, {
       method: 'PATCH',
-      headers: {
-        ...getAuthHeaders(),
-      },
-      body: JSON.stringify({
-        state: newState,
-      }),
+      body: JSON.stringify({ state: newState }),
     });
 
     if (!response.ok) {
@@ -365,7 +347,6 @@ function AdminRecipeDetailPage() {
 
     const response = await apiFetch(`/api/admin/recipes/${recipe.id}`, {
       method: 'DELETE',
-      headers: getAuthHeaders(),
     });
 
     if (!response.ok) {

@@ -41,7 +41,7 @@
 
 .RecipeImage{
     width: 100%;
-    height: 36vh;
+    height: 30vh;
 
     img{
         object-fit: cover;

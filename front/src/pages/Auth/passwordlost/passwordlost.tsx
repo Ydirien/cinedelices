@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import '../AuthPages.css';
 import { API_URL } from '../../../constants';
+import '../AuthPages.css';
 
 export default function Passwordlost() {
 

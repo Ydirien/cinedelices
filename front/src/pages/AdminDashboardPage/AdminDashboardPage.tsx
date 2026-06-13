@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './AdminDashboardPage.css';
 import { apiFetch } from '../../lib/apiClient';
+import { useAuth } from '../../../context/AuthContext/AuthContext';
 
 type AdminStats = {
   totalRecipes: number;
@@ -33,6 +34,8 @@ type DashboardData = {
 };
 
 function AdminDashboardPage() {
+  const {user} = useAuth()
+  const isAdmin = user?.role === "ADMIN";
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
@@ -55,8 +58,12 @@ function AdminDashboardPage() {
   }
 
   useEffect(() => {
-    fetchDashboard();
-  }, []);
+    if (isAdmin) {
+      fetchDashboard();
+    } else {
+      setIsLoading(false);
+    }
+  }, [isAdmin]);
 
   async function handleApproveRecipe(id: number) {
     const response = await apiFetch(`/api/admin/recipes/${id}/state`, {
@@ -79,7 +86,7 @@ function AdminDashboardPage() {
       return;
     }
 
-    const response = await apiFetch(`/api/admin/recipes/${id}`, { method: 'DELETE' });
+      const response = await apiFetch(`/api/admin/recipes/${id}`, { method: 'DELETE' });
 
     if (!response.ok) {
       setErrorMessage('Impossible de supprimer cette recette.');
@@ -87,6 +94,10 @@ function AdminDashboardPage() {
     }
 
     fetchDashboard();
+  }
+
+  if (!isAdmin) {
+    return <p>401 : Non autorisée</p>;
   }
 
   if (isLoading) {

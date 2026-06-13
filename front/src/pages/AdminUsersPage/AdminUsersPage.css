@@ -1,12 +1,12 @@
 .admin-users-page {
   min-height: 80vh;
   padding: 1rem;
-  color: #fff;
+  color: var(--quaternary-color);
 }
 
 .admin-users-message {
   padding: 2rem 1rem;
-  color: #fff;
+  color: var(--quaternary-color);
   text-align: center;
 }
 
@@ -17,15 +17,15 @@
   margin: 0 auto 1rem;
   padding: 1.5rem;
   border-radius: 1rem;
-  background-color: #111;
-  border: 1px solid rgba(243, 201, 105, 0.25);
+  background-color: var(--bg);
+  border: 1px solid var(--gold-light-border);
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
 .admin-users-header h1 {
-  color: #f3c969;
+  color: var(--gold-light);
   margin: 0;
   font-size: 1.6rem;
 }
@@ -38,8 +38,8 @@
 
 .admin-users-header-actions a {
   text-decoration: none;
-  background-color: #f3c969;
-  color: #111;
+  background-color: var(--gold-light);
+  color: var(--bg);
   font-weight: bold;
   padding: 0.8rem 1rem;
   border-radius: 0.5rem;
@@ -58,13 +58,13 @@
 }
 
 .admin-users-success-message {
-  background-color: #1d6b3a;
-  color: #fff;
+  background-color: var(--success);
+  color: var(--quaternary-color);
 }
 
 .admin-users-error-message {
-  background-color: #8b1e1e;
-  color: #fff;
+  background-color: var(--danger);
+  color: var(--quaternary-color);
 }
 
 /* TABLE */
@@ -74,8 +74,8 @@
   margin: 0 auto;
   overflow-x: auto;
   border-radius: 1rem;
-  background-color: #111;
-  border: 1px solid rgba(243, 201, 105, 0.25);
+  background-color: var(--bg);
+  border: 1px solid var(--gold-light-border);
 }
 
 .admin-users-table {
@@ -88,16 +88,16 @@
 .admin-users-table td {
   padding: 1rem;
   text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--white-08);
 }
 
 .admin-users-table th {
-  color: #f3c969;
+  color: var(--gold-light);
   font-weight: bold;
 }
 
 .admin-users-table td {
-  color: #f5f5f5;
+  color: var(--off-white);
 }
 
 /* ROLE / STATUT */
@@ -112,12 +112,12 @@
 
 .user-role.user {
   background-color: #735c1d;
-  color: #fff;
+  color: var(--quaternary-color);
 }
 
 .user-role.admin {
-  background-color: #1d6b3a;
-  color: #fff;
+  background-color: var(--success);
+  color: var(--quaternary-color);
 }
 
 /* ACTIONS */
@@ -141,18 +141,18 @@
 }
 
 .admin-users-actions .promote-button {
-  background-color: #1d6b3a;
-  color: #fff;
+  background-color: var(--success);
+  color: var(--quaternary-color);
 }
 
 .admin-users-actions .demote-button {
-  background-color: #f3c969;
-  color: #111;
+  background-color: var(--gold-light);
+  color: var(--bg);
 }
 
 .admin-users-actions .danger-button {
-  background-color: #8b1e1e;
-  color: #fff;
+  background-color: var(--danger);
+  color: var(--quaternary-color);
 }
 
 .admin-users-actions button:hover {

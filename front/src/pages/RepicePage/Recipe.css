@@ -1,13 +1,13 @@
 /* ── VARIABLES (scoped à la page recette) ────────────── */
 .recipe-page-bg {
-  --r-bg:           #111;
+  --r-bg:           var(--bg);
   --r-card:         #373737;
   --r-border:       #2a2a2a;
   --r-border-hover: rgba(212, 160, 23, 0.4);
-  --r-gold:         #d4a017;
+  --r-gold:         var(--quinary-color);
   --r-gold-dim:     rgba(212, 160, 23, 0.15);
-  --r-text:         var(--quaternary-color);      /* #fff */
-  --r-text-muted:   var(--tertiary-color);        /* #9e9e9e */
+  --r-text:         var(--quaternary-color);      /* var(--quaternary-color) */
+  --r-text-muted:   var(--tertiary-color);        /* var(--tertiary-color) */
   --r-text-faint:   #555;
   --r-radius:       14px;
   --r-radius-lg:    18px;
@@ -110,7 +110,7 @@
 }
 
 .recipe-badge--thematic {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--white-08);
   border-color: rgba(255, 255, 255, 0.25);
   color: rgba(255, 255, 255, 0.75);
 }
@@ -184,7 +184,7 @@
   font-size: 0.67rem;
   text-transform: uppercase;
   letter-spacing: 0.7px;
-  color: var(--r-text-faint);
+  color: var(--quinary-color);
   font-weight: 600;
 }
 
@@ -233,7 +233,7 @@
   font-weight: 600;
 }
 
-.rating-empty { font-size: 0.88rem; color: var(--r-text-faint); }
+.rating-empty { font-size: 0.88rem; color: var(--quinary-color); }
 
 /* ── MAIN CONTENT ────────────────────────────────────── */
 .recipe-main { 
@@ -284,7 +284,7 @@
 
 .recipe-tab--active {
   background: var(--r-gold);
-  color: #000;
+  color: var(--primary-color);
   font-weight: 700;
 }
 
@@ -292,7 +292,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--white-08);
   color: var(--r-text-muted);
   border-radius: 20px;
   padding: 1px 7px;
@@ -303,7 +303,7 @@
 
 .recipe-tab--active .recipe-tab-count {
   background: rgba(0, 0, 0, 0.2);
-  color: #000;
+  color: var(--primary-color);
 }
 
 /* ── INGREDIENTS GRID ────────────────────────────────── */
@@ -366,7 +366,7 @@
   width: 30px;
   height: 30px;
   background: var(--r-gold);
-  color: #000;
+  color: var(--primary-color);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -482,7 +482,7 @@
 
 .comment-submit {
   background: var(--r-gold);
-  color: #000;
+  color: var(--primary-color);
   border: none;
   border-radius: 8px;
   padding: 9px 22px;

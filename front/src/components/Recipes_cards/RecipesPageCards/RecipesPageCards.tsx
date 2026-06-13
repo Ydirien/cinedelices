@@ -35,7 +35,7 @@ export default function RecipesPageCards({ recipes }: RecipesPageCardsProps) {
                     {type?.[0]?.thematic?.name || 'Recette'} - {work.category.name}
                   </h2>
                 <div className="RecipeIMG">
-                  <img src={recipe.image.startsWith('http') ? recipe.image : `${API_URL}/${recipe.image}`} alt={recipe.title} className="recetteImage" />
+                  <img crossOrigin='anonymous' src={recipe.image.includes("upload") ? API_URL+"/"+recipe.image : recipe.image} alt={recipe.title} className="recetteImage" />
                 </div>
                  <div className="Recipe-Info">
                     <h3>{recipe.title}</h3>

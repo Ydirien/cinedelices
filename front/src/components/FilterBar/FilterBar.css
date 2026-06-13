@@ -1,28 +1,31 @@
 /* ============================================================
-   FilterBar — mobile-first
+   FilterBar — barre de filtres (catégories + types)
+   Mobile-first : boutons enroulables sur mobile,
+   légèrement plus grands sur desktop.
    ============================================================ */
 
+/* Conteneur principal de la barre de filtres */
 .filter-bar {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
   gap: 1rem;
   width: 100%;
 }
 
 .filter-group {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
   gap: 0.5rem;
   width: 100%;
 }
 
+/* Titre du groupe */
 .filter-group h4 {
   margin: 0;
   font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  text-transform: uppercase;  
+  letter-spacing: 0.06em;     
   opacity: 0.8;
-  color: var(--quaternary-color);
 }
 
 
@@ -42,7 +45,7 @@
   display: none;
 }
 
-/* Boutons de filtre */
+/* Style de base des boutons de filtre */
 .filter-group button {
   background: var(--secondary-color);
   --color: var(--quinary-color);
@@ -56,40 +59,46 @@
   white-space: nowrap;
   flex: 0 0 auto; /* ne se compresse pas dans le scroll horizontal */
   cursor: pointer;
+
   color: var(--color);
   border: 2px solid var(--quinary-color);
   border-radius: 6px;
   position: relative;
   overflow: hidden;
   z-index: 0;
+
   transition: color 0.3s ease-in-out;
 }
 
-/* Cercle d'animation au hover/active */
+/* Cercle d'animation qui remonte au hover/active*/
+
 .filter-group button::before {
   content: "";
   position: absolute;
   background: var(--color);
-  z-index: -1;
-  width: 300%;
-  aspect-ratio: 1 / 1;
+  z-index: -1;         
+  width: 300%;        
+  aspect-ratio: 1 / 1; 
   border-radius: 50%;
-  top: 100%;
-  left: 100%;
+  top: 100%;            
+  left: 100%;         
   transform: translate(0, 0);
   transition: transform 0.4s ease-in-out;
 }
 
+/* Au survol ou quand le filtre est actif : le texte passe en blanc */
 .filter-group button:hover,
 .filter-group button.active {
   color: white;
 }
 
+/* Le cercle remonte et couvre le bouton */
 .filter-group button:hover::before,
 .filter-group button.active::before {
   transform: translate(-120%, -120%);
 }
 
+/* Le bouton actif garde le fond coloré même sans survol */
 .filter-group button.active {
   background-color: var(--color);
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;

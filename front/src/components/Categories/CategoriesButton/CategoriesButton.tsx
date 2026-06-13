@@ -1,14 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useFetcher } from 'react-router-dom';
 import './CategoriesButton.css';
-import logoFilms from '../../../assets/Logo-categories/Boutton_films.png';
-import logoSeries from '../../../assets/Logo-categories/Boutton_series.png';
-import logoAnimes from '../../../assets/Logo-categories/Boutton_anime.png';
-import logoDA from '../../../assets/Logo-categories/Boutton_dessinanime.png';
-import logoEntrees from '../../../assets/Logo-types/Boutton_entree.png';
-import logoDesserts from '../../../assets/Logo-types/Boutton_desserts.png';
-import logoPlats from '../../../assets/Logo-types/Boutton_plats.png';
-import logoBoissons from '../../../assets/Logo-types/Boutton_boissons.png';
 import { ICategory, IType } from '../../../../@types/index.d';
 import { API_URL } from '../../../constants';
 import { apiFetch } from '../../../lib/apiClient';
@@ -60,20 +52,6 @@ function CategoriesButton() {
 
   useEffect(() => {});
 
-  const categoryImages: Record<string, string> = {
-    Film: logoFilms,
-    Série: logoSeries,
-    'Manga / Anime': logoAnimes,
-    'Dessin animé': logoDA
-  };
-
-  const typeImages: Record<string, string> = {
-    Entrée: logoEntrees,
-    Plat: logoPlats,
-    Dessert: logoDesserts,
-    Boisson: logoBoissons,
-  };
-
   const scroll = (direction: 'left' | 'right') => {
     if (!carouselRef.current) return;
 
@@ -100,9 +78,7 @@ function CategoriesButton() {
             <div className="category-buttons">
               {getAllCategories.map((category) => (
                 <NavLink key={category.name} className="category" to={`/recettes?category=${category.name}`}>
-                  <div className="button-category">
-                    <img src={categoryImages[category.name]} alt={category.name} />
-                  </div>
+                  <div className="button-category">{category.name}</div>
                 </NavLink>
               ))}
             </div>
@@ -110,9 +86,7 @@ function CategoriesButton() {
             <div className="type-buttons">
               {getAllTypes.map((type) => (
                 <NavLink key={type.name} className="type" to={`/recettes?thematic=${type.name}`}>
-                  <div className="button-category">
-                    <img src={typeImages[type.name]} alt={type.name} />
-                  </div>
+                  <div className="button-category">{type.name}</div>
                 </NavLink>
               ))}
             </div>

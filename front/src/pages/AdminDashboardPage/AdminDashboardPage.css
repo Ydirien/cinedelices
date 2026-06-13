@@ -1,241 +1,188 @@
-/* ============================================================
-   AdminDashboardPage — mobile-first
-   ============================================================ */
-
 .admin-dashboard-page {
   min-height: 80vh;
-  padding: 1rem;
-  color: #fff;
+  padding: 2rem 1rem;
+  color: var(--quaternary-color);
 }
 
-/* HEADER */
 .admin-dashboard-header {
   max-width: 1100px;
-  margin: 0 auto 1.5rem;
-  padding: 1.25rem;
+  margin: 0 auto 2rem;
+  padding: 2.5rem 2rem;
   border-radius: 1rem;
-  background-color: #111;
-  border: 1px solid rgba(243, 201, 105, 0.25);
+  background-color: var(--bg);
+  border: 1px solid var(--gold-light-border);
 }
 
 .admin-dashboard-header h1 {
-  color: #f3c969;
-  margin: 0 0 0.75rem;
-  font-size: clamp(1.4rem, 4vw, 2rem);
+  color: var(--gold-light);
+  margin: 0 0 1.2rem;
+  font-size: 2rem;
 }
 
 .admin-dashboard-header p {
   margin: 0;
-  color: #f5f5f5;
+  color: var(--off-white);
   line-height: 1.6;
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 
-/* STATS — 1 colonne mobile → 2 colonnes 480px → 3 colonnes 768px → 5 colonnes 1024px */
 .admin-stats-grid {
   max-width: 1100px;
-  margin: 0 auto 1.5rem;
+  margin: 0 auto 2rem;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
 }
 
 .admin-stat-card {
-  padding: 1.25rem 1rem;
+  padding: 1.5rem;
   border-radius: 1rem;
-  background-color: #111;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: var(--bg);
+  border: 1px solid var(--white-08);
   text-align: center;
-  transition: border-color 0.2s ease;
-}
-
-.admin-stat-card:hover {
-  border-color: rgba(243, 201, 105, 0.4);
 }
 
 .admin-stat-card span {
   display: block;
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: bold;
-  color: #f3c969;
-  margin-bottom: 0.4rem;
+  color: var(--gold-light);
+  margin-bottom: 0.5rem;
 }
 
 .admin-stat-card p {
   margin: 0;
-  color: #f5f5f5;
-  font-size: 0.9rem;
+  color: var(--off-white);
 }
 
-/* BOUTONS D'ACTION */
 .admin-dashboard-actions {
   max-width: 1100px;
-  margin: 0 auto 1.5rem;
+  margin: 0 auto 2rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .admin-dashboard-actions a {
   text-decoration: none;
-  background-color: #f3c969;
-  color: #111;
+  background-color: var(--gold-light);
+  color: var(--bg);
   font-weight: bold;
-  padding: 0.875rem 1rem;
-  min-height: 48px;
+  padding: 0.8rem 1rem;
   border-radius: 0.5rem;
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.2s ease;
 }
 
 .admin-dashboard-actions a:hover {
   opacity: 0.9;
 }
 
-/* RECETTES EN ATTENTE */
 .admin-pending-section {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 1.25rem;
+  padding: 2rem;
   border-radius: 1rem;
-  background-color: #111;
-  border: 1px solid rgba(243, 201, 105, 0.25);
+  background-color: var(--bg);
+  border: 1px solid var(--gold-light-border);
 }
 
 .admin-pending-section h2 {
-  color: #f3c969;
-  margin-bottom: 1.25rem;
+  color: var(--gold-light);
+  margin-bottom: 1.5rem;
 }
 
 .admin-pending-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .admin-pending-card {
   padding: 1rem;
   border-radius: 0.8rem;
-  background-color: rgba(255, 255, 255, 0.06);
+  background-color: var(--white-06);
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   gap: 1rem;
-  transition: background-color 0.2s ease;
-}
-
-.admin-pending-card:hover {
-  background-color: rgba(255, 255, 255, 0.09);
 }
 
 .admin-pending-card h3 {
-  color: #f3c969;
-  margin-bottom: 0.4rem;
-  font-size: 1rem;
+  color: var(--gold-light);
+  margin-bottom: 0.5rem;
 }
 
 .admin-pending-card p {
-  margin: 0.25rem 0;
-  font-size: 0.9rem;
-  color: #d0d0d0;
+  margin: 0.3rem 0;
 }
 
 .admin-pending-actions {
   display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.8rem;
+  align-items: center;
 }
 
 .admin-pending-actions button {
   border: none;
   border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
-  min-height: 44px;
+  padding: 0.7rem 1rem;
   cursor: pointer;
   font-weight: bold;
-  background-color: #f3c969;
-  color: #111;
-  transition: opacity 0.2s ease;
-}
-
-.admin-pending-actions button:hover {
-  opacity: 0.9;
+  background-color: var(--gold-light);
+  color: var(--bg);
 }
 
 .admin-pending-actions .danger-button {
-  background-color: #8b1e1e;
-  color: #fff;
+  background-color: var(--danger);
+  color: var(--quaternary-color);
+}
+
+@media screen and (max-width: 900px) {
+  .admin-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-pending-card {
+    flex-direction: column;
+  }
+
+  .admin-pending-actions {
+    align-items: stretch;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .admin-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-dashboard-header,
+  .admin-pending-section {
+    padding: 1.5rem;
+  }
+
+  .admin-dashboard-actions {
+    flex-direction: column;
+  }
+
+  .admin-pending-actions {
+    flex-direction: column;
+  }
+
+  .admin-pending-actions .view-button {
+    width: 100%;
+}
 }
 
 .admin-pending-actions .view-button {
   text-decoration: none;
   border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
-  min-height: 44px;
+  padding: 0.7rem 1rem;
   cursor: pointer;
   font-weight: bold;
-  background-color: #f3c969;
-  color: #111;
-  display: flex;
+  background-color: var(--gold-light);
+  color: var(--bg);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s ease;
-}
-
-.admin-pending-actions .view-button:hover {
-  opacity: 0.9;
-}
-
-/* 480px+ : 2 colonnes stats */
-@media (min-width: 480px) {
-  .admin-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .admin-dashboard-actions {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .admin-dashboard-actions a {
-    flex: 1 1 auto;
-    min-width: 160px;
-  }
-}
-
-/* 768px+ : 3 colonnes stats, card recettes côte à côte */
-@media (min-width: 768px) {
-  .admin-stats-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .admin-pending-card {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .admin-pending-actions {
-    flex-direction: row;
-    align-items: center;
-    flex-shrink: 0;
-  }
-}
-
-/* 1024px+ : 5 colonnes stats */
-@media (min-width: 1024px) {
-  .admin-dashboard-page {
-    padding: 2rem 1rem;
-  }
-
-  .admin-dashboard-header,
-  .admin-pending-section {
-    padding: 2rem;
-  }
-
-  .admin-stats-grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
+  width: 100%;
 }

@@ -1,7 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { NavLink } from "react-router-dom";
+import Cropper, { type Area } from "react-easy-crop";
 import "./createRecipe.css";
 import { apiFetch } from "../../lib/apiClient";
+
+// Charge une image à partir d'une URL/base64 dans un objet <img> en mémoire,
+// pour pouvoir ensuite la dessiner dans un canvas (utilisé par confirmCrop).
+const createImage = (url: string): Promise<HTMLImageElement> =>
+  new Promise((resolve, reject) => {
+    const img = new Image();
+    img.addEventListener("load", () => resolve(img));
+    img.addEventListener("error", (error) => reject(error));
+    img.src = url;
+  });
 
 export default function CreateRecipe() {
   const [title, setTitle] = useState("");
@@ -179,6 +190,111 @@ export default function CreateRecipe() {
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
+  // ── Recadrage de l'image ──────────────────────────────────────────────────
+  const CROP_ASPECT = 16 / 9; // ratio largeur/hauteur du cadre de recadrage
+  const OUTPUT_WIDTH = 1280; // taille de sortie de l'image recadrée/compressée
+  const OUTPUT_HEIGHT = Math.round(OUTPUT_WIDTH / CROP_ASPECT);
+
+  // image brute (avant recadrage), encodée en base64, affichée dans la modale
+  const [rawImageSrc, setRawImageSrc] = useState<string | null>(null);
+  // affiche/masque la fenêtre de recadrage
+  const [showCropModal, setShowCropModal] = useState(false);
+  // position de la zone de recadrage dans l'image (gérée par react-easy-crop)
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  // niveau de zoom choisi par l'utilisateur (1 = pas de zoom, 3 = zoom max)
+  const [zoom, setZoom] = useState(1);
+  // zone (en pixels, dans l'image d'origine) actuellement sélectionnée par le
+  // cadre de recadrage ; mise à jour en continu par react-easy-crop
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
+
+  // référence vers l'input file, pour pouvoir le réinitialiser (annulation/suppression)
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Appelé par react-easy-crop à chaque déplacement/zoom : on mémorise la
+  // zone sélectionnée en pixels pour pouvoir l'utiliser dans confirmCrop.
+  const onCropComplete = useCallback((_croppedArea: Area, croppedAreaPixelsValue: Area) => {
+    setCroppedAreaPixels(croppedAreaPixelsValue);
+  }, []);
+
+  // Déclenché quand l'utilisateur choisit un fichier image.
+  // On ne l'envoie pas tout de suite : on le lit en base64 (FileReader) pour
+  // l'afficher dans la fenêtre de recadrage, avec zoom/position réinitialisés.
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setRawImageSrc(reader.result as string);
+      setCrop({ x: 0, y: 0 });
+      setZoom(1);
+      setCroppedAreaPixels(null);
+      setShowCropModal(true);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // Appelé au clic sur "Valider" : dessine la zone sélectionnée
+  // (croppedAreaPixels, fournie par react-easy-crop) dans un canvas de
+  // sortie de taille fixe (OUTPUT_WIDTH x OUTPUT_HEIGHT), ce qui recadre et
+  // redimensionne l'image. canvas.toBlob convertit ensuite le résultat en
+  // JPEG qualité 0.85, ce qui compresse le fichier final (résout aussi le
+  // problème "image trop lourde").
+  const confirmCrop = async () => {
+    if (!rawImageSrc || !croppedAreaPixels) return;
+
+    const img = await createImage(rawImageSrc);
+
+    const canvas = document.createElement("canvas");
+    canvas.width = OUTPUT_WIDTH;
+    canvas.height = OUTPUT_HEIGHT;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.drawImage(
+      img,
+      croppedAreaPixels.x,
+      croppedAreaPixels.y,
+      croppedAreaPixels.width,
+      croppedAreaPixels.height,
+      0,
+      0,
+      OUTPUT_WIDTH,
+      OUTPUT_HEIGHT
+    );
+
+    canvas.toBlob(
+      (blob) => {
+        if (!blob) return;
+        const croppedFile = new File([blob], "recipe-image.jpg", { type: "image/jpeg" });
+        setImage(croppedFile);
+        setPreview(URL.createObjectURL(croppedFile));
+        setShowCropModal(false);
+        setRawImageSrc(null);
+      },
+      "image/jpeg",
+      0.85
+    );
+  };
+
+  // Ferme la fenêtre de recadrage sans rien valider et vide l'input file
+  // (pour permettre de re-choisir le même fichier si besoin, sinon le
+  // navigateur ne déclenche pas onChange une seconde fois pour un fichier identique).
+  const cancelCrop = () => {
+    setShowCropModal(false);
+    setRawImageSrc(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  // Supprime la photo déjà recadrée/sélectionnée (clic sur le bouton ✕) :
+  // on réinitialise l'image, l'aperçu et l'input file pour permettre à
+  // l'utilisateur d'en choisir une nouvelle.
+  const removeImage = () => {
+    setImage(null);
+    setPreview(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
   // ── Works handlers ─────────────────────────────────────────────────────────
   const handleCreateWork = async () => {
     try {
@@ -291,19 +407,83 @@ export default function CreateRecipe() {
         <div className="Add-Header">
           <h2>Ajoute ta recette</h2>
           <div className="RecipeImg">
+            {/* Aperçu de l'image déjà recadrée, ou label par défaut si aucune image */}
             {preview ? <img src={preview} alt="preview" /> : <label>Image</label>}
+            {/* Input file invisible superposé à la zone : cliquer sur l'image/label
+                ouvre le sélecteur de fichier, ce qui permet aussi de "modifier"
+                la photo (handleFileChange relance la fenêtre de recadrage) */}
             <input
+              ref={fileInputRef}
               type="file"
               accept="image/*"
-              onChange={(e) => {
-                if (e.target.files && e.target.files[0]) {
-                  setImage(e.target.files[0]);
-                  setPreview(URL.createObjectURL(e.target.files[0]));
-                }
-              }}
+              onChange={handleFileChange}
             />
+            {/* Bouton ✕ affiché uniquement si une image a été choisie, et masqué
+                pendant le recadrage (sinon il reste visible par-dessus la modale).
+                stopPropagation empêche le clic d'atteindre l'input file
+                (qui ouvrirait le sélecteur de fichier au lieu de supprimer) */}
+            {preview && !showCropModal && (
+              <button
+                type="button"
+                className="RecipeImg-remove"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeImage();
+                }}
+                aria-label="Supprimer la photo"
+              >
+                ✕
+              </button>
+            )}
           </div>
         </div>
+
+        {/* Fenêtre modale de recadrage : affichée seulement si une image brute
+            a été sélectionnée (showCropModal + rawImageSrc) */}
+        {showCropModal && rawImageSrc && (
+          <div className="crop-overlay">
+            <div className="crop-modal">
+              <h3>Ajuste ta photo</h3>
+
+              {/* Cadre de recadrage (16:9) : react-easy-crop gère le glisser-
+                  déposer et le pincement (pinch-to-zoom) en interne, et
+                  remonte la zone sélectionnée via onCropComplete. */}
+              <div className="crop-viewport">
+                <Cropper
+                  image={rawImageSrc}
+                  crop={crop}
+                  zoom={zoom}
+                  aspect={CROP_ASPECT}
+                  onCropChange={setCrop}
+                  onZoomChange={setZoom}
+                  onCropComplete={onCropComplete}
+                />
+              </div>
+
+              {/* Slider de zoom : de 1 (pas de zoom) à 3 (zoom max), pas de 0.01 */}
+              <input
+                className="crop-zoom"
+                type="range"
+                min={1}
+                max={3}
+                step={0.01}
+                value={zoom}
+                onChange={(e) => setZoom(Number(e.target.value))}
+              />
+
+              {/* Annuler ferme la modale sans toucher à l'image actuelle,
+                  Valider génère l'image recadrée/compressée et ferme la modale */}
+              <div className="crop-actions">
+                <button type="button" className="AddMore-Button" onClick={cancelCrop}>
+                  Annuler
+                </button>
+                <button type="button" className="AddMore-Button crop-confirm" onClick={confirmCrop}>
+                  Valider
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Infos principales */}
         <div className="AddRecipeInfo">

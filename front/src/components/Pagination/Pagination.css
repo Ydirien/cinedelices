@@ -1,36 +1,33 @@
-/* ============================================================
-   Pagination — mobile-first
-   ============================================================ */
-
+/* ── Conteneur centré en bas de la grille ── */
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.35rem;
-  padding: 1.25rem 0;
-  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 1.5rem 0;
 }
 
-/* Bouton générique */
+/* Bouton générique (numéro + flèches) */
 .pagination__btn {
-  min-width: 2.4rem;
-  height: 2.4rem;
-  padding: 0 0.4rem;
+  min-width: 2.2rem;
+  height: 2.2rem;
+  padding: 0 0.5rem;
+
   background: var(--secondary-color);
   color: var(--quaternary-color);
   border: 2px solid var(--quinary-color);
   border-radius: 6px;
   font-size: 0.9rem;
   cursor: pointer;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
   position: relative;
   overflow: hidden;
   z-index: 0;
   transition: color 0.3s ease-in-out;
-  /* Taille tactile minimale */
-  min-height: 40px;
 }
 
 /* Cercle d'animation identique aux boutons FilterBar */
@@ -56,7 +53,7 @@
   color: white;
 }
 
-/* Page active */
+/* Page actuellement affichée */
 .pagination__btn--active {
   background-color: var(--quinary-color);
   color: white;
@@ -64,13 +61,13 @@
   cursor: default;
 }
 
-/* Flèches */
+/* Flèches ‹ › légèrement plus grandes */
 .pagination__btn--arrow {
   font-size: 1.3rem;
   line-height: 1;
 }
 
-/* Désactivé */
+/* Bouton désactivé (première/dernière page) */
 .pagination__btn:disabled {
   opacity: 0.3;
   cursor: not-allowed;
@@ -82,6 +79,4 @@
   color: var(--tertiary-color);
   padding: 0 0.2rem;
   user-select: none;
-  display: inline-flex;
-  align-items: center;
 }

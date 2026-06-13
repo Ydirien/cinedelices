@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LuCircleUser } from 'react-icons/lu';
-import '../AuthPages.css';
 import { API_URL } from '../../../constants';
+import '../AuthPages.css';
 
 export default function Register() {
   // États pour récupérer les valeurs des inputs
@@ -18,24 +18,31 @@ export default function Register() {
   const navigate = useNavigate(); 
 
   // Fonction pour évaluer la force du mot de passe
-  const getPasswordStrength = (pwd: string) => {
-    if (!pwd) return { score: 0, label: 'Vide', className: 'none' };
-    let score = 0;
-    if (pwd.length >= 8) score++;
-    if (pwd.length >= 12) score++;
-    if (/[A-Z]/.test(pwd) && /[0-9]/.test(pwd)) score++;
-    if (/[^A-Za-z0-9]/.test(pwd)) score++;
-    if (/[a-z]/.test(pwd) && /[A-Z]/.test(pwd)) score++;
-    if (/[0-9]/.test(pwd) || /[^A-Za-z0-9]/.test(pwd)) score++;
+ const getPasswordStrength = (pwd: string) => {
+  if (!pwd) return { score: 0, label: 'Vide', className: 'none' };
+  
+  let score = 0;
+  if (pwd.length >= 8) score++;
+  if (pwd.length >= 12) score++;
+  if (/[A-Z]/.test(pwd) && /[0-9]/.test(pwd)) score++;
+  if (/[^A-Za-z0-9]/.test(pwd)) score++;
+  if (/[a-z]/.test(pwd) && /[A-Z]/.test(pwd)) score++;
+  if (/[0-9]/.test(pwd) || /[^A-Za-z0-9]/.test(pwd)) score++;
 
-    switch (score) {
-      case 1: return { score, label: 'Faible', className: 'weak' };
-      case 2:
-      case 3: return { score, label: 'Moyen', className: 'medium' };
-      case 4: return { score, label: 'Fort', className: 'strong' };
-      default: return { score, label: 'Très Faible', className: 'very-weak' };
-    }
-  };
+  // On utilise des conditions "plus grand ou égal" au lieu du switch exact
+  if (score >= 5) {
+    return { score, label: 'Excellent', className: 'strong' }; // Optionnel: tu peux ajouter un état max
+  }
+  if (score === 4) {
+    return { score, label: 'Fort', className: 'strong' };
+  }
+  if (score >= 2) {
+    return { score, label: 'Moyen', className: 'medium' };
+  }
+  
+  // Si le score est de 1 ou moins
+  return { score, label: 'Faible', className: 'weak' };
+};
 
   const strength = getPasswordStrength(password);
 

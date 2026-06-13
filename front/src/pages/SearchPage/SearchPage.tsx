@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, NavLink } from "react-router-dom";
-import "./SearchPage.css";
 import { API_URL } from "../../constants";
+import "./SearchPage.css";
 
 // Je définis le type d'une recette pour que TypeScript sache quelles données j'utilise
 type Recipe = {

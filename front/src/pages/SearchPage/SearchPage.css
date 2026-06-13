@@ -1,11 +1,6 @@
-/* ============================================================
-   SearchPage — mobile-first
-   ============================================================ */
-
 .SearchPage {
-  padding-top: 2rem;
-  padding-bottom: 3rem;
-  min-height: 60vh;
+  padding: 7rem 1rem 2rem;
+  min-height: 100vh;
   color: var(--quaternary-color);
   margin-top: -100px;
 }
@@ -19,12 +14,11 @@
 .SearchPage > p {
   text-align: center;
   color: var(--tertiary-color);
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
+  margin-bottom: 2rem;
 }
 
 .SearchPage > p strong {
-  color: #d4a017;
+  color: var(--quinary-color);
 }
 
 .SearchPage-loading,
@@ -32,92 +26,89 @@
   color: var(--tertiary-color);
   text-align: center;
   margin-top: 2rem;
-  font-size: 0.95rem;
 }
 
-/* Conteneur résultats */
+/* Conteneur de la liste des résultats */
 .SearchPage-results {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
+
   width: 100%;
   max-width: 900px;
-  margin: 0 auto 3rem;
+  margin: 0 auto 4rem;
 }
 
-/* Carte résultat — mobile : image plein-largeur en haut */
+/* Carte de recette en format horizontal */
 .SearchPage-card {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: auto 1fr auto;
   grid-template-areas:
-    "image"
-    "title"
-    "description"
-    "link";
-  gap: 0.75rem;
-  background: rgba(26, 26, 26, 0.603);
-  border: 2px solid #d4a017;
+    "image title"
+    "image description"
+    "image link";
+
+  gap: 0.8rem 1.5rem;
+
+  background: var(--overlay-dark);
+  border: 2px solid var(--quinary-color);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 30px var(--shadow-soft);
   backdrop-filter: blur(9.5px);
+
   overflow: hidden;
-  padding: 0.875rem;
+  padding: 1rem;
   text-align: start;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.SearchPage-card:hover {
-  box-shadow: 0 6px 36px rgba(212, 160, 23, 0.25);
-}
-
-/* Image */
+/* Image à gauche */
 .SearchPage-card img {
   grid-area: image;
-  width: 100%;
-  height: 180px;
+
+  width: 220px;
+  height: 160px;
   object-fit: cover;
-  border-radius: 10px;
+
+  border-radius: 12px;
   background-color: #333;
 }
 
-/* Titre */
+/* Titre à droite */
 .SearchPage-card h2 {
   grid-area: title;
+
   color: var(--quaternary-color);
-  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-size: 1.4rem;
   margin: 0;
 }
 
-/* Description */
+/* Description à droite */
 .SearchPage-card p {
   grid-area: description;
-  color: var(--tertiary-color);
-  font-size: 0.9rem;
-  line-height: 1.45;
-  margin: 0;
 
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  color: var(--tertiary-color);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin: 0;
 }
 
 /* Bouton lien */
 .SearchPage-card a {
   grid-area: link;
+
   width: fit-content;
   padding: 0.6rem 1.2rem;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
+
   text-decoration: none;
   color: var(--quaternary-color);
   font-weight: bold;
-  font-size: 0.9rem;
+
   border: 2px solid var(--quinary-color);
   border-radius: 20px;
   background: transparent;
-  transition: background-color 0.2s ease, color 0.2s ease;
+
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .SearchPage-card a:hover {
@@ -125,43 +116,24 @@
   color: var(--secondary-color);
 }
 
-/* Tablette 640px+ : image à gauche, contenu à droite */
-@media (min-width: 640px) {
-  .SearchPage-results {
-    gap: 1.25rem;
+/* Mobile */
+@media (max-width: 900px) {
+  .SearchPage {
+    padding: 6rem 1rem 2rem;
+    margin-top: -100px;
   }
 
   .SearchPage-card {
-    grid-template-columns: 180px 1fr;
-    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
     grid-template-areas:
-      "image title"
-      "image description"
-      "image link";
-    gap: 0.75rem 1.25rem;
-    padding: 1rem;
+      "image"
+      "title"
+      "description"
+      "link";
   }
 
   .SearchPage-card img {
-    width: 180px;
-    height: 100%;
-    min-height: 140px;
-  }
-}
-
-/* Desktop 900px+ */
-@media (min-width: 900px) {
-  .SearchPage-card {
-    grid-template-columns: 220px 1fr;
-    gap: 0.8rem 1.5rem;
-  }
-
-  .SearchPage-card img {
-    width: 220px;
-    min-height: 160px;
-  }
-
-  .SearchPage-card p {
-    -webkit-line-clamp: 4;
+    width: 100%;
+    height: 180px;
   }
 }
